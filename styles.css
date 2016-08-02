@@ -532,15 +532,11 @@ body .demo-blog {
 }
 
 #logovanje {
-    margin-left: 360px;
-    background-color: teal;
-    width:300px;
+    width:350px;
 }
 
 #registrovanje {
-    margin-left: 20px;
-    background-color: teal;
-    width:300px;
+      width:350px;
 }
 
 .mdl-card__title {
