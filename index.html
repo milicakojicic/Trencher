@@ -35,7 +35,7 @@
 
           <div class="mdl-card headline on-the-road-again mdl-cell mdl-cell--12-col mdl-color-text--grey-50">
                        <span id="headlineSpan">Trenchr</span>
-                       <span id="underHeadline">Socijalna mreza za studente</span>
+                       <span id="underHeadline">Socijalna mreža za studente</span>
           </div>
 
           <div class="mdl-card on-the-road-again mdl-cell mdl-cell--12-col">
@@ -65,35 +65,90 @@
 
             <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
 
-              <div>
-               <span>
-                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white show-modal" id="registrovanje">Registrujte se</button>
-                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white show-modal" id="logovanje">Ulogujte se</button>
-              </span>
-    <dialog class="mdl-dialog">
-      <div class="mdl-dialog__content">
-        <p>
-          Allow this site to collect usage data to improve your experience?
-        </p>
-      </div>
-      <div class="mdl-dialog__actions mdl-dialog__actions--full-width">
-        <button type="button" class="mdl-button">Agree</button>
-        <button type="button" class="mdl-button close">Disagree</button>
-      </div>
-    </dialog>
-    <script>
-      var dialog = document.querySelector('dialog');
-      var showModalButton = document.querySelector('.show-modal');
-      if (! dialog.showModal) {
-        dialogPolyfill.registerDialog(dialog);
-      }
-      showModalButton.addEventListener('click', function() {
-        dialog.showModal();
-      });
-      dialog.querySelector('.close').addEventListener('click', function() {
-        dialog.close();
-      });
-    </script>
+                  <div>
+                   <span>
+                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white show-modal-reg" id="registrovanje">Registrujte se</button>
+                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white show-modal-log" id="logovanje">Ulogujte se</button>
+                  </span>
+
+                  <dialog class="mdl-dialog">
+                   <div class="mdl-dialog__content">
+                     <form action="#">
+                         <div class="mdl-textfield mdl-js-textfield">
+                           <input class="mdl-textfield__input" type="text" id="username-log"/>
+                           <label class="mdl-textfield__label" for="username-log">Korisničko ime</label>
+                         </div>
+
+                         <div class="mdl-textfield mdl-js-textfield">
+                           <input class="mdl-textfield__input" type="text" id="pass-log"/>
+                           <label class="mdl-textfield__label" for="pass-log">Lozinka</label>
+                         </div>
+
+                         <span  class="mdl-cell--12-col mdl-grid">
+                           <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white">Potvrdi</button>
+                           <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white close odustani">Odustani</button>
+                         </span>
+                       </form>
+                   </div>
+                 </dialog>
+
+                 <dialog class="mdl-dialog dialog-reg">
+                  <div class="mdl-dialog__content">
+                    <form action="#">
+
+                      <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="text" id="email-reg"/>
+                        <label class="mdl-textfield__label" for="email-reg">Email</label>
+                      </div>
+
+                        <div class="mdl-textfield mdl-js-textfield">
+                          <input class="mdl-textfield__input" type="text" id="username-reg"/>
+                          <label class="mdl-textfield__label" for="username-reg">Korisničko ime</label>
+                        </div>
+
+                        <div class="mdl-textfield mdl-js-textfield">
+                          <input class="mdl-textfield__input" type="text" id="pass-reg"/>
+                          <label class="mdl-textfield__label" for="pass-reg">Lozinka</label>
+                        </div>
+
+                        <span  class="mdl-cell--12-col mdl-grid">
+                          <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white">Potvrdi</button>
+                          <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white close odustani">Odustani</button>
+                        </span>
+                      </form>
+                  </div>
+                </dialog>
+
+
+                <script>
+                //logovanje dijalog
+                 var dialog = document.querySelector('dialog');
+                 var showModalButton = document.querySelector('.show-modal-log');
+                 if (! dialog.showModal) {
+                   dialogPolyfill.registerDialog(dialog);
+                 }
+                 showModalButton.addEventListener('click', function() {
+                   dialog.showModal();
+                 });
+                 dialog.querySelector('.close').addEventListener('click', function() {
+                   dialog.close();
+                 });
+
+                //registracija dijalog
+                 var dialog1 = document.querySelector('.dialog-reg');
+                 var showModalButton1 = document.querySelector('.show-modal-reg');
+                 if (! dialog1.showModal) {
+                   dialogPolyfill.registerDialog(dialog1);
+                 }
+                 showModalButton1.addEventListener('click', function() {
+                   dialog1.showModal();
+                 });
+                 dialog1.querySelector('.close').addEventListener('click', function() {
+                   dialog1.close();
+                 });
+
+                </script>
+
               </div>
             </div>
           </div> <!--drugi div-->
