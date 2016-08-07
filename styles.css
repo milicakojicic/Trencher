@@ -583,6 +583,7 @@ h3,h4 {
 
  .profileButton .mdl-button--accent.mdl-button--accent.mdl-button--raised, .mdl-button--accent.mdl-button--accent.mdl-button--fab {
     background: teal;
+     color: white;
 }
 
 #resetuj {
