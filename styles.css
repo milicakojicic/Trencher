@@ -52,7 +52,7 @@ body .demo-blog {
 }
 
 .demo-blog.mdl-layout .mdl-layout__content {
-  padding-top: 100px;
+  padding-top: 0px;
   position: relative;
   -webkit-overflow-scrolling: touch;
 }
@@ -555,4 +555,65 @@ h3,h4 {
 
 .odustani {
   margin-left: 10px;
+}
+
+.profilePicture {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+}
+
+.center {
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profileLabel {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.profileButton .mdl-button--fab {
+    font-size: 10px;
+    font-weight: bolder;
+}
+
+ .profileButton .mdl-button--accent.mdl-button--accent.mdl-button--raised, .mdl-button--accent.mdl-button--accent.mdl-button--fab {
+    background: teal;
+}
+
+#resetuj {
+    float: right;
+}
+
+#profileForm {
+    margin-top: 20px;
+    background: white;
+    padding: 35px;
+}
+
+.header {
+    background: teal;
+    height: 100px;
+}
+
+#headLine {
+    color: white;
+    font-size: 50px;
+    padding-top: 40px;
+}
+
+* {
+    font-family: HeadlineFont;
+}
+
+#profile {
+    margin-top: 25px;
+}
+
+.index{
+    margin-top: 50px;
 }
