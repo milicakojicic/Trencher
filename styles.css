@@ -615,6 +615,7 @@ h3,h4 {
     margin-top: 25px;
 }
 
-.index{
-    margin-top: 50px;
+.index {
+    height: 50px;
+    width: 50px;
 }
