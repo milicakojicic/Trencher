@@ -575,14 +575,14 @@ h3,h4 {
     line-height: 30px;
 }
 
-.profileButton .mdl-button--fab {
+.mdl-button--fab {
     font-size: 10px;
     font-weight: bolder;
 }
 
- .profileButton .mdl-button--accent.mdl-button--accent.mdl-button--raised, .mdl-button--accent.mdl-button--accent.mdl-button--fab {
+.mdl-button--accent.mdl-button--accent.mdl-button--raised, .mdl-button--accent.mdl-button--accent.mdl-button--fab {
     background: teal;
-     color: white;
+    color: white;
 }
 
 #resetuj {
@@ -651,8 +651,19 @@ h3,h4 {
 }
 
 .trenchr {
-    margin-left: 450px;
+    margin-left: 40%;
     color: white;
     font-size: 50px;
-
 }
+
+.mainDiv {
+    min-height: 500px;
+    padding-top: 20px;
+}
+
+.groups {
+    padding-top: 10px;
+    padding-left: 18px;
+    background-color: whitesmoke;
+}
+
