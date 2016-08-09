@@ -624,3 +624,27 @@ h3,h4 {
     height: 50px;
     width: 50px;
 }
+
+.mdl-layout__header {
+    background-color:teal;
+}
+
+.material-icons {
+    color: white;
+}
+
+.mdl-layout__drawer-button {
+    margin-top: 25px;
+}
+
+
+ .demo-card-wide.mdl-card {
+     width: 100%;
+ }
+.demo-card-wide > .mdl-card__title {
+    color: #fff;
+    height: 50px;
+}
+.demo-card-wide > .mdl-card__menu {
+    color: #fff;
+}
