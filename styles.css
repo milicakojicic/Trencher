@@ -659,11 +659,38 @@ h3,h4 {
 .mainDiv {
     min-height: 500px;
     padding-top: 20px;
+
+}
+
+.postDiv {
+    min-height: 100px;
+    padding-top: 20px;
+    min-width: 100%;
 }
 
 .groups {
     padding-top: 10px;
     padding-left: 18px;
     background-color: whitesmoke;
+    padding-right: 18px;
+    max-width: 835px;
+}
+
+#postButton {
+    float: right;
+}
+
+.postDiv .mdl-textfield {
+    width: 800px;
+}
+
+#groupForm {
+    max-width: 800px;
+    margin-bottom: 20px;
+    margin-right: 0px; !important;
+}
+
+#publish {
+    margin-left: 15px;
 }
 
