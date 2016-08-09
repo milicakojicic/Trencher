@@ -633,9 +633,10 @@ h3,h4 {
     color: white;
 }
 
+/*
 .mdl-layout__drawer-button {
     margin-top: 25px;
-}
+}*/
 
 
  .demo-card-wide.mdl-card {
@@ -647,4 +648,11 @@ h3,h4 {
 }
 .demo-card-wide > .mdl-card__menu {
     color: #fff;
+}
+
+.trenchr {
+    margin-left: 450px;
+    color: white;
+    font-size: 50px;
+
 }

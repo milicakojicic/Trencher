@@ -33,12 +33,27 @@
 <div class="demo-blog mdl-layout mdl-js-layout has-drawer is-upgraded mdl-layout--fixed-header">
 
 
-
     <header class="mdl-layout__header">
-        <div class="header">
-            <span class="center" id="headLine">Trenchr</span>
+        <div class="mdl-layout__header-row">
+
+            <span class="trenchr">Trenchr</span>
+
+            <div class="mdl-layout-spacer"></div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+                  mdl-textfield--floating-label mdl-textfield--align-right">
+                <label class="mdl-button mdl-js-button mdl-button--icon"
+                       for="fixed-header-drawer-exp">
+                    <i class="material-icons">search</i>
+                </label>
+                <div class="mdl-textfield__expandable-holder">
+                    <input class="mdl-textfield__input" type="text" name="sample"
+                           id="fixed-header-drawer-exp">
+                </div>
+            </div>
         </div>
     </header>
+
+
 
     <div class="mdl-layout__drawer">
         <span class="mdl-layout-title">Trenchr</span>
@@ -96,7 +111,7 @@
                 </div>
 
             </div>
-            <div class="mdl-cell mdl-cell--3-col" style="background-color: fuchsia;">CS 3</div>
+            <div class="mdl-cell mdl-cell--3-col" style="background-color: whitesmoke"></div>
             <div class="mdl-cell mdl-cell--1-col"></div>
         </div> <!--grid-->
 
