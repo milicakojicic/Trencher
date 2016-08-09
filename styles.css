@@ -572,8 +572,7 @@ h3,h4 {
 }
 
 .profileLabel {
-    margin-top: 5px;
-    margin-bottom: 5px;
+    line-height: 30px;
 }
 
 .profileButton .mdl-button--fab {
@@ -588,9 +587,15 @@ h3,h4 {
 
 #resetuj {
     float: right;
+    display: none;
 }
 
-#profileForm {
+#save{
+    float: left;
+    display: none;
+}
+
+.profileForm {
     margin-top: 20px;
     background: white;
     padding: 35px;

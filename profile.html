@@ -45,27 +45,42 @@
         </div>
 
         <div class="center">
-            <form id="profileForm">
-                <div class="mdl-textfield mdl-js-textfield">
-                    <label class="profileLabel">Ime <input class="mdl-textfield__input" type="text"></label>
-                    <label class="profileLabel">Prezime <input class="mdl-textfield__input" type="text"></label>
-                    <label class="profileLabel">Datum rodjenja <input class="mdl-textfield__input" type="text"></label>
-                    <label class="profileLabel">Grad <input class="mdl-textfield__input" type="text"></label>
-                    <label class="profileLabel">Email <input class="mdl-textfield__input" type="text"></label>
-                    <label class="profileLabel">Fakultet <input class="mdl-textfield__input" type="text"></label>
 
+            <form class="profileForm" id="pForm">
+                <div class="mdl-textfield mdl-js-textfield">
+                    <label class="profileLabel">Ime
+                        <input class="mdl-textfield__input" id="name" type="text" value="Ljubica" disabled autofocus
+                               onfocus="this.value = this.value;">
+                    </label>
+                    <label class="profileLabel">Prezime
+                        <input class="mdl-textfield__input" id="surname" type="text" value="Peleksic" disabled>
+                    </label>
+                    <label class="profileLabel">Datum rodjenja
+                        <input class="mdl-textfield__input" id="date" type="text" value="18.11.1993." disabled>
+                    </label>
+                    <label class="profileLabel">Grad
+                        <input class="mdl-textfield__input" id="city" type="text" value="Beograd" disabled>
+                    </label>
+                    <label class="profileLabel">Email
+                        <input class="mdl-textfield__input" id="email" type="text" value="peleksic.ljubica@gmail.com" disabled>
+                    </label>
+                    <label class="profileLabel">Fakultet
+                        <input class="mdl-textfield__input" id="faculty" type="text" value="MATF" disabled>
+                    </label>
                 </div>
 
                 <div class="profileButton">
-                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-                        Sačuvaj
-                    </button>
-                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="resetuj">
-                        Resetuj
-                    </button>
+                    <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="edit"
+                            onclick="izmeniProfil()" type="button" value="Izmeni">
+                    </input>
+                    <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="save"
+                        type="submit" value="Sačuvaj">
+                    </input>
+                    <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="resetuj"
+                        type="reset" value="Resetuj" onclick="resetujFormu()">
+                    </input>
+
                 </div>
-
-
 
             </form>
         </div>
@@ -82,7 +97,8 @@
     <div class="mdl-layout__obfuscator"></div>
 </div>
 
-<script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+<script src="javascript/profile.js"></script>
+
 </body>
 
 <script>
