@@ -32,7 +32,6 @@
 
 <div class="demo-blog mdl-layout mdl-js-layout has-drawer is-upgraded mdl-layout--fixed-header">
 
-
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row headerProfile">
 
@@ -53,8 +52,6 @@
         </div>
     </header>
 
-
-
     <div class="mdl-layout__drawer">
         <span class="mdl-layout-title">Trenchr</span>
         <nav class="mdl-navigation">
@@ -65,48 +62,57 @@
 
     <main class="default mdl-layout__content">
 
+        <div class="mdl-grid postDiv">
+            <div class="mdl-cell mdl-cell--2-col"></div>
+            <div class="mdl-cell mdl-cell--8-col groups">
+
+                <form action="#" id="groupForm">
+
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--2-col">
+                            <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>
+                            <input class="mdl-button mdl-js-button"
+                                   type="button" value="Vazno" id="important">
+                            </input>
+                        </div>
+                        <div class="mdl-cell mdl-cell--1-col"></div>
+                        <div class="mdl-cell mdl-cell--2-col">
+                            <input class="mdl-button mdl-js-button" id="results"
+                                   type="button" value="Rezultati">
+                            </input>
+                        </div>
+                        <div class="mdl-cell mdl-cell--1-col"></div>
+                        <div class="mdl-cell mdl-cell--2-col">
+                            <input class="mdl-button mdl-js-button" id="vote"
+                                   type="button" value="Glasanje">
+                            </input>
+                        </div>
+                        <div class="mdl-cell mdl-cell--1-col"></div>
+                        <div class="mdl-cell mdl-cell--2-col">
+                            <input class="mdl-button mdl-js-button" id="materials"
+                                   type="button" value="Materijali">
+                            </input>
+                        </div>
+                    </div>
+
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <textarea class="mdl-textfield__input" type="text" rows= "5" id="groupPost" ></textarea>
+                        <label class="mdl-textfield__label" for="groupPost">Napisi post...</label>
+                    </div>
+
+                    <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent postButton" id="publish"
+                           type="submit" value="Objavi">
+                    </input>
+                </form>
+
+            </div>
+            <div class="mdl-cell mdl-cell--2-col"></div>
+        </div> <!--grid-->
+
         <div class="mdl-grid mainDiv">
             <div class="mdl-cell mdl-cell--2-col"></div>
             <div class="mdl-cell mdl-cell--8-col groups">
 
-                <form action="#">
-                    <div class="mdl-textfield mdl-js-textfield">
-                        <textarea class="mdl-textfield__input" type="text" rows= "3" cols="10" id="groupPost" ></textarea>
-                        <label class="mdl-textfield__label" for="groupPost">Napisi post...</label>
-                    </div>
-                </form>
-
-                <div class="demo-list-action mdl-list">
-                    <div class="mdl-list__item">
-                        <span class="mdl-list__item-primary-content">
-                             <i class="material-icons mdl-list__item-avatar">school</i>
-                                <span>Analiza 1</span>
-                        </span>
-
-                        <input type="button" class="join mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect
-                         mdl-button--accent" value="join">
-                    </div>
-
-                    <div class="mdl-list__item">
-                        <span class="mdl-list__item-primary-content">
-                            <i class="material-icons mdl-list__item-avatar">school</i>
-                            <span>Programiranje 2</span>
-                        </span>
-
-                        <input type="button" class="join mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect
-                         mdl-button--accent" value="join">
-                    </div>
-
-                    <div class="mdl-list__item">
-                        <span class="mdl-list__item-primary-content">
-                            <i class="material-icons mdl-list__item-avatar">school</i>
-                            <span>Uvod u organizaciju racunara</span>
-                        </span>
-
-                        <input type="button" class="join mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect
-                         mdl-button--accent" value="join">
-                    </div>
-                </div>
 
             </div>
             <div class="mdl-cell mdl-cell--2-col"></div>

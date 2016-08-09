@@ -747,3 +747,24 @@ footer {
     padding-right: 18px;
     max-width: 835px;
 }
+
+#postButton {
+    float: right;
+}
+
+.postDiv .mdl-textfield {
+    width: 800px;
+}
+
+#groupForm {
+    max-width: 800px;
+    margin-bottom: 20px;
+    margin-right: 0px; !important;
+}
+
+#publish {
+    margin-left: 15px;
+    background-color: teal;
+    color: whitesmoke;
+}
+
