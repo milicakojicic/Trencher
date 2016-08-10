@@ -550,6 +550,7 @@ h3,h4 {
 
 .mdl-button {
     font-family: HeadlineFont;
+    display: inline;
 }
 
 
