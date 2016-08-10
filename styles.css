@@ -685,7 +685,8 @@ h3,h4 {
     -webkit-justify-content: flex-end;
     -ms-flex-pack: end;
     justify-content: flex-end;
-    padding: 16px;
+    padding-bottom: 40px;
+    padding-left: 20px;
     height: 151px;
 }
 
@@ -733,7 +734,6 @@ footer {
 .mainDiv {
     min-height: 500px;
     padding-top: 20px;
-
 }
 
 .postDiv {
@@ -744,6 +744,14 @@ footer {
 
 .groups {
     padding-top: 10px;
+    padding-left: 18px;
+    background-color: whitesmoke;
+    padding-right: 18px;
+    max-width: 835px;
+}
+
+.groups1 {
+    padding-top: 30px;
     padding-left: 18px;
     background-color: whitesmoke;
     padding-right: 18px;
@@ -768,5 +776,60 @@ footer {
     margin-left: 15px;
     background-color: teal;
     color: whitesmoke;
+    opacity: 0.5;
 }
 
+.navProfil {
+    margin-bottom: 40px;
+}
+
+#mail {
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+#join {
+    background-color: teal;
+    color:whitesmoke;
+}
+
+#important {
+    margin-left: 12px;
+}
+
+#results {
+    margin-left: 12px;
+}
+
+#vote {
+    margin-left: 12px;
+}
+
+#materials {
+    margin-left: 12px;
+}
+
+#editPic {
+
+    position: absolute;
+    top: 50px;
+    left: 55%;
+    opacity: 0.5;
+}
+
+#editButton {
+    display: none;
+}
+
+#poll {
+    /*display: none;*/
+}
+
+.opcija {
+    display: inline;
+    max-width: 200px;
+}
+
+.mdl-textfield {
+    padding: 10px 0px;
+}

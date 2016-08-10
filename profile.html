@@ -58,16 +58,17 @@
             </div>
         </header>
 
-
-
-
         <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
             <header class="demo-drawer-header">
                 <span>  <img src="images/default.png" class="demo-avatar">
- Zdravo, Ljubice!</span>
-
-
+                    Ljubica Peleksic
+                </span>
+                <span id="mail">
+                    peleksic.ljubica@gmail.com
+                </span>
             </header>
+
+
             <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
                 <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation" style="margin-right: 20px;">home</i>Home</a>
                 <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation" style="margin-right: 20px;">inbox</i>Inbox</a>
@@ -84,6 +85,19 @@
             <img src="images/default.png" class="profilePicture">
         </div>
 
+        <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--5-col"></div>
+            <div class="mdl-cell mdl-cell--2-col">
+                <label class="mdl-button mdl-js-button mdl-button--icon" id="editPic" for="editButton">
+                    <i class="material-icons">mode_edit</i>
+                </label>
+                <input class="mdl-button mdl-js-button" id="editButton"
+                       type="file" value="">
+                </input>
+            </div>
+            <div class="mdl-cell mdl-cell--5-col"></div>
+        </div>
+
         <div class="center">
 
             <form class="profileForm" id="pForm">
@@ -95,9 +109,6 @@
                     <label class="profileLabel">Prezime
                         <input class="mdl-textfield__input" id="surname" type="text" value="Peleksic" disabled>
                     </label>
-                    <label class="profileLabel">Datum rodjenja
-                        <input class="mdl-textfield__input" id="date" type="text" value="18.11.1993." disabled>
-                    </label>
                     <label class="profileLabel">Grad
                         <input class="mdl-textfield__input" id="city" type="text" value="Beograd" disabled>
                     </label>
@@ -106,6 +117,12 @@
                     </label>
                     <label class="profileLabel">Fakultet
                         <input class="mdl-textfield__input" id="faculty" type="text" value="MATF" disabled>
+                    </label>
+                    <label class="profileLabel">Smer
+                        <input class="mdl-textfield__input" id="smer" type="text" value="Informatika" disabled>
+                    </label>
+                    <label class="profileLabel">Godina upisa
+                        <input class="mdl-textfield__input" id="year" type="text" value="2012" disabled>
                     </label>
                 </div>
 
