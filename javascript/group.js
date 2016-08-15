@@ -27,6 +27,7 @@ $( document ).ready(function() {
             }
         }
         if(ind == 0){
+
             brPolja++;
             var promenljiva = "opcija" + brPolja;
             document.getElementById("poll").innerHTML += '<div class="mdl-textfield mdl-js-textfield">'+
