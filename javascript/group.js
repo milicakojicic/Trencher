@@ -40,10 +40,17 @@ function dodajRezultati() {
     if(rez == 0) {
         document.getElementById("results").style.border = "1px solid teal";
         rez = 1;
+
+        document.getElementById("rezultati").style.display = "block";
+        document.getElementById("rezultati").innerHTML += ' <label for="files_results" class="btn">Dodajte rezultate</label>' +
+            '<input id="files_results" style="visibility:hidden;" type="file">';
     }
     else {
         document.getElementById("results").style.border = "0px solid teal";
         rez = 0;
+
+        document.getElementById("rezultati").style.display = "none";
+        document.getElementById("rezultati").innerHTML = "";
     }
 
 }
@@ -70,10 +77,17 @@ function dodajMaterijali() {
     if(mat == 0) {
         document.getElementById("materials").style.border = "1px solid teal";
         mat = 1;
+
+        document.getElementById("materijali").style.display = "block";
+        document.getElementById("materijali").innerHTML += ' <label for="files" class="btn">Dodajte materijale</label>' +
+           '<input id="files" style="visibility:hidden;" type="file">';
+
     }
     else {
         document.getElementById("materials").style.border = "0px solid teal";
         mat = 0;
+        document.getElementById("materijali").style.display = "none";
+        document.getElementById("materijali").innerHTML = "";
     }
 }
 
