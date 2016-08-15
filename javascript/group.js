@@ -58,15 +58,16 @@ function dodajRezultati() {
 function dodajGlasanje() {
     if(glas == 0) {
         document.getElementById("vote").style.border = "1px solid teal";
+        document.getElementById("poll").style.display = "block";
         glas = 1;
     }
     else {
         document.getElementById("vote").style.border = "0px solid teal";
+        document.getElementById("poll").style.display = "none";
         glas = 0;
     }
 
-    //document.getElementById("poll").style.display = "block";
-    //document.getElementById("poll").innerHTML = "";
+
 
     console.log(arr);
 
@@ -96,6 +97,7 @@ function objaviPost() {
     var prosli = document.getElementById("groupPosts").innerHTML;
     var text = document.getElementById("groupPost").value;
     var objava = "";
+    var glasanje = "";
     arr = [];
     document.getElementById("publish").disabled = true;
     document.getElementById("publish").style.opacity = 0.5;
@@ -117,12 +119,37 @@ function objaviPost() {
 
     if(glas != 0){
         objava += 'Glasanje ';
+
+        glasanje+= "<br>";
+
+        glasanje+= '<ul class="demo-list-icon mdl-list">';
+
+        for(var i = 1; i <= brPolja; i++) {
+            if(document.getElementById("opcija" + i) != null){
+
+                glasanje +=
+                    '<li class="mdl-list__item"> '+
+                    '    <span class="mdl-list__item-primary-content glas"> '+
+                            document.getElementById("opcija" + i).value +
+                            '<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox2"> '+
+                            '<input type="checkbox" id="checkbox2" class="mdl-checkbox__input"> ' +
+                            '</label>' +
+                    '   </span> '+
+                    '</li>';
+            }
+        }
+
+        glasanje += '</ul>';
+
     }
 
     objava +=  ' </div>';
     document.getElementById("groupPosts").innerHTML = objava +
         '<div class="objava" style="border: 1px solid teal;"> ' +
-        text +  '</div>' + prosli;
+        text + glasanje +  '</div>' + prosli;
+
+    //dodavanje opcija za glasanje u objavu nakon teksta
+
 
     imp = 0;
     mat = 0;
@@ -135,50 +162,41 @@ function objaviPost() {
     document.getElementById("groupPost").placeholder = "Napisite post...";
 }
 
+//funkcija za dodavanje nove opcije za glasanje
 function poslednjaOpcija() {
     arr = [];
-    var ind = 0;
 
-    //u petlji gledamo koja su polja popunjena i cuvamo njihove vrednosti u nizu arr
-    for(var i = 1; i <= brPolja-1; i++){
-        var promenljiva = "opcija" + i;
+    //cuvanje unesenih vrednosti
+    for(var i = 1; i <= brPolja; i++) {
 
-        if(document.getElementById(promenljiva) != null) {
-            if (!document.getElementById(promenljiva).value.length) {
-                ind = 1;
-            }
-
-            arr.push(document.getElementById(promenljiva).value);
+        if(document.getElementById("opcija" + i) != null){
+            arr.push(document.getElementById("opcija" + i).value);
         }
+
     }
 
-    //ako su sva polja popunjena,dodajemo novo polje
-    if(ind == 0){
-        document.getElementById("opcija").focus();
+    brPolja++;
 
-        brPolja++;
+    //dodavanje novog polje
+    var promenljiva = "opcija" + brPolja;
+    document.getElementById("opcije").innerHTML +=  '<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable ' +
+        'mdl-textfield--floating-label mdl-textfield--align-left"> ' +
+        '<label class="mdl-button mdl-js-button mdl-button--icon" ' +
+        'for="opcija' + brPolja +
+        '"> <i class="material-icons">lens</i> ' +
+        '</label> ' +
+    '<input class="mdl-textfield__input" type="text" name="sample" id="opcija' + brPolja +
+    '" placeholder="dodaj opciju" style="margin-left: 50px"> ' +
+    '</div> ';
 
-        var promenljiva = "opcija" + brPolja;
-        document.getElementById("poll").innerHTML +=  '<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable ' +
-            'mdl-textfield--floating-label mdl-textfield--align-left"> ' +
-            '<label class="mdl-button mdl-js-button mdl-button--icon" ' +
-            'for="opcija3"> ' +
-            '<i class="material-icons">add</i> ' +
-            '</label> ' +
-        '<input class="mdl-textfield__input" type="text" name="sample" ' +
-        'id="opcija3" placeholder="dodaj opciju" style="margin-left: 50px" onclick="poslednjaOpcija()"> ' +
-        '</div> ';
+    glasanje = document.getElementById("opcije").innerHTML;
 
-        console.log(arr);
+    //promenljive iz niza se stavljaju u inpute
+    for(var i = 1; i <= brPolja-1; i++) {
 
-        for(var i = 1; i <= brPolja-2; i++){
-            var promenljiva = "opcija" + i;
-
-            console.log(promenljiva + " " + arr[i-1]);
-            document.getElementById(promenljiva).value = arr[i-1];
-
+        if(document.getElementById("opcija" + i) != null){
+            document.getElementById("opcija" + i).value = arr[i-1];
         }
-
 
     }
 
