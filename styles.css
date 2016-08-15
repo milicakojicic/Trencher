@@ -997,4 +997,23 @@ footer {
     background-color: orange;
 }
 
+#dodajOpciju {
+    border-bottom: 0px;
+}
 
+.opcijeGlasanja {
+    margin-left: 20px;
+}
+
+.mdl-checkbox {
+    display: inline; !important;
+    margin-left: 20px;
+}
+
+.glas {
+    border: 1px solid teal;
+}
+
+#poll {
+    display: none;
+}
