@@ -17,41 +17,6 @@ $( document ).ready(function() {
         }
     });
 
-    $(ime).bind('input propertychange', function() {
-        var ind = 0;
-
-        for(var i = 1; i <= brPolja; i++){
-            var promenljiva = "opcija" + i;
-
-            if(!document.getElementById(promenljiva).value.length){
-                ind = 1;
-            }
-
-            arr.push(document.getElementById(promenljiva).value);
-        }
-
-        if(ind == 0){
-
-            brPolja++;
-            var promenljiva = "opcija" + brPolja;
-            document.getElementById("poll").innerHTML += '<div class="mdl-textfield mdl-js-textfield">'+
-                '<i class="material-icons" id="plus3">add</i> ' +
-                '<input class="mdl-textfield__input opcija" type="text" id="opcija3" placeholder="dodaj opciju"/>' +
-                '</div>'
-
-            for(var i = 1; i <= brPolja-1; i++){
-                var promenljiva = "opcija" + i;
-
-                document.getElementById(promenljiva).value = arr[i-1];
-
-            }
-
-        }
-
-    });
-
-
-
 });
 
 var imp = 0;
@@ -153,13 +118,55 @@ function objaviPost() {
     document.getElementById("materials").style.border = "0px solid teal";
     document.getElementById("vote").style.border = "0px solid teal";
     document.getElementById("important").style.border = "0px solid teal";
-
-
-
     document.getElementById("groupPost").placeholder = "Napisite post...";
-
-
-
 }
 
+function poslednjaOpcija() {
+    arr = [];
+    var ind = 0;
+
+    //u petlji gledamo koja su polja popunjena i cuvamo njihove vrednosti u nizu arr
+    for(var i = 1; i <= brPolja-1; i++){
+        var promenljiva = "opcija" + i;
+
+        if(document.getElementById(promenljiva) != null) {
+            if (!document.getElementById(promenljiva).value.length) {
+                ind = 1;
+            }
+
+            arr.push(document.getElementById(promenljiva).value);
+        }
+    }
+
+    //ako su sva polja popunjena,dodajemo novo polje
+    if(ind == 0){
+        document.getElementById("opcija").focus();
+
+        brPolja++;
+
+        var promenljiva = "opcija" + brPolja;
+        document.getElementById("poll").innerHTML +=  '<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable ' +
+            'mdl-textfield--floating-label mdl-textfield--align-left"> ' +
+            '<label class="mdl-button mdl-js-button mdl-button--icon" ' +
+            'for="opcija3"> ' +
+            '<i class="material-icons">add</i> ' +
+            '</label> ' +
+        '<input class="mdl-textfield__input" type="text" name="sample" ' +
+        'id="opcija3" placeholder="dodaj opciju" style="margin-left: 50px" onclick="poslednjaOpcija()"> ' +
+        '</div> ';
+
+        console.log(arr);
+
+        for(var i = 1; i <= brPolja-2; i++){
+            var promenljiva = "opcija" + i;
+
+            console.log(promenljiva + " " + arr[i-1]);
+            document.getElementById(promenljiva).value = arr[i-1];
+
+        }
+
+
+    }
+
+}
 
