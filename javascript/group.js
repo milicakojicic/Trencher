@@ -1,5 +1,6 @@
 var brPolja = 3;
 var ime = "#opcija" + brPolja;
+var arr = [];
 
 $( document ).ready(function() {
 
@@ -25,7 +26,10 @@ $( document ).ready(function() {
             if(!document.getElementById(promenljiva).value.length){
                 ind = 1;
             }
+
+            arr.push(document.getElementById(promenljiva).value);
         }
+
         if(ind == 0){
 
             brPolja++;
@@ -34,6 +38,13 @@ $( document ).ready(function() {
                 '<i class="material-icons" id="plus3">add</i> ' +
                 '<input class="mdl-textfield__input opcija" type="text" id="opcija3" placeholder="dodaj opciju"/>' +
                 '</div>'
+
+            for(var i = 1; i <= brPolja-1; i++){
+                var promenljiva = "opcija" + i;
+
+                document.getElementById(promenljiva).value = arr[i-1];
+
+            }
 
         }
 
@@ -82,9 +93,10 @@ function dodajGlasanje() {
         glas = 0;
     }
 
-    document.getElementById("poll").style.display = "block";
-    document.getElementById("poll").innerHTML = "";
+    //document.getElementById("poll").style.display = "block";
+    //document.getElementById("poll").innerHTML = "";
 
+    console.log(arr);
 
 
 }
@@ -105,6 +117,7 @@ function objaviPost() {
     var prosli = document.getElementById("groupPosts").innerHTML;
     var text = document.getElementById("groupPost").value;
     var objava = "";
+    arr = [];
     document.getElementById("publish").disabled = true;
     document.getElementById("publish").style.opacity = 0.5;
     document.getElementById("groupPost").value = "";
