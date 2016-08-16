@@ -1011,11 +1011,17 @@ footer {
 }
 
 .glas {
-    border: 1px solid teal;
+    background-color: teal;
+    padding: 5px;
+    float: right;
 }
 
 #poll {
     display: none;
+}
+
+.br_glasova {
+    color:white;
 }
 
 .predmeti:hover {
