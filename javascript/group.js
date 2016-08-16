@@ -137,9 +137,13 @@ function objaviPost() {
                     '   </span> '+
                     '</li>';
             }
+
+            document.getElementById("opcija" + i).value = "";
         }
 
         glasanje += '</ul>';
+        document.getElementById("poll").style.display = "none";
+
 
     }
 
