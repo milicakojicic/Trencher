@@ -122,26 +122,29 @@ function objaviPost() {
 
         glasanje+= "<br>";
 
-        glasanje+= '<ul class="demo-list-icon mdl-list">';
 
         for(var i = 1; i <= brPolja; i++) {
             if(document.getElementById("opcija" + i) != null){
 
-                glasanje +=
-                    '<li class="mdl-list__item"> '+
-                    '    <span class="mdl-list__item-primary-content glas"> '+
-                            document.getElementById("opcija" + i).value +
-                            '<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox2"> '+
-                            '<input type="checkbox" id="checkbox2" class="mdl-checkbox__input"> ' +
-                            '</label>' +
-                    '   </span> '+
-                    '</li>';
+                glasanje += '<div class="mdl-grid glas_ceo">' +
+
+                                '<div class="mdl-cell mdl-cell--10-col opcija">' +
+                                document.getElementById("opcija" + i).value +
+                                '</div>' +
+                                '<div class="mdl-cell mdl-cell--1-col">' +
+                                    '<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox2"> '+
+                                    '<input type="checkbox" id="checkbox2" class="mdl-checkbox__input"> ' +
+                                    '</label>' +
+                                '</div>'+
+                                '<div class="mdl-cell mdl-cell--1-col glas">' +
+                                    '2+' +
+                                '</div>' +
+                            '</div>';
             }
 
             document.getElementById("opcija" + i).value = "";
         }
 
-        glasanje += '</ul>';
         document.getElementById("poll").style.display = "none";
 
 
