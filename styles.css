@@ -664,6 +664,8 @@ h3,h4 {
     padding: 20px;
     background-color: whitesmoke;
     font-size: 20px;
+    word-wrap: break-word;
+
 }
 
 .tip {
@@ -1006,24 +1008,52 @@ footer {
 }
 
 .mdl-checkbox {
-    display: inline; !important;
+    /*display: inline; !important;*/
     margin-left: 20px;
 }
 
+
 .glas {
-    background-color: teal;
-    padding: 5px;
-    float: right;
+    background-color: #EEEEEE;
+    border: 1px solid lightgray;
+    margin-top: 10px;
+    max-height: 20px;
+    margin-left: 50px;
+}
+
+
+.glas_ceo {
+    background-color: #EEEEEE;
+    border: 1px solid lightgray;
+    margin-top: 10px;
+}
+
+
+.grid_opcija {
+    background-color: #EEEEEE;
+    border: 1px solid lightgray;
+    margin-top: 10px;
 }
 
 #poll {
     display: none;
 }
 
-.br_glasova {
-    color:white;
-}
-
 .predmeti:hover {
     background-color: rgba(158,158,158,0.20);
 }
+
+/*
+.notification_hidden {
+    display: none;
+} */
+
+.notification {
+    background-color: teal;
+    border-radius: 2px;
+    color: whitesmoke;
+    min-width: 4px;
+    padding: 3px;
+    margin-left: 10px;
+}
+
