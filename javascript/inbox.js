@@ -1,3 +1,12 @@
+var focus = 0,
+    blur = 0;
+$( "#pretraziOsobe" )
+
+    //fja u kojoj treba za izabranu osobu prikazati dosadasnji chat sa njom
+    .focusout(function() {
+        console.log("Ljubica");
+    });
+
 var poruka = document.getElementById("poruka");
 poruka.addEventListener("keydown", function (e) {
     if (e.keyCode === 13 && !e.shiftKey) {
@@ -8,8 +17,7 @@ poruka.addEventListener("keydown", function (e) {
     }
 });
 
-
-
+//dodati zahtev za upisivanje nove poruke u bazu
 function posalji(e) {
     var div = document.getElementById("poruke");
 

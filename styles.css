@@ -1103,3 +1103,12 @@ footer {
     padding: 3px;
     margin-left: 10px;
 }
+
+#primalac {
+    background-color: whitesmoke;
+}
+
+input {
+    background-color: whitesmoke; !important;
+    min-width: 100%;
+}
