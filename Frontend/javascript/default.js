@@ -3,9 +3,8 @@
  */
 
 //
-function pogledajGrupu(ime) {
-    imeGrupe = ime;
-    url = "/Frontend/group.html"
-    window.location.href = url;
+function pogledajGrupu(idGrupe) {
+    url = "group.html";
+    window.location.href = url + "?id=" + idGrupe;
 
 }

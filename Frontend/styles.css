@@ -1112,3 +1112,7 @@ input {
     background-color: whitesmoke; !important;
     min-width: 100%;
 }
+
+#inputTraziOsobe {
+    margin-left: 20px;
+}

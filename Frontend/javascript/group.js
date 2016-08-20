@@ -2,8 +2,30 @@ var brPolja = 3;
 var ime = "#opcija" + brPolja;
 var arr = [];
 
+var parametar = getQueryParams(document.location.search);
+var idGrupe = parametar.id;
+console.log(idGrupe);
+
+//ajax poziv za prikazivanje odredjene grupe ruta /groups/idGrupe
+
+function getQueryParams(qs) {
+    qs = qs.split('+').join(' ');
+
+    var params = {},
+        tokens,
+        re = /[?&]?([^=]+)=([^&]*)/g;
+
+    while (tokens = re.exec(qs)) {
+        params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+    }
+
+    return params;
+}
+
+
 $( document ).ready(function() {
 
+    //kada se krene pisati post
     $('#groupPost').bind('input propertychange', function() {
 
         document.getElementById("publish").disabled = true;
@@ -16,6 +38,10 @@ $( document ).ready(function() {
 
         }
     });
+
+    
+
+
 
 });
 
