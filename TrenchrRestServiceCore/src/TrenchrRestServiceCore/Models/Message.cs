@@ -7,5 +7,7 @@ namespace TrenchrRestServiceCore.Models
 {
     public class Message
     {
+        public string Text { get; set; }
+
     }
 }
