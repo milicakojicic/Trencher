@@ -7,5 +7,6 @@ namespace TrenchrRestServiceCore.Models
 {
     public class Student
     {
+        
     }
 }
