@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace TrenchrRestServiceCore.Controllers
+namespace TrenchrRestService.Controllers
 {
     [Route("posts")]
     public class StudentController : ApiController

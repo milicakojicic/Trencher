@@ -6,8 +6,8 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>ddbb853a-e680-4ba6-8564-0a3ce0445baa</ProjectGuid>
-    <RootNamespace>TrenchrRestServiceCore</RootNamespace>
+    <ProjectGuid>da5334dc-eedc-426a-adc4-a84643a6440d</ProjectGuid>
+    <RootNamespace>TrenchrRestService</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>

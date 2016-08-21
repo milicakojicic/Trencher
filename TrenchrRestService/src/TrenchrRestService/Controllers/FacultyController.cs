@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
-using TrenchrRestServiceCore.Models;
+using TrenchrRestService;
+using TrenchrRestService.Models;
 
-namespace TrenchrRestServiceCore.Controllers
+namespace TrenchrRestService.Controllers
 {
     [Route("faculties")]
     public class FacultyController : ApiController
@@ -14,7 +16,7 @@ namespace TrenchrRestServiceCore.Controllers
         [HttpGet]
         public IActionResult GetAllFaculties()
         {
-            var stmnt = "MATCH (f:fakutet) return id(f) as id, f.Name as name, f.University as univercity, f.City as city";
+            var stmnt = "MATCH (f:fakultet) return id(f) as id, f.Name as name, f.University as university, f.City as city";
             var resultFaculties = Neo4jClient.Execute(stmnt);
             var faculties = new List<Faculty>();
             foreach (var f in resultFaculties)
@@ -26,7 +28,7 @@ namespace TrenchrRestServiceCore.Controllers
                     University= (string)f["university"]
                 });
             
-            return Ok();
+            return Ok(JsonConvert.SerializeObject(faculties, Formatting.Indented));
         }
     }
 }

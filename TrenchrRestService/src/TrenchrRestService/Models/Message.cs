@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TrenchrRestServiceCore.Models
+namespace TrenchrRestService.Models
 {
-    public class Student
+    public class Message
     {
-        
+        public string Text { get; set; }
+
     }
 }

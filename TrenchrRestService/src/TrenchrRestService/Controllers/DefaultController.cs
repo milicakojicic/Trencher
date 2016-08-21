@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
-using TrenchrRestServiceCore.Models;
+using TrenchrRestService.Models;
 
-namespace TrenchrRestServiceCore.Controllers
+namespace TrenchrRestService.Controllers
 {
     [Route("/")]
     public class DefaultController : ApiController
