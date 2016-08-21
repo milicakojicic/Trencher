@@ -26,6 +26,9 @@
             z-index: 900;
         }
     </style>
+
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
 </head>
 
 <body>
@@ -117,7 +120,7 @@
 
                 <h4 class="naslov_grupe"> Moje grupe </h4>
 
-                <div class="demo-list-action mdl-list">
+                <div class="demo-list-action mdl-list ">
                     <div class="mdl-list__item predmeti" onclick="pogledajGrupu(this.id)" id="1">
                          <span class="mdl-list__item-primary-content">
                              <i class="material-icons mdl-list__item-avatar">school</i>
@@ -125,14 +128,14 @@
                          </span>
                     </div>
 
-                    <div class="mdl-list__item predmeti">
+                    <div class="mdl-list__item predmeti" onclick="pogledajGrupu(this.id)" id="2">
                         <span class="mdl-list__item-primary-content ">
                             <i class="material-icons mdl-list__item-avatar">school</i>
                             <span>Programiranje 2</span>
                         </span>
                     </div>
 
-                    <div class="mdl-list__item predmeti">
+                    <div class="mdl-list__item predmeti" onclick="pogledajGrupu(this.id)" id="3">
                         <span class="mdl-list__item-primary-content">
                             <i class="material-icons mdl-list__item-avatar">school</i>
                             <span>Uvod u organizaciju racunara</span>

@@ -1,12 +1,30 @@
 var focus = 0,
     blur = 0;
-$( "#pretraziOsobe" )
 
+$( document ).ready(function() {
+
+    //kada se krene pisati poruka omogucava se pritisak dugmeta dok postoji text u textarea
+    $('#poruka').bind('input propertychange', function () {
+
+        document.getElementById("posaljiPoruku").disabled = true;
+        document.getElementById("posaljiPoruku").style.opacity = 0.5;
+        document.getElementById("poruka").placeholder = " ";
+
+        if (this.value.length) {
+            document.getElementById("posaljiPoruku").disabled = false;
+            document.getElementById("posaljiPoruku").style.opacity = 1;
+        }
+    });
+
+});
+
+$( "#pretraziOsobe" )
     //fja u kojoj treba za izabranu osobu prikazati dosadasnji chat sa njom
     .focusout(function() {
         console.log("Ljubica");
     });
 
+//dodavanje mogucnost da se salje poruka na ENTER
 var poruka = document.getElementById("poruka");
 poruka.addEventListener("keydown", function (e) {
     if (e.keyCode === 13 && !e.shiftKey) {

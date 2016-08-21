@@ -2,27 +2,6 @@ var brPolja = 3;
 var ime = "#opcija" + brPolja;
 var arr = [];
 
-var parametar = getQueryParams(document.location.search);
-var idGrupe = parametar.id;
-console.log(idGrupe);
-
-//ajax poziv za prikazivanje odredjene grupe ruta /groups/idGrupe
-
-function getQueryParams(qs) {
-    qs = qs.split('+').join(' ');
-
-    var params = {},
-        tokens,
-        re = /[?&]?([^=]+)=([^&]*)/g;
-
-    while (tokens = re.exec(qs)) {
-        params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
-    }
-
-    return params;
-}
-
-
 $( document ).ready(function() {
 
     //kada se krene pisati post
@@ -39,9 +18,88 @@ $( document ).ready(function() {
         }
     });
 
-    
+
+    var parametar = getQueryParams(document.location.search);
+    var idGrupe = parametar.id;
+    console.log(idGrupe);
+    //napisati GET zahtev za podatke o grupi za taj idGrupe
+
+    //napisati POST za insert u bazu
+    $('#publish').click(function() {
+        var prosli = document.getElementById("groupPosts").innerHTML;
+        var text = document.getElementById("groupPost").value;
+        var objava = "";
+        var glasanje = "";
+        arr = [];
+        document.getElementById("publish").disabled = true;
+        document.getElementById("publish").style.opacity = 0.5;
+        document.getElementById("groupPost").value = "";
+
+        objava += '<div class="tip">';
+
+        if(imp != 0){
+            objava += 'Važno ';
+        }
+
+        if(mat != 0){
+            objava += 'Materijali  ';
+        }
+
+        if(rez != 0){
+            objava += 'Rezultati  ';
+        }
+
+        if(glas != 0){
+            objava += 'Glasanje ';
+
+            glasanje+= "<br>";
 
 
+            for(var i = 1; i <= brPolja; i++) {
+                if(document.getElementById("opcija" + i) != null){
+
+                    glasanje += '<div class="mdl-grid glas_ceo">' +
+
+                        '<div class="mdl-cell mdl-cell--10-col opcija">' +
+                        document.getElementById("opcija" + i).value +
+                        '</div>' +
+                        '<div class="mdl-cell mdl-cell--1-col">' +
+                        '<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox2"> '+
+                        '<input type="checkbox" id="checkbox2" class="mdl-checkbox__input"> ' +
+                        '</label>' +
+                        '</div>'+
+                        '<div class="mdl-cell mdl-cell--1-col glas">' +
+                        '2+' +
+                        '</div>' +
+                        '</div>';
+                }
+
+                document.getElementById("opcija" + i).value = "";
+            }
+
+            document.getElementById("poll").style.display = "none";
+
+
+        }
+
+        objava +=  ' </div>';
+        document.getElementById("groupPosts").innerHTML = objava +
+            '<div class="objava" style="border: 1px solid teal;"> ' +
+            text + glasanje +  '</div>' + prosli;
+
+        //dodavanje opcija za glasanje u objavu nakon teksta
+
+
+        imp = 0;
+        mat = 0;
+        rez = 0;
+        glas = 0;
+        document.getElementById("results").style.border = "0px solid teal";
+        document.getElementById("materials").style.border = "0px solid teal";
+        document.getElementById("vote").style.border = "0px solid teal";
+        document.getElementById("important").style.border = "0px solid teal";
+        document.getElementById("groupPost").placeholder = "Napisite post...";
+    });
 
 });
 
@@ -50,6 +108,19 @@ var rez = 0;
 var glas= 0;
 var mat = 0;
 
+function getQueryParams(qs) {
+    qs = qs.split('+').join(' ');
+
+    var params = {},
+        tokens,
+        re = /[?&]?([^=]+)=([^&]*)/g;
+
+    while (tokens = re.exec(qs)) {
+        params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+    }
+
+    return params;
+}
 
 function dodajVazno() {
     if(imp == 0) {
@@ -116,83 +187,6 @@ function dodajMaterijali() {
         document.getElementById("materijali").style.display = "none";
         document.getElementById("materijali").innerHTML = "";
     }
-}
-
-function objaviPost() {
-
-    var prosli = document.getElementById("groupPosts").innerHTML;
-    var text = document.getElementById("groupPost").value;
-    var objava = "";
-    var glasanje = "";
-    arr = [];
-    document.getElementById("publish").disabled = true;
-    document.getElementById("publish").style.opacity = 0.5;
-    document.getElementById("groupPost").value = "";
-
-    objava += '<div class="tip">';
-
-    if(imp != 0){
-        objava += 'Važno ';
-    }
-
-    if(mat != 0){
-        objava += 'Materijali  ';
-    }
-
-    if(rez != 0){
-        objava += 'Rezultati  ';
-    }
-
-    if(glas != 0){
-        objava += 'Glasanje ';
-
-        glasanje+= "<br>";
-
-
-        for(var i = 1; i <= brPolja; i++) {
-            if(document.getElementById("opcija" + i) != null){
-
-                glasanje += '<div class="mdl-grid glas_ceo">' +
-
-                                '<div class="mdl-cell mdl-cell--10-col opcija">' +
-                                document.getElementById("opcija" + i).value +
-                                '</div>' +
-                                '<div class="mdl-cell mdl-cell--1-col">' +
-                                    '<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox2"> '+
-                                    '<input type="checkbox" id="checkbox2" class="mdl-checkbox__input"> ' +
-                                    '</label>' +
-                                '</div>'+
-                                '<div class="mdl-cell mdl-cell--1-col glas">' +
-                                    '2+' +
-                                '</div>' +
-                            '</div>';
-            }
-
-            document.getElementById("opcija" + i).value = "";
-        }
-
-        document.getElementById("poll").style.display = "none";
-
-
-    }
-
-    objava +=  ' </div>';
-    document.getElementById("groupPosts").innerHTML = objava +
-        '<div class="objava" style="border: 1px solid teal;"> ' +
-        text + glasanje +  '</div>' + prosli;
-
-    //dodavanje opcija za glasanje u objavu nakon teksta
-
-
-    imp = 0;
-    mat = 0;
-    rez = 0;
-    glas = 0;
-    document.getElementById("results").style.border = "0px solid teal";
-    document.getElementById("materials").style.border = "0px solid teal";
-    document.getElementById("vote").style.border = "0px solid teal";
-    document.getElementById("important").style.border = "0px solid teal";
-    document.getElementById("groupPost").placeholder = "Napisite post...";
 }
 
 //funkcija za dodavanje nove opcije za glasanje
