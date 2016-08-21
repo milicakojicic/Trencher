@@ -790,7 +790,7 @@ footer {
     margin-top: 10px;
 }
 
-#join {
+.mdl-button--accent.mdl-button--accent.mdl-button--raised, .mdl-button--accent.mdl-button--accent.mdl-button--fab {
     background-color: teal;
     color:whitesmoke;
 }
@@ -1066,6 +1066,7 @@ footer {
     color: white;
     margin-left: 82%;
     margin-top: -20px;
+    opacity: 0.5;
 }
 
 #porukaDiv {
@@ -1111,4 +1112,8 @@ footer {
 input {
     background-color: whitesmoke; !important;
     min-width: 100%;
+}
+
+#inputTraziOsobe {
+    margin-left: 20px;
 }

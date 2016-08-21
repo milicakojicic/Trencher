@@ -20,13 +20,7 @@ namespace TrenchrRestService.Controllers
             var resultFaculties = Neo4jClient.Execute(stmnt);
             var faculties = new List<Faculty>();
             foreach (var f in resultFaculties)
-                faculties.Add(new Faculty()
-                {
-                    ID = (long)f["id"],
-                    Name = (string)f["name"],
-                    City = (string)f["city"],
-                    University= (string)f["university"]
-                });
+                faculties.Add(new Faculty(f));
             
             return Ok(JsonConvert.SerializeObject(faculties, Formatting.Indented));
         }

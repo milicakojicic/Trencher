@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace TrenchrRestService.Models
 {
-    public class Post
+    public class VoteOption
     {
-        public DateTime Time { get; set; }
-        public long  AuthorId { get; set; }
-        
+        public string Text { get; set; }
+        public List<Student> VotedFor { get; set; }
     }
 }

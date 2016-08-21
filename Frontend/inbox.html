@@ -87,8 +87,8 @@
                 <div class="mdl-cell mdl-cell--2-col"></div>
                 <div class="mdl-cell mdl-cell--8-col" id="primalac">
 
-                    <div id="pretraziOsobe">
-                        <input list="osobe" name="traziOsobe" id="inputTraziOsobe" placeholder="Izaberi osobu...">
+                    <div class="mdl-textfield mdl-js-textfield" id="pretraziOsobe">
+                        <input list="osobe" class="mdl-textfield__input" name="traziOsobe" id="inputTraziOsobe" placeholder="Izaberi osobu...">
                         <datalist id="osobe">
                             <option value="Internet Explorer">
                             <option value="Firefox">
@@ -147,7 +147,7 @@
                             </div>
 
                             <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent postButton"
-                                   id="posaljiPoruku" type="button" value="Pošalji" onclick="posalji()" one>
+                                   id="posaljiPoruku" type="button" value="Pošalji" onclick="posalji()" disabled>
                             </input>
 
                         </form>
