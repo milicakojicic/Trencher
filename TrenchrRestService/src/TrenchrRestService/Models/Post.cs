@@ -9,6 +9,7 @@ namespace TrenchrRestService.Models
     {
         public DateTime Time { get; set; }
         public long  AuthorId { get; set; }
+        public string Text { get; set; }
         
     }
 }
