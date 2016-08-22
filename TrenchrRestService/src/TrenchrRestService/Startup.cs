@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Cors;
+
 
 namespace TrenchrRestService
 {
@@ -36,7 +38,13 @@ namespace TrenchrRestService
         {
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
-
+            services.AddCors(options => 
+            {
+                options.AddPolicy("AllowAll",
+                    bulider => bulider.AllowAnyMethod()
+                                      .AllowAnyHeader()
+                                      .AllowAnyOrigin());
+            });
             services.AddMvc();
         }
 
@@ -49,7 +57,7 @@ namespace TrenchrRestService
             app.UseApplicationInsightsRequestTelemetry();
 
             app.UseApplicationInsightsExceptionTelemetry();
-
+            app.UseCors("AllowAll");
             app.UseMvc();
         }
     }
