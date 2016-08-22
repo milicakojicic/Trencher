@@ -229,3 +229,7 @@ function poslednjaOpcija() {
 
 }
 
+function prokaziProfil(id) {
+
+    console.log(id);
+}
