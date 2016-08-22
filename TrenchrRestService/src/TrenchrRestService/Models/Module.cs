@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace TrenchrRestService.Models
 {
-    public class VotePost : Post
+    public class Module
     {
-        public List<VoteOption> VoteOptions { get; set; }
+        public string Name { get; set; }
     }
 }

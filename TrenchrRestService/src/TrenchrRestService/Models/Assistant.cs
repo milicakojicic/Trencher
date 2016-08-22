@@ -5,14 +5,11 @@ using System.Threading.Tasks;
 
 namespace TrenchrRestService.Models
 {
-    public class Subject
+    public class Assistant
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public string Level { get; set; }
-        public string Type { get; set; }
-        public int Espb { get; set; }
+        public string Surname { get; set; }
+        public string PicturePath { get; set; }
     }
-
-  
 }

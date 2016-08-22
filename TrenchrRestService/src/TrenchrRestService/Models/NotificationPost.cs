@@ -5,12 +5,11 @@ using System.Threading.Tasks;
 
 namespace TrenchrRestService.Models
 {
-    public class Post
+    public class NotificationPost
     {
-        public int ID{ get; set; }
-        public DateTime Time { get; set; }
-        public long  AuthorId { get; set; }
+        public int ID { get; set; }
         public string Text { get; set; }
-        public string Type { get; set; }
+        //indikator da li je oznacen kao vazan ili ne
+        public int Important { get; set; }
     }
 }

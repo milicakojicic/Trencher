@@ -12,6 +12,7 @@ namespace TrenchrRestService.Controllers
     [Route("/")]
     public class DefaultController : ApiController
     {
+        /*
         [HttpGet]
         public IActionResult GetAllPosts()
         {
@@ -58,6 +59,6 @@ namespace TrenchrRestService.Controllers
         {
 
             return Ok("radi");
-        }
+        } */
     }
 }

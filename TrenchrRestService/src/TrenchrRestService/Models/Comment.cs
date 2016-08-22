@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 
 namespace TrenchrRestService.Models
 {
-    public class Message
+    public class Comment
     {
         public int ID { get; set; }
         public string Text { get; set; }
         public DateTime Time { get; set; }
-        public int SenderID { get; set; }
-        public long ConversationID { get; set; }
+        //dodatna polja, student koji je okacio komentar + njegova slika + post na koji se odnosi
+        public Student Student { get; set; }
+        public string PicturePath{ get; set; }
     }
 }
