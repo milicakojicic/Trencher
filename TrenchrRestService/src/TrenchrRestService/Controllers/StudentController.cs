@@ -10,15 +10,35 @@ using TrenchrRestService.Models;
 
 namespace TrenchrRestService.Controllers
 {
-    [Route("students")]
     public class StudentController : ApiController
     {
+
+        [Route("studenti")]
         [HttpGet]
         public IActionResult GetAllStudents()
         {
 
-            return Ok();
+            var stmnt = "MATCH (s:student) return id(s) as id, s.ime as ime, s.prezime as prezime, s.generacija as generacija, s.email as email, s.indeks as indeks, s.putanja as slika";
+            var resultStudents = Neo4jClient.Execute(stmnt);
+            var students = new List<Student>();
+            foreach (var s in resultStudents)
+                students.Add(new Student(s));
+
+            return Ok(JsonConvert.SerializeObject(students, Formatting.Indented));
             
+        }
+
+        [Route("studenti/{id}")]
+        [HttpGet]
+        public IActionResult GetStudent(long id)
+        {
+
+            var stmnt = $"MATCH (s:student) where id(s)  = {id} return id(s) as id, s.ime as ime, s.prezime as prezime, s.generacija as generacija, s.email as email, s.indeks as indeks, s.putanja as slika";
+            var resultStudents = Neo4jClient.Execute(stmnt);
+            var student = new Student(resultStudents.FirstOrDefault());
+
+            return Ok(JsonConvert.SerializeObject(student, Formatting.Indented));
+
         }
     }
 }

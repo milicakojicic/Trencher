@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 
 namespace TrenchrRestService.Models
 {
-    public class Message
+    public class Post
     {
         public int ID { get; set; }
         public string Text { get; set; }
-        public DateTime Time { get; set; }
-        public long ConversationID { get; set; }
+        public int Important { get; set; }
+        public long UserId { get; set; }
+        public string PicturePath { get; set; }
+        public string AuthorInfo { get; set; }
     }
 }

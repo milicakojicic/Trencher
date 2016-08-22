@@ -6,14 +6,23 @@ using System.Threading.Tasks;
 
 namespace TrenchrRestService.Models
 {
-    public class Student
+    public class Student : User
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public string Email { get; set; }
-        public int Year { get; set; }
+       
+        public long Year { get; set; }
         public string Index { get; set; }
-        public string PicturePath { get; set; }
+ 
+        public Student() { }
+
+        public Student(IRecord record)
+        {
+            ID = (long)record["id"];
+            Name = (string)record["ime"];
+            Surname = (string)record["prezime"];
+            Year = (long)record["generacija"];
+            Index = (string)record["indeks"];
+            Email = (string)record["email"];
+            PicturePath = (string)record["slika"];
+        }
     }
 }

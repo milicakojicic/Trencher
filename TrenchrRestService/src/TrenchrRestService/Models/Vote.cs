@@ -5,12 +5,8 @@ using System.Threading.Tasks;
 
 namespace TrenchrRestService.Models
 {
-    public class Vote
+    public class Vote : Post
     {
-        public int ID { get; set; }
-        public string Text { get; set; }
-        //indikator da li je oznacen kao vazan ili ne
-        public int Important { get; set; }
         public List<VoteOption> VoteOptions { get; set; }
     }
 }

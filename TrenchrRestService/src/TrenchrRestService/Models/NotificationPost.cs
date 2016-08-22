@@ -5,11 +5,8 @@ using System.Threading.Tasks;
 
 namespace TrenchrRestService.Models
 {
-    public class NotificationPost
+    public class NotificationPost : Post
     {
-        public int ID { get; set; }
-        public string Text { get; set; }
-        //indikator da li je oznacen kao vazan ili ne
-        public int Important { get; set; }
+       
     }
 }

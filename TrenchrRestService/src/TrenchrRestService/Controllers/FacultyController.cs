@@ -10,7 +10,7 @@ using TrenchrRestService.Models;
 
 namespace TrenchrRestService.Controllers
 {
-    [Route("faculties")]
+    [Route("fakulteti")]
     public class FacultyController : ApiController
     {
         [HttpGet]

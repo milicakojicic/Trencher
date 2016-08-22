@@ -5,11 +5,8 @@ using System.Threading.Tasks;
 
 namespace TrenchrRestService.Models
 {
-    public class Professor
+    public class Professor : User
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public string PicturePath { get; set; }
+        
     }
 }
