@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $.get("url", function(data){
+    $.get("http://localhost:12345/kursevi", function(data){
         console.log(data);
     });
 
