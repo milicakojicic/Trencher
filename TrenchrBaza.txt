@@ -1,6 +1,6 @@
 // Fakulteti
-create (matf:fakultet {Name:"Matematièki fakultet", University:"Beogradski Univerzitet", City:"Beograd"})
-create (etf:fakultet {Name:"Elektrotehnièki fakultet", University:"Beogradski Univerzitet", City:"Beograd"})
+create (matf:fakultet {name:"Matematièki fakultet", University:"Beogradski Univerzitet", City:"Beograd"})
+create (etf:fakultet {name:"Elektrotehnièki fakultet", University:"Beogradski Univerzitet", City:"Beograd"})
 
 // Smerovi
 create (matfI:smer {name:"Informatika"})
@@ -11,14 +11,6 @@ create (matfM:smer {name:"Matematika"})
 create (matf)-[:ima_smer]->(matfI)
 create (matf)-[:ima_smer]->(matfR)
 create (matf)-[:ima_smer]->(matfM)
-
-// Skolska godina
-create (god1516:godina {name:"Skolska 2015/16"})
-create (god1617:godina {name:"Skolska 2016/17"})
-
-// Smer -> Skolska godina
-create (matfI)-[:skolska_godina]->(god1516)
-create (matfI)-[:skolska_godina]->(god1617)
 
 // Kursevi
 create (mr:kurs {name:"Mrezno racunarstvo", espb: 8, opis: "Opis kursa"})
@@ -31,51 +23,48 @@ create (kiaa2:kurs {name:"Konstrukcija i analiza algoritama 2", espb: 8, opis: "
 create (niz:kurs {name:"Naucno izracunavanje", espb: 8, opis: "Opis kursa"})
 
 // Smer -> Kurs
-create (matfI)-[:kurs]->(mr)
-create (matfI)-[:kurs]->(pbp)
-create (matfI)-[:kurs]->(is)
-create (matfI)-[:kurs]->(ar)
-create (matfI)-[:kurs]->(ip)
-create (matfI)-[:kurs]->(msnr)
-create (matfI)-[:kurs]->(kiaa2)
-create (matfI)-[:kurs]->(niz)
+create (matfI)-[:sadrzi_kurs]->(mr)
+create (matfI)-[:sadrzi_kurs]->(pbp)
+create (matfI)-[:sadrzi_kurs]->(is)
+create (matfI)-[:sadrzi_kurs]->(ar)
+create (matfI)-[:sadrzi_kurs]->(ip)
+create (matfI)-[:sadrzi_kurs]->(msnr)
+create (matfI)-[:sadrzi_kurs]->(kiaa2)
+create (matfI)-[:sadrzi_kurs]->(niz)
 
 // Odrzani kursevi
-create (mr16:odrzan_kurs {name:"Mrezno racunarstvo 16", espb: 8, tip: "obavezni", nivo: "master studije"})
-create (pbp16:odrzan_kurs {name:"Projektovanje baza podataka 16", espb: 8, tip: "obavezni", nivo: "master studije"})
-create (is16:odrzan_kurs {name:"Informacioni sistemi 16", espb: 8, tip: "obavezni", nivo: "master studije"})
-create (ar16:odrzan_kurs {name:"Automatsko rezonovanje 16", espb: 8, tip: "obavezni", nivo: "master studije"})
-create (ip16:odrzan_kurs {name:"Istrazivanje podataka 16", espb: 8, tip: "obavezni", nivo: "master studije"})
-create (msnr16:odrzan_kurs {name:"Metodologija strucnog i naucnog rada 16", espb: 4, tip: "obavezni", nivo: "master studije"})
-create (kiaa2_16:odrzan_kurs {name:"Konstrukcija i analiza algoritama 2 16", espb: 8, tip: "obavezni", nivo: "master studije"})
-create (niz16:odrzan_kurs {name:"Naucno izracunavanje 16", espb: 8, tip: "obavezni", nivo: "master studije"})
+create (mr16:odrzan_kurs {name:"Mrezno racunarstvo 16", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
+create (pbp16:odrzan_kurs {name:"Projektovanje baza podataka 16", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
+create (is16:odrzan_kurs {name:"Informacioni sistemi 16", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
+create (ar16:odrzan_kurs {name:"Automatsko rezonovanje 16", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
+create (ip16:odrzan_kurs {name:"Istrazivanje podataka 16", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
+create (msnr16:odrzan_kurs {name:"Metodologija strucnog i naucnog rada 16", espb: 4, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
+create (kiaa2_16:odrzan_kurs {name:"Konstrukcija i analiza algoritama 2 16", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
+create (niz16:odrzan_kurs {name:"Naucno izracunavanje 16", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
 
 // Kursevi -> Odrzani kursevi
-create (mr)-[:odrzan_kurs]->(mr16)
-create (pbp)-[:odrzan_kurs]->(pbp16)
-create (is)-[:odrzan_kurs]->(is16)
-create (ar)-[:odrzan_kurs]->(ar16)
-create (ip)-[:odrzan_kurs]->(ip16)
-create (msnr)-[:odrzan_kurs]->(msnr16)
-create (kiaa2)-[:odrzan_kurs]->(kiaa2_16)
-create (niz)-[:odrzan_kurs]->(niz16)
-
-// Skolska godina -> Predmet
-create (god1516)-[:odrzan_kurs]->(mr16)
-create (god1516)-[:odrzan_kurs]->(pbp16)
-create (god1516)-[:odrzan_kurs]->(is16)
-create (god1516)-[:odrzan_kurs]->(ar16)
-create (god1516)-[:odrzan_kurs]->(ip16)
-create (god1516)-[:odrzan_kurs]->(msnr16)
-create (god1617)-[:odrzan_kurs]->(kiaa2_16)
-create (god1617)-[:odrzan_kurs]->(niz16)
+create (mr)-[:odrzan]->(mr16)
+create (pbp)-[:odrzan]->(pbp16)
+create (is)-[:odrzan]->(is16)
+create (ar)-[:odrzan]->(ar16)
+create (ip)-[:odrzan]->(ip16)
+create (msnr)-[:odrzan]->(msnr16)
+create (kiaa2)-[:odrzan]->(kiaa2_16)
+create (niz)-[:odrzan]->(niz16)
 
 // Studenti
-create (MilicaKojicic:student {name: "Milica Kojicic", ime:"Milica", prezime: "Kojicic", fakultet: "Matematicki fakultet", smer: "Informatika", generacija: 2012})
-create (LjubicaPeleksic:student {name: "Ljubica Peleksic", ime:"Ljubica", prezime: "Peleksic", fakultet: "Matematicki fakultet", smer: "Informatika", generacija: 2012})
-create (NemanjaSubotic:student {name: "Nemanja Subotic", ime:"Nemanja", prezime: "Subotic", fakultet: "Matematicki fakultet", smer: "Informatika", generacija: 2012})
-create (PetarVukmirovic:student {name: "Petar Vukmirovic", ime:"Petar", prezime: "Vukmirovic", fakultet: "Matematicki fakultet", smer: "Informatika", generacija: 2012})
-create (IgorRodic:student {name: "Igor Rodic", ime:"Igor", prezime: "Rodic", fakultet: "Matematicki fakultet", smer: "Informatika", generacija: 2012})
+create (MilicaKojicic:student {name: "Milica Kojicic", ime:"Milica", prezime: "Kojicic", generacija: 2012, indeks: "1066/2015", email: "bla@gmail.com",putanja:""})
+create (LjubicaPeleksic:student {name: "Ljubica Peleksic", ime:"Ljubica", prezime: "Peleksic",generacija: 2012, indeks: "1070/2015", email: "bla1@gmail.com",putanja:""})
+create (NemanjaSubotic:student {name: "Nemanja Subotic", ime:"Nemanja", prezime: "Subotic", generacija: 2012 , indeks: "1071/2015", email: "bla2@gmail.com",putanja:""})
+create (PetarVukmirovic:student {name: "Petar Vukmirovic", ime:"Petar", prezime: "Vukmirovic", generacija: 2012, indeks: "1076/2015", email: "bla3@gmail.com",putanja:""})
+create (IgorRodic:student {name: "Igor Rodic", ime:"Igor", prezime: "Rodic", generacija: 2012, indeks: "1075/2015", email: "bla5@gmail.com",putanja:""})
+
+// Student -> Smer
+create (MilicaKojicic)-[:na_smeru]->(matfI)
+create (LjubicaPeleksic)-[:na_smeru]->(matfI)
+create (NemanjaSubotic)-[:na_smeru]->(matfI)
+create (PetarVukmirovic)-[:na_smeru]->(matfI)
+create (IgorRodic)-[:na_smeru]->(matfI)
 
 // Studenti -> Predmet
 create (MilicaKojicic)-[:pohadja]->(mr16)
@@ -127,13 +116,13 @@ create (PetarVukmirovic)-[:pohadja]->(niz16)
 create (IgorRodic)-[:pohadja]->(niz16)
 
 // Profesori
-create (SasaMalkov:profesor {name: "Sasa Malkov", ime:"Sasa", prezime: "Malkov"})
-create (FilipMaric:profesor {name: "Filip Maric", ime:"Filip", prezime: "Maric"})
-create (MilanTuba:profesor {name: "Milan Tuba", ime:"Milan", prezime: "Tuba"})
-create (NenadMitic:profesor {name: "Nenad Mitic", ime:"Nenad", prezime: "Mitic"})
-create (MilenaVujosevicJanicic:profesor {name: "Milena Vujosevic Janicic", ime:"Milena", prezime: "Vujosevic Janicic"})
-create (MiodragZivkovic:profesor {name: "Miodrag Zivkovic", ime:"Miodrag", prezime: "Zivkovic"})
-create (MladenNikolic:profesor {name: "Mladen Nikolic", ime:"Mladen", prezime: "Nikolic"})
+create (SasaMalkov:profesor {name: "Sasa Malkov", ime:"Sasa", prezime: "Malkov",putanja:""})
+create (FilipMaric:profesor {name: "Filip Maric", ime:"Filip", prezime: "Maric",putanja:""})
+create (MilanTuba:profesor {name: "Milan Tuba", ime:"Milan", prezime: "Tuba",putanja:""})
+create (NenadMitic:profesor {name: "Nenad Mitic", ime:"Nenad", prezime: "Mitic",putanja:""})
+create (MilenaVujosevicJanicic:profesor {name: "Milena Vujosevic Janicic", ime:"Milena", prezime: "Vujosevic Janicic",putanja:""})
+create (MiodragZivkovic:profesor {name: "Miodrag Zivkovic", ime:"Miodrag", prezime: "Zivkovic",putanja:""})
+create (MladenNikolic:profesor {name: "Mladen Nikolic", ime:"Mladen", prezime: "Nikolic",putanja:""})
 
 // Profesor -> Predmet
 create (SasaMalkov)-[:drzi]->(is16)
@@ -145,39 +134,105 @@ create (MilenaVujosevicJanicic)-[:drzi]->(msnr16)
 create (MiodragZivkovic)-[:drzi]->(kiaa2_16)
 create (MladenNikolic)-[:drzi]->(niz16)
 
-// Cvorovi za grupisanje postova jednog predmeta
-create (is16_postovi:postovi {name: "is16 postovi"})
-create (pbp16_postovi:postovi {name: "pbp16 postovi"})
-create (ar16_postovi:postovi {name: "ar16 postovi"})
-create (mr16_postovi:postovi {name: "mr16 postovi"})
-create (ip16_postovi:postovi {name: "ip16 postovi"})
-create (msnr16_postovi:postovi {name: "msnr16 postovi"})
-create (kiaa2_16_postovi:postovi {name: "kiaa2_16 postovi"})
-create (niz16_postovi:postovi {name: "niz16 postovi"})
+//Profesor -> Fakultet
+create (SasaMalkov)-[:na_fakultetu]->(matf)
+create (FilipMaric)-[:na_fakultetu]->(matf)
+create (MilanTuba)-[:na_fakultetu]->(matf)
+create (NenadMitic)-[:na_fakultetu]->(matf)
+create (MilenaVujosevicJanicic)-[:na_fakultetu]->(matf)
+create (MiodragZivkovic)-[:na_fakultetu]->(matf)
+create (MladenNikolic)-[:na_fakultetu]->(matf)
 
-// Predmet -> Cvorovi za grupisanje
-create (is16)-[:postovi]->(is16_postovi)
-create (pbp16)-[:postovi]->(pbp16_postovi)
-create (ar16)-[:postovi]->(ar16_postovi)
-create (mr16)-[:postovi]->(mr16_postovi)
-create (ip16)-[:postovi]->(ip16_postovi)
-create (msnr16)-[:postovi]->(msnr16_postovi)
-create (kiaa2_16)-[:postovi]->(kiaa2_16_postovi)
-create (niz16)-[:postovi]->(niz16_postovi)
+// Asistenti
+create (StasaVujicicStankovic:asistent {name: "Stasa Vujicic Stankovic", ime:"Stasa", prezime: "Vujicic Stankovic ", putanja:""})
+create (MilanBankovic:asistent {name: "Milan Bankovic", ime:"Milan", prezime: "Bankovic", putanja:""})
+create (StefanMiskovic:asistent {name: "Stefan Miskovic", ime:"Stefan", prezime: "Miskovic", putanja:""})
+create (MirjanaMaljkovic:asistent {name: "Mirjana Maljkovic", ime:"Mirjana", prezime: "Maljkovic", putanja:""})
+create (DanijelaPetrovic:asistent {name: "Danijela Petrovic", ime:"Danijela", prezime: "Petrovic", putanja:""})
 
-// Postovi
-create (is16_post1:post {name: "Rezultati", tekst: "Izasli rezultati kolokvijuma"})
-create (is16_post2:post {name: "Rezultati", tekst: "Izasli rezultati pismenog ispita"})
+// Profesor -> Predmet
+create (StasaVujicicStankovic)-[:drzi_vezbe]->(is16)
+create (MirjanaMaljkovic)-[:drzi_vezbe]->(pbp16)
+create (MilanBankovic)-[:drzi_vezbe]->(ar16)
+create (StefanMiskovic)-[:drzi_vezbe]->(mr16)
+create (MirjanaMaljkovic)-[:drzi_vezbe]->(ip16)
+create (DanijelaPetrovic)-[:drzi_vezbe]->(kiaa2_16)
+create (StefanMiskovic)-[:drzi_vezbe]->(niz16)
 
-// Cvorovi za grupisanje -> Postovi
-create (is16_postovi)-[:post]->(is16_post1)
-create (is16_postovi)-[:post]->(is16_post2)
+//Profesor -> Fakultet
+create (StasaVujicicStankovic)-[:na_fakultetu]->(matf)
+create (MirjanaMaljkovic)-[:na_fakultetu]->(matf)
+create (StefanMiskovic)-[:na_fakultetu]->(matf)
+create (MirjanaMaljkovic)-[:na_fakultetu]->(matf)
+create (DanijelaPetrovic)-[:na_fakultetu]->(matf)
+
+// Rezultati
+create (rezultati1:rezultati {name: "RezultatiPBP", tekst: "Izasli rezultati kolokvijuma",putanja: "../rezultati",ind: "1",vreme: "12.05.2016. 12:57:42"})
+create (rezultati2:rezultati {name: "RezultatiIS", tekst: "Izasli rezultati pismenog ispita",putanja: "../rezultati", ind: "0",vreme: "12.05.2016. 12:57:42"})
+
+//Predmet -> Rezultati
+create (pbp16)-[:ima_post]->(rezultati1)
+create (is16)-[:ima_post]->(rezultati2)
+
+//Materijali
+create (materijali1:materijali {name: "MaterijaliMR", tekst: "Skripta iz Mreznog racunarstva",putanja: "../materijali", ind: "1",vreme: "12.05.2016. 12:57:42"})
+create (materijali2:materijali {name: "MaterijaliAR", tekst: "Odgovori na pitanja Automatsko rezonovanje",putanja: "../materijali", ind: "0",vreme: "12.05.2016. 12:57:42"})
+
+//Predmet -> Materijali
+create (mr16)-[:ima_post]->(materijali1)
+create (ar16)-[:ima_post]->(materijali2)
+
+//Obavestenje 
+create (obavestenje1:obavestenje {name: "ObavestenjeMSNR", tekst: "Treba predati rad do kraja nedelje", ind: "1",vreme: "12.05.2016. 12:57:42"})
+create (obavestenje2:obavestenje {name: "MaterijaliMR", tekst: "Skripta iz Mreznog racunarstva",ind: "0",vreme: "12.05.2016. 12:57:42"})
+
+//Predmet -> Obavestenje
+create (pbp16)-[:ima_post]->(rezultati1)
+create (is16)-[:ima_post]->(rezultati2)
+
+//Glsanje
+create (glasanje1:glasanje {name: "GlasanjeIP", tekst: "Odredjivanje termina ispita",ind: "1",vreme: "12.05.2016. 12:57:42"})
+
+//Opcija glasanja
+create (opcija1:opcija {name: "Opcija1", tekst: "28.06.", brGlasova:"5"})
+create (opcija2:opcija {name: "Opcija2", tekst: "27.05.", brGlasova:"4"})
+
+//Glasanje -> Opcija
+create (opcija1)-[:u_glasanju]->(glasanje1)
+create (opcija2)-[:u_glasanju]->(glasanje1)
+
+//Predmet -> Glasanje
+create (ip16)-[:ima_post]->(glasanje1)
+
+//Osoba -> Objava
+create (MilicaKojicic)-[:objavio]->(rezultati1)
+create (LjubicaPeleksic)-[:objavio]->(rezultati2)
+create (IgorRodic)-[:objavio]->(materijali1)
+create (SasaMalkov)-[:objavio]->(materijali2)
+create (MilenaVujosevicJanicic)-[:objavio]->(obavestenje1)
+create (MilanTuba)-[:objavio]->(obavestenje2)
+create (LjubicaPeleksic)-[:objavio]->(glasanje1)
 
 // Komentari
-create (is16_post1_kom1:komentar {name: "kom1", tekst: "Hvala"})
+create (komentarObavestenje1:komentar {name: "komentarObavestenje1", tekst: "Hvala",vreme: "12.05.2016. 12:57:42"})
 
-// Post -> Komentari
-create (is16_post1)-[:komentar]->(is16_post1_kom1)
+// Komentar -> Post
+create (komentarObavestenje1)-[:u_postu]->(obavestenje1)
 
-// Student -> Komentari
-create (MilicaKojicic)-[:napisao]->(is16_post1_kom1)
+// Student -> Komentar
+create (NemanjaSubotic)-[:komentarisao]->(komentarObavestenje1)
+
+//Poruka
+create (poruka1:poruka {name: "Poruka1", tekst: "Posalji mi vezbe iz ar-a", vreme: "12.05.2016. 12:57:42"})
+create (poruka2:poruka {name: "Poruka1", tekst: "Hocu", vreme: "12.05.2016. 12:57:42"})
+
+//Konverzacija
+create(konverzacija1:konverzacija{})
+
+//Osoba -> Poruka
+create (LjubicaPeleksic)-[:poslao_poruku]->(poruka1)
+create (MilicaKojicic)-[:poslao_poruku]->(poruka2)
+
+//Osoba -> Konverzacija
+create (MilicaKojicic)-[:u_konverzaciji]->(konverzacija1)
+create (LjubicaPeleksic)-[:u_konverzaciji]->(konverzacija1)

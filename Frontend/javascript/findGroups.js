@@ -7,7 +7,7 @@ function pridruziSeGrupi(idGrupe) {
     //ako korisnik nije trazio da se pridruzi grupi, zahtev se salje
     else {
         //ajax poziv za pridruzivanje korisnika grupi
-        document.getElementById(idGrupe).value = "poslat zahtev";
+        document.getElementById(idGrupe).value = "Pridružen";
     }
 
 }

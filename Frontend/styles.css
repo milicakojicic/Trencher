@@ -660,17 +660,17 @@ h3,h4 {
 
 .objava {
     margin-bottom: 20px;
-    min-height: 100px;
+    min-height: 150px;
     padding: 20px;
     background-color: whitesmoke;
     font-size: 20px;
     word-wrap: break-word;
-
+    padding-top: 0px; !important;
 }
 
 .tip {
-    color:black;
-    font-size: 25px;
+    color:whitesmoke;
+    font-size: 15px;
     background-color: teal;
     min-height: 40px;
     padding: 20px;
@@ -742,22 +742,31 @@ footer {
     min-height: 100px;
     padding-top: 20px;
     min-width: 100%;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
 }
 
 .groups {
     padding-top: 10px;
     padding-left: 18px;
     background-color: whitesmoke;
-    padding-right: 18px;
     max-width: 835px;
+    padding-right: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
 }
 
 .groups1 {
     padding-top: 30px;
     padding-left: 18px;
-    background-color: whitesmoke;
     padding-right: 18px;
     max-width: 835px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 #postButton {
@@ -1117,3 +1126,16 @@ input {
 #inputTraziOsobe {
     margin-left: 20px;
 }
+
+.tipPosta {
+    background-color: teal;
+    border-radius: 100px 50px;
+    overflow-wrap: break-word;
+    font-size: 15px;
+    color: whitesmoke;
+}
+
+.tipovi {
+    min-height: 34px;
+}
+
