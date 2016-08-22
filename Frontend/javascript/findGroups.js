@@ -1,3 +1,10 @@
+$(document).ready(function(){
+    $.get("url", function(data){
+        console.log(data);
+    });
+
+});
+
 function pridruziSeGrupi(idGrupe) {
 
     //ako je korisnik vec trazio da se pridruzi grupi, zahtev se ne salje
