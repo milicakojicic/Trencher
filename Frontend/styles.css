@@ -756,6 +756,8 @@ footer {
     padding-right: 18px;
     margin-right: 0px;
     margin-left: 0px;
+    max-height: 850px;
+    overflow-y: scroll;
 }
 
 .groups1 {

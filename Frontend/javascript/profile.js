@@ -39,6 +39,9 @@ $(document).ready(function(){
                             '<label class="profileLabel">Fakultet '+
                             '    <input class="mdl-textfield__input" id="faculty" type="text" value="'+ student.Faculty+'" disabled> '+
                             '</label>'+
+                            '<label class="profileLabel">Univerzitet '+
+                            '    <input class="mdl-textfield__input" id="university" type="text" value="'+ student.University+'" disabled> '+
+                            '</label>'+
                             '<label class="profileLabel">Smer '+
                             '    <input class="mdl-textfield__input" id="smer" type="text" value="'+ student.Module+'" disabled> '+
                             '</label> '+
