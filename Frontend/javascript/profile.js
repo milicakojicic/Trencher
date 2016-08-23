@@ -1,6 +1,54 @@
 /**
  * Created by Ljubica on 8.8.2016.
  */
+//id studenta koji treba da se prikaze
+var id = 464;
+
+$(document).ready(function(){
+    //dodati GET zahteve za fakultet i smer
+
+    $.get("http://localhost:12345/studenti/" + id, function(data){
+
+        var student = JSON.parse(data);
+        var div = document.getElementById("divProfil");
+        var divPic = document.getElementById("profile");
+
+        div.innerHTML +=    '<label class="profileLabel">Ime '+
+                                '<input class="mdl-textfield__input" id="name" type="text" value="' + student.Name + '" disabled autofocus '+
+                                    'onfocus="this.value = this.value;"> '+
+                            '</label> '+
+                            '<label class="profileLabel">Prezime '+
+                            '    <input class="mdl-textfield__input" id="surname" type="text" value="'+ student.Surname +'" disabled>'+
+                            '</label>'+
+                            '<label class="profileLabel">Indeks'+
+                            '    <input class="mdl-textfield__input" id="city" type="text" value="'+ student.Index+'" disabled>'+
+                            '</label>'+
+                            '<label class="profileLabel">Email '+
+                            '    <input class="mdl-textfield__input" id="email" type="text" value="'+ student.Email+'" disabled> '+
+                            '</label> '+
+                            '<label class="profileLabel">Fakultet '+
+                            '    <input class="mdl-textfield__input" id="faculty" type="text" value="MATF" disabled> '+
+                            '</label>'+
+                            '<label class="profileLabel">Smer '+
+                            '    <input class="mdl-textfield__input" id="smer" type="text" value="Informatika" disabled> '+
+                            '</label> '+
+                            '<label class="profileLabel">Godina upisa '+
+                            '<input class="mdl-textfield__input" id="year" type="text" value="'+ student.Year+'" disabled> '+
+                            '</label> ';
+
+        if(student.PicturePath == ""){
+            divPic.innerHTML += '<img src="images/default.png" class="profilePicture">'
+
+        }
+        else {
+            //PROVERITI DA LI JE DOBRO
+            divPic.innerHTML += '<img src="'+ student.PicturePath +'" class="profilePicture">'
+        }
+
+
+    });
+
+});
 
 function izmeniProfil() {
 
