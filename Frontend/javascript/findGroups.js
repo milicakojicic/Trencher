@@ -4,8 +4,6 @@ $(document).ready(function(){
         var kursevi = JSON.parse(data);
         var div = document.getElementById("sveGrupe");
 
-        console.log(kursevi[1]);
-
         for(var i = 0; i < kursevi.length; i++){
 
 

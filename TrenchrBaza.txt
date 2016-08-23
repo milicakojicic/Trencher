@@ -33,14 +33,14 @@ create (matfI)-[:sadrzi_kurs]->(kiaa2)
 create (matfI)-[:sadrzi_kurs]->(niz)
 
 // Odrzani kursevi
-create (mr16:odrzan_kurs {name:"Mrezno racunarstvo 16", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
-create (pbp16:odrzan_kurs {name:"Projektovanje baza podataka 16", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
-create (is16:odrzan_kurs {name:"Informacioni sistemi 16", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
-create (ar16:odrzan_kurs {name:"Automatsko rezonovanje 16", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
-create (ip16:odrzan_kurs {name:"Istrazivanje podataka 16", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
-create (msnr16:odrzan_kurs {name:"Metodologija strucnog i naucnog rada 16", espb: 4, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
-create (kiaa2_16:odrzan_kurs {name:"Konstrukcija i analiza algoritama 2 16", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
-create (niz16:odrzan_kurs {name:"Naucno izracunavanje 16", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
+create (mr16:odrzan_kurs {name:"Mrezno racunarstvo ", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
+create (pbp16:odrzan_kurs {name:"Projektovanje baza podataka ", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
+create (is16:odrzan_kurs {name:"Informacioni sistemi ", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
+create (ar16:odrzan_kurs {name:"Automatsko rezonovanje ", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
+create (ip16:odrzan_kurs {name:"Istrazivanje podataka ", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
+create (msnr16:odrzan_kurs {name:"Metodologija strucnog i naucnog rada ", espb: 4, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
+create (kiaa2_16:odrzan_kurs {name:"Konstrukcija i analiza algoritama 2 ", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
+create (niz16:odrzan_kurs {name:"Naucno izracunavanje ", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
 
 // Kursevi -> Odrzani kursevi
 create (mr)-[:odrzan]->(mr16)

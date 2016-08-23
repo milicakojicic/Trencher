@@ -10,10 +10,11 @@ using TrenchrRestService.Models;
 
 namespace TrenchrRestService.Controllers
 {
-    [Route("kursevi")]
+    
     public class HeldCourseController : ApiController
     {
-
+        
+        [Route("kursevi")]
         [HttpGet]
         public IActionResult GetAllGroups()
         {
@@ -26,5 +27,26 @@ namespace TrenchrRestService.Controllers
             return Ok(JsonConvert.SerializeObject(courses, Formatting.Indented));
         }
 
+        [Route("kursevi/{id}")]
+        [HttpGet]
+        public IActionResult GetGroups(long id)
+        {
+            var stmnt = $"MATCH (s:student)-[:pohadja]-(o:odrzan_kurs) where id(s) = {id} return id(o) as id, o.name as name, o.espb as espb, o.tip as tip, o.nivo as nivo, o.godina as godina";
+            var resultCourses = Neo4jClient.Execute(stmnt);
+            var courses = new List<HeldCourse>();
+            foreach (var o in resultCourses)
+                courses.Add(new HeldCourse(o));
+
+            return Ok(JsonConvert.SerializeObject(courses, Formatting.Indented));
+
+            /*
+            var resultCourses = Neo4jClient.Execute(stmnt);
+            var courses = new List<HeldCourse>();
+            foreach (var o in resultCourses)
+                courses.Add(new HeldCourse(o));
+
+            return Ok(JsonConvert.SerializeObject(courses, Formatting.Indented));*/
+        }
+            
     }
 }
