@@ -101,6 +101,56 @@ $( document ).ready(function() {
         document.getElementById("groupPost").placeholder = "Napisite post...";
     });
 
+
+
+
+    var id_grupe = 598;
+    //GET za sve postove na odredjenoj grupi
+    $.get("http://localhost:12345/postovi/" + id_grupe, function(data){
+
+        console.log(data);
+
+        var postovi = JSON.parse(data);
+        var div = document.getElementById("groupPosts");
+
+        //prolazi se kroz sve postove
+        for(var i = 0; i < postovi.length; i++){
+
+            var str1 = "post";
+            var res = str1.concat(i.toString());
+
+            div.innerHTML += '<div class="tip">' +
+                                 '<span>  <img src="images/default.png" class="demo-avatar"> Ljubica Peleksic' +
+                                 '</span>' +
+                                 '<div class="naslov_posta">' + postovi[i].Caption + '</div>' +
+                             '</div>'+
+                             '<div class="objava">' +
+                                '<div class="mdl-grid tipovi" id=' + res + '>' +
+                                '</div>' +
+                                postovi[i].Text +
+                             '</div>';
+
+            if (postovi[i].Important === "1") {
+                document.getElementById(res).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Vazno</span></div>';
+            }
+
+            if (postovi[i].Type === "mat") {
+                document.getElementById(res).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Materijali</span></div>';
+            }
+
+
+            else if (postovi[i].Type === "rez") {
+                document.getElementById(res).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Rezultati</span></div>';
+            }
+
+            else if (postovi[i].Type === "glas") {
+                document.getElementById(res).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Glasanje</span></div>';
+            }
+
+        }
+
+    });
+
 });
 
 var imp = 0;

@@ -39,13 +39,7 @@ namespace TrenchrRestService.Controllers
 
             return Ok(JsonConvert.SerializeObject(courses, Formatting.Indented));
 
-            /*
-            var resultCourses = Neo4jClient.Execute(stmnt);
-            var courses = new List<HeldCourse>();
-            foreach (var o in resultCourses)
-                courses.Add(new HeldCourse(o));
-
-            return Ok(JsonConvert.SerializeObject(courses, Formatting.Indented));*/
+         
         }
             
     }

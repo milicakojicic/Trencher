@@ -11,6 +11,7 @@ namespace TrenchrRestService.Models
        
         public long Year { get; set; }
         public string Index { get; set; }
+
         //fakultet na kom je student, zasad samo jedan
         public string Faculty { get; set; }
         public string Module { get; set; }

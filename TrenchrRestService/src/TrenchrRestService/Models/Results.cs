@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 
 namespace TrenchrRestService.Models
 {
-    public class Vote : Post
+    public class Results : Post
     {
-        //lista opcija glasanja
-        public List<VoteOption> VoteOptions { get; set; }
+       
+        public string Path { get; set; }
 
-        public Vote() { }
+        public Results() { }
 
-        public Vote(IRecord record)
+        public Results(IRecord record)
         {
 
+            Path = (string)record["putanja"];
             ID = (long)record["id"];
             Caption = (string)record["naslov"];
             Type = (string)record["tip"];
@@ -24,5 +25,6 @@ namespace TrenchrRestService.Models
             Time = Convert.ToDateTime((string)record["vreme"]);
 
         }
+
     }
 }

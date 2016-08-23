@@ -2,7 +2,7 @@
  * Created by Ljubica on 8.8.2016.
  */
 //id studenta koji treba da se prikaze
-var id = 319                        ;
+var id = 654 ;
 
 $(document).ready(function(){
     //dodati GET zahteve za fakultet i smer
@@ -12,6 +12,15 @@ $(document).ready(function(){
         var student = JSON.parse(data);
         var div = document.getElementById("divProfil");
         var divPic = document.getElementById("profile");
+
+        var headerSlika = document.getElementById("korisnik");
+
+        if(student.PicturePath == ""){
+            headerSlika.innerHTML += '<img src="images/default.png" class="demo-avatar">'
+        }
+        else {
+            headerSlika.innerHTML += '<img src="'+ student.PicturePath +'"  class="demo-avatar">';
+        }
 
 
         var spanUser = document.getElementById("korisnik");
@@ -51,7 +60,6 @@ $(document).ready(function(){
 
         if(student.PicturePath == ""){
             divPic.innerHTML += '<img src="images/default.png" class="profilePicture">'
-
         }
         else {
             //PROVERITI DA LI JE DOBRO

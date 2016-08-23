@@ -1,5 +1,5 @@
 //id studenta ciji je profil
-var id = 574;
+var id = 452;
 
 function pogledajGrupu(idGrupe) {
     url = "group.html";
