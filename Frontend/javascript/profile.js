@@ -2,7 +2,7 @@
  * Created by Ljubica on 8.8.2016.
  */
 //id studenta koji treba da se prikaze
-var id = 464;
+var id = 450;
 
 $(document).ready(function(){
     //dodati GET zahteve za fakultet i smer
@@ -12,6 +12,16 @@ $(document).ready(function(){
         var student = JSON.parse(data);
         var div = document.getElementById("divProfil");
         var divPic = document.getElementById("profile");
+
+
+        var spanUser = document.getElementById("korisnik");
+        spanUser.innerHTML += student.Name + " " + student.Surname;
+
+
+        var spanMail = document.getElementById("mail");
+        spanMail.innerText += student.Email;
+
+
 
         div.innerHTML +=    '<label class="profileLabel">Ime '+
                                 '<input class="mdl-textfield__input" id="name" type="text" value="' + student.Name + '" disabled autofocus '+
@@ -27,10 +37,10 @@ $(document).ready(function(){
                             '    <input class="mdl-textfield__input" id="email" type="text" value="'+ student.Email+'" disabled> '+
                             '</label> '+
                             '<label class="profileLabel">Fakultet '+
-                            '    <input class="mdl-textfield__input" id="faculty" type="text" value="MATF" disabled> '+
+                            '    <input class="mdl-textfield__input" id="faculty" type="text" value="'+ student.Faculty+'" disabled> '+
                             '</label>'+
                             '<label class="profileLabel">Smer '+
-                            '    <input class="mdl-textfield__input" id="smer" type="text" value="Informatika" disabled> '+
+                            '    <input class="mdl-textfield__input" id="smer" type="text" value="'+ student.Module+'" disabled> '+
                             '</label> '+
                             '<label class="profileLabel">Godina upisa '+
                             '<input class="mdl-textfield__input" id="year" type="text" value="'+ student.Year+'" disabled> '+

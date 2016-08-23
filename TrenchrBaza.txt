@@ -1,6 +1,6 @@
 // Fakulteti
-create (matf:fakultet {name:"Matematièki fakultet", University:"Beogradski Univerzitet", City:"Beograd"})
-create (etf:fakultet {name:"Elektrotehnièki fakultet", University:"Beogradski Univerzitet", City:"Beograd"})
+create (matf:fakultet {name:"Matematièki fakultet", university:"Univerzitet u Beogradu", city:"Beograd"})
+create (etf:fakultet {name:"Elektrotehnièki fakultet", university:"Univerzitet u Beogradu", city:"Beograd"})
 
 // Smerovi
 create (matfI:smer {name:"Informatika"})
@@ -58,6 +58,15 @@ create (LjubicaPeleksic:student {name: "Ljubica Peleksic", ime:"Ljubica", prezim
 create (NemanjaSubotic:student {name: "Nemanja Subotic", ime:"Nemanja", prezime: "Subotic", generacija: 2012 , indeks: "1071/2015", email: "bla2@gmail.com",putanja:""})
 create (PetarVukmirovic:student {name: "Petar Vukmirovic", ime:"Petar", prezime: "Vukmirovic", generacija: 2012, indeks: "1076/2015", email: "bla3@gmail.com",putanja:""})
 create (IgorRodic:student {name: "Igor Rodic", ime:"Igor", prezime: "Rodic", generacija: 2012, indeks: "1075/2015", email: "bla5@gmail.com",putanja:""})
+
+// Studenti->Fakultet
+
+create (MilicaKojicic)-[:na_fakultetu]->(matf)
+create (LjubicaPeleksic)-[:na_fakultetu]->(matf)
+create (NemanjaSubotic)-[:na_fakultetu]->(matf)
+create (PetarVukmirovic)-[:na_fakultetu]->(matf)
+create (IgorRodic)-[:na_fakultetu]->(matf)
+
 
 // Student -> Smer
 create (MilicaKojicic)-[:na_smeru]->(matfI)
@@ -236,3 +245,5 @@ create (MilicaKojicic)-[:poslao_poruku]->(poruka2)
 //Osoba -> Konverzacija
 create (MilicaKojicic)-[:u_konverzaciji]->(konverzacija1)
 create (LjubicaPeleksic)-[:u_konverzaciji]->(konverzacija1)
+
+

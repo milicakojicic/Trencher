@@ -18,7 +18,7 @@ namespace TrenchrRestService.Controllers
         public IActionResult GetAllStudents()
         {
 
-            var stmnt = "MATCH (s:student) return id(s) as id, s.ime as ime, s.prezime as prezime, s.generacija as generacija, s.email as email, s.indeks as indeks, s.putanja as slika";
+            var stmnt = "MATCH (s:student)-[:na_fakultetu]-(fakultet),(s:student)-[:na_smeru]-(smer)  return id(s) as id, s.ime as ime, s.prezime as prezime, s.generacija as generacija, s.email as email, s.indeks as indeks, s.putanja as slika, fakultet.name + ', ' + fakultet.university + ', ' + fakultet.city as fakultet, smer.name as smer";
             var resultStudents = Neo4jClient.Execute(stmnt);
             var students = new List<Student>();
             foreach (var s in resultStudents)
@@ -33,7 +33,7 @@ namespace TrenchrRestService.Controllers
         public IActionResult GetStudent(long id)
         {
 
-            var stmnt = $"MATCH (s:student) where id(s)  = {id} return id(s) as id, s.ime as ime, s.prezime as prezime, s.generacija as generacija, s.email as email, s.indeks as indeks, s.putanja as slika";
+            var stmnt = $"MATCH (s:student)-[:na_fakultetu]-(fakultet),(s:student)-[:na_smeru]-(smer) where id(s) = {id} return id(s) as id, s.ime as ime, s.prezime as prezime, s.generacija as generacija, s.email as email, s.indeks as indeks, s.putanja as slika, fakultet.name  + \", \" + fakultet.university + \",\" + fakultet.city as fakultet, smer.name as smer";
             var resultStudents = Neo4jClient.Execute(stmnt);
             var student = new Student(resultStudents.FirstOrDefault());
 
