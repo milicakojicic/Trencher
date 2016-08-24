@@ -12,17 +12,17 @@ using Newtonsoft.Json.Linq;
 namespace TrenchrRestService.Controllers
 {
     
-    public class PostController : ApiController
+    public class MaterialController : ApiController
     {
 
-        //postovi koji pripadaju nekom predmetu
+        //materijali koji pripadaju nekom predmetu
         [Route("postovi/{id}")]
         [HttpGet]
         public IActionResult GetAllMaterials(long id)
         {
 
 
-            var stmnt = $"MATCH (o:odrzan_kurs)-[:ima_post]-(post), (korisnik)-[:objavio]-(post) where id(o) = {id} return id(o) as id, post.tip as tip, post.name as naslov, post.putanja as putanja, post.tekst as tekst, post.ind as indikator, post.vreme as vreme, id(korisnik) as korisnik_id, korisnik.name as ime_korisnika, korisnik.putanja as putanja_korisnika";
+            var stmnt = $"MATCH (o:odrzan_kurs)-[:ima_post]-(post) where id(o) = {id} return id(o) as id, post.tip as tip, post.name as naslov, post.putanja as putanja, post.tekst as tekst, post.ind as indikator, post.vreme as vreme";
             var resultPosts = Neo4jClient.Execute(stmnt);
 
             //mozda nam nekad bude trebalo
