@@ -104,7 +104,8 @@ $( document ).ready(function() {
 
 
 
-    var id_grupe = 598;
+    //testirati na predmetu Automatsko rezonovanje
+    var id_grupe = 700;
     //GET za sve postove na odredjenoj grupi
     $.get("http://localhost:12345/postovi/" + id_grupe, function(data){
 
@@ -119,8 +120,13 @@ $( document ).ready(function() {
             var str1 = "post";
             var res = str1.concat(i.toString());
 
+            var str2 = "author";
+            var res1 = str2.concat(i.toString());
+
+
+
             div.innerHTML += '<div class="tip">' +
-                                 '<span>  <img src="images/default.png" class="demo-avatar"> Ljubica Peleksic' +
+                                 '<span id=' + res1+ '>'+
                                  '</span>' +
                                  '<div class="naslov_posta">' + postovi[i].Caption + '</div>' +
                              '</div>'+
@@ -145,6 +151,17 @@ $( document ).ready(function() {
 
             else if (postovi[i].Type === "glas") {
                 document.getElementById(res).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Glasanje</span></div>';
+            }
+
+
+            //profil slika
+            if(postovi[i].PicturePath == ""){
+                document.getElementById(res1).innerHTML += '<img src="images/default.png" class="demo-avatar" style="margin-right: 10px;">';
+                document.getElementById(res1).innerHTML += postovi[i].AuthorInfo;
+            }
+            else {
+                document.getElementById(res1).innerHTML += '<img src="'+ postovi[i].PicturePath +'"  class="demo-avatar" style="margin-right: 10px;">';
+                document.getElementById(res1).innerHTML += postovi[i].AuthorInfo;
             }
 
         }
