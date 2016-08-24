@@ -38,6 +38,7 @@ namespace TrenchrRestService.Models
                         $" ind :' {Important}', " +
                         $" vreme : '{Time.ToLocalTime()}'" +
                          "})<-[:objavio]-(autor) RETURN id(o) as id";
+
             var result = Neo4jClient.Execute(stmnt);
             return (long)result.FirstOrDefault()["id"];
         }
