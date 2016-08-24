@@ -19,8 +19,6 @@ namespace TrenchrRestService.Controllers
         [HttpGet]
         public IActionResult GetAllMaterials(long id)
         {
-
-
             var stmnt = $"MATCH (o:odrzan_kurs)-[:ima_post]-(post), (korisnik)-[:objavio]-(post) where id(o) = {id} return id(o) as id, post.tip as tip, post.name as naslov, post.putanja as putanja, post.tekst as tekst, post.ind as indikator, post.vreme as vreme, id(korisnik) as korisnik_id, korisnik.name as ime_korisnika, korisnik.putanja as putanja_korisnika";
             var resultPosts = Neo4jClient.Execute(stmnt);
 
@@ -62,6 +60,40 @@ namespace TrenchrRestService.Controllers
             return Ok(JsonConvert.SerializeObject(posts, Formatting.Indented));
          
         }
+
+
+        //unos materijala za neki predmet
+        [Route("materijali/")]
+        [HttpPost]
+        public IActionResult InsertMaterials(long id)
+        {
+
+          
+        }
+
+        [Route("rezultati/")]
+        [HttpPost]
+        public IActionResult InsertResults(long id)
+        {
+
+        }
+
+        [Route("glasanje/")]
+        [HttpPost]
+        public IActionResult InsertVoting(long id)
+        {
+
+        }
+
+        [Route("obavestenje/")]
+        [HttpPost]
+        public IActionResult InsertNotification(long id)
+        {
+
+        }
+
+
+
     }
 }
 

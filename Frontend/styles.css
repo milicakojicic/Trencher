@@ -659,13 +659,13 @@ h3,h4 {
 }
 
 .objava {
-    margin-bottom: 20px;
     min-height: 150px;
     padding: 20px;
     background-color: whitesmoke;
     font-size: 20px;
     word-wrap: break-word;
-    padding-top: 0px; !important;
+    padding-top: 20px; !important;
+    border-bottom: 1px solid gainsboro;
 }
 
 .tip {
@@ -1129,12 +1129,13 @@ input {
     margin-left: 20px;
 }
 
+
 .tipPosta {
-    background-color: teal;
+    background-color: whitesmoke;
     border-radius: 100px 50px;
     overflow-wrap: break-word;
     font-size: 15px;
-    color: whitesmoke;
+    color: teal;
 }
 
 .tipovi {
@@ -1144,4 +1145,12 @@ input {
 .naslov_posta {
     margin-top: 20px;
     font-size: 20px;
+}
+
+.komentar {
+    margin-bottom: 20px;
+    font-size: large;
+    width: 100%;
+    color:teal;
+    background-color: whitesmoke;
 }
