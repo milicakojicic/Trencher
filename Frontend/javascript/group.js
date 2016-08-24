@@ -140,7 +140,7 @@ $( document ).ready(function() {
 
 
     //testirati na predmetu Automatsko rezonovanje
-    var id_grupe = 700;
+    var id_grupe = 170;
     //GET za sve postove na odredjenoj grupi
     $.get("http://localhost:12345/postovi/" + id_grupe, function(data){
 

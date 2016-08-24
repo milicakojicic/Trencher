@@ -22,7 +22,7 @@ namespace TrenchrRestService.Controllers
         {
 
 
-            var stmnt = $"MATCH (o:odrzan_kurs)-[:ima_post]-(post) where id(o) = {id} return id(o) as id, post.tip as tip, post.name as naslov, post.putanja as putanja, post.tekst as tekst, post.ind as indikator, post.vreme as vreme";
+            var stmnt = $"MATCH (o:odrzan_kurs)-[:ima_post]-(post) where id(o) = {id} return id(o) as kurs_id, id(post) as id , post.tip as tip, post.name as naslov, post.putanja as putanja, post.tekst as tekst, post.ind as indikator, post.vreme as vreme";
             var resultPosts = Neo4jClient.Execute(stmnt);
 
             //mozda nam nekad bude trebalo
