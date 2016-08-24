@@ -18,6 +18,7 @@ namespace TrenchrRestService.Models
 
             Path = (string)record["putanja"];
             ID = (long)record["id"];
+            KursID = (long)record["kurs_id"];
             Caption = (string)record["naslov"];
             Type = (string)record["tip"];
             Text = (string)record["tekst"];

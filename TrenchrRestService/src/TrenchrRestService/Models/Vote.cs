@@ -17,6 +17,7 @@ namespace TrenchrRestService.Models
         {
 
             ID = (long)record["id"];
+            KursID = (long)record["kurs_id"];
             Caption = (string)record["naslov"];
             Type = (string)record["tip"];
             Text = (string)record["tekst"];
