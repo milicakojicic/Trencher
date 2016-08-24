@@ -22,9 +22,6 @@ namespace TrenchrRestService.Models
             Text = (string)record["tekst"];
             Important = (string)record["indikator"];
             Time = Convert.ToDateTime((string)record["vreme"]);
-            UserId = (long)record["korisnik_id"];
-            AuthorInfo = (string)record["ime_korisnika"];
-            PicturePath = (string)record["putanja_korisnika"];
 
 
         }
