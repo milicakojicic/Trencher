@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using TrenchrRestService;
 using TrenchrRestService.Models;
+using Newtonsoft.Json.Linq;
 
 namespace TrenchrRestService.Controllers
 {
