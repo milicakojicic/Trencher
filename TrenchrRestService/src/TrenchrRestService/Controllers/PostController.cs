@@ -66,7 +66,10 @@ namespace TrenchrRestService.Controllers
         [HttpPost]
         public IActionResult NovoObavestenje([FromBody] JObject jsonBody)
         {
-            var obavestenje = JsonConvert.DeserializeObject<NotificationPost>(jsonBody.ToString(), new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Ignore });
+            var obavestenje = JsonConvert.DeserializeObject<NotificationPost>(jsonBody.ToString(), 
+                                new JsonSerializerSettings()
+                                    { MissingMemberHandling = MissingMemberHandling.Ignore }
+                                );
             obavestenje.SaveToDB();
             return Created("lokacija", "radi");
         }
