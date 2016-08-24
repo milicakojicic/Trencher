@@ -15,7 +15,6 @@ namespace TrenchrRestService.Models
         public string Level { get; set; }
         public string Year { get; set; }
 
-
         public HeldCourse() { }
 
         public HeldCourse(IRecord record)

@@ -1,4 +1,5 @@
 ﻿using Neo4j.Driver.V1;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace TrenchrRestService.Models
         {
 
             ID = (long)record["id"];
+            KursID = (long)record["kurs_id"];
             Caption = (string)record["naslov"];
             Type = (string)record["tip"];
             Text = (string)record["tekst"];
@@ -22,7 +24,23 @@ namespace TrenchrRestService.Models
             UserId = (long)record["korisnik_id"];
             AuthorInfo = (string)record["ime_korisnika"];
             PicturePath = (string)record["putanja_korisnika"];
+        }
 
+        public long SaveToDB()
+        {
+            var stmnt = "MATCH (ok:odrzan_kurs), (autor) " +
+                       $"WHERE id(ok) = {KursID} AND id(autor) = {UserId} " +
+                        " WITH ok,autor " +
+                        "CREATE (ok)-[:ima_post]->(o:obavestenje{" +
+                        $" name : '{Caption}', " +
+                        $" tekst : '{Text}', " +
+                        $" tip : '{Type}', " +
+                        $" ind :' {Important}', " +
+                        $" vreme : '{Time.ToLocalTime()}'" +
+                         "})<-[:objavio]-(autor) RETURN id(o) as id";
+
+            var result = Neo4jClient.Execute(stmnt);
+            return (long)result.FirstOrDefault()["id"];
         }
     }
 }

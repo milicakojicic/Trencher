@@ -9,6 +9,7 @@ namespace TrenchrRestService.Models
     public class Post
     {
         public long ID { get; set; }
+        public long KursID { get; set; }
         public string Caption { get; set; }
         public string Type { get; set; }
         public string Text { get; set; }
