@@ -18,6 +18,12 @@ $( document ).ready(function() {
         }
     });
 
+    $('#koment').bind('input propertychange', function() {
+
+        document.getElementById("koment").placeholder = " ";
+
+    });
+
 
     var parametar = getQueryParams(document.location.search);
     var idGrupe = parametar.id;
@@ -25,8 +31,13 @@ $( document ).ready(function() {
     //napisati GET zahtev za podatke o grupi za taj idGrupe
 
     //napisati POST za insert u bazu
+
+
+
+    //OBJAVA POST-a
     $('#publish').click(function() {
         var prosli = document.getElementById("groupPosts").innerHTML;
+        //vrednost textarea
         var text = document.getElementById("groupPost").value;
         var objava = "";
         var glasanje = "";
@@ -35,22 +46,17 @@ $( document ).ready(function() {
         document.getElementById("publish").style.opacity = 0.5;
         document.getElementById("groupPost").value = "";
 
-        objava += '<div class="tip">';
+        //gornji deo, slika i tagovi
+        objava += '<div class="tip">' +
+                    '<span id="slika">'+
+                    '</span>' +
+                    '<div class="mdl-grid tipovi" id="tipovi">' +
+                        //ovde idu tagovi
+                    '</div>' +
+                  '</div>';
 
-        if(imp != 0){
-            objava += 'Važno ';
-        }
-
-        if(mat != 0){
-            objava += 'Materijali  ';
-        }
-
-        if(rez != 0){
-            objava += 'Rezultati  ';
-        }
 
         if(glas != 0){
-            objava += 'Glasanje ';
 
             glasanje+= "<br>";
 
@@ -79,15 +85,44 @@ $( document ).ready(function() {
 
             document.getElementById("poll").style.display = "none";
 
+        }
+
+
+
+        document.getElementById("groupPosts").innerHTML = objava +
+            '<div class="objava"> ' +
+            text + glasanje +  '</div>' + '<div class="mdl-textfield mdl-js-textfield komentar">'+
+            '<textarea class="mdl-textfield__input" type="text" rows="5" id="koment1"></textarea>'+
+            '<label class="mdl-textfield__label" for="koment1">Napišite komentar...</label>'+
+            '</div>'+
+            prosli;
+
+        if(imp != 0){
+
+            document.getElementById("tipovi").innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Vazno</span></div>';
 
         }
 
-        objava +=  ' </div>';
-        document.getElementById("groupPosts").innerHTML = objava +
-            '<div class="objava" style="border: 1px solid teal;"> ' +
-            text + glasanje +  '</div>' + prosli;
+        if(mat != 0){
+            document.getElementById("tipovi").innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center"> Materijali</span></div>';
+
+        }
+
+        if(rez != 0){
+            document.getElementById("tipovi").innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Rezultati</span></div>';
+        }
+
+        if (glas != 0) {
+            document.getElementById("tipovi").innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Glasanje</span></div>';
+        }
+
+        console.log(objava);
+        console.log(text);
 
         //dodavanje opcija za glasanje u objavu nakon teksta
+
+        //AJAX POZIV ZA UNOS U BAZU POST-a
+
 
 
         imp = 0;
@@ -104,7 +139,8 @@ $( document ).ready(function() {
 
 
 
-    var id_grupe = 598;
+    //testirati na predmetu Automatsko rezonovanje
+    var id_grupe = 700;
     //GET za sve postove na odredjenoj grupi
     $.get("http://localhost:12345/postovi/" + id_grupe, function(data){
 
@@ -119,16 +155,26 @@ $( document ).ready(function() {
             var str1 = "post";
             var res = str1.concat(i.toString());
 
+            var str2 = "author";
+            var res1 = str2.concat(i.toString());
+
+
+
             div.innerHTML += '<div class="tip">' +
-                                 '<span>  <img src="images/default.png" class="demo-avatar"> Ljubica Peleksic' +
+                                 '<span id=' + res1+ '>'+
                                  '</span>' +
-                                 '<div class="naslov_posta">' + postovi[i].Caption + '</div>' +
+                                 '<div class="mdl-grid tipovi" id=' + res + '>' +
+                                    //ovde idu tagovi
+                                 '</div>' +
                              '</div>'+
                              '<div class="objava">' +
-                                '<div class="mdl-grid tipovi" id=' + res + '>' +
-                                '</div>' +
-                                postovi[i].Text +
+                                 postovi[i].Text +
+                             '</div>'+
+                             '<div class="mdl-textfield mdl-js-textfield komentar">'+
+                                 '<textarea class="mdl-textfield__input" type="text" rows="5" id="koment"></textarea>'+
+                                 '<label class="mdl-textfield__label" for="koment">Napišite komentar...</label>'+
                              '</div>';
+
 
             if (postovi[i].Important === "1") {
                 document.getElementById(res).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Vazno</span></div>';
@@ -145,6 +191,17 @@ $( document ).ready(function() {
 
             else if (postovi[i].Type === "glas") {
                 document.getElementById(res).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Glasanje</span></div>';
+            }
+
+
+            //profil slika
+            if(postovi[i].PicturePath == ""){
+                document.getElementById(res1).innerHTML += '<img src="images/default.png" class="demo-avatar" style="margin-right: 10px;">';
+                document.getElementById(res1).innerHTML += postovi[i].AuthorInfo;
+            }
+            else {
+                document.getElementById(res1).innerHTML += '<img src="'+ postovi[i].PicturePath +'"  class="demo-avatar" style="margin-right: 10px;">';
+                document.getElementById(res1).innerHTML += postovi[i].AuthorInfo;
             }
 
         }
