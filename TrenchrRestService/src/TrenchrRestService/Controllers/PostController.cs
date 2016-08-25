@@ -67,9 +67,37 @@ namespace TrenchrRestService.Controllers
         public IActionResult NovoObavestenje([FromBody] JObject jsonBody)
         {
             var obavestenje = JsonConvert.DeserializeObject<NotificationPost>(jsonBody.ToString(), new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Ignore });
-            obavestenje.SaveToDB();
+            obavestenje.SaveToDBNotification();
             return Created("lokacija", "radi");
         }
+
+        [Route("postovi/materijali")]
+        [HttpPost]
+        public IActionResult NoviMaterijali([FromBody] JObject jsonBody)
+        {
+            var materijali = JsonConvert.DeserializeObject<Material>(jsonBody.ToString(), new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Ignore });
+            materijali.SacuvajMaterijale();
+            return Created("lokacija", "radi");
+        }
+
+        [Route("postovi/rezultati")]
+        [HttpPost]
+        public IActionResult NoviRezultati([FromBody] JObject jsonBody)
+        {
+            var rezultati = JsonConvert.DeserializeObject<Results>(jsonBody.ToString(), new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Ignore });
+            rezultati.SacuvajRezultate();
+            return Created("lokacija", "radi");
+        }
+
+        [Route("postovi/glasanje")]
+        [HttpPost]
+        public IActionResult NovoGlasanje([FromBody] JObject jsonBody)
+        {
+            var glasanje = JsonConvert.DeserializeObject<Vote>(jsonBody.ToString(), new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Ignore });
+            glasanje.SacuvajGlasanje();
+            return Created("lokacija", "radi");
+        }
+
 
     }
 }

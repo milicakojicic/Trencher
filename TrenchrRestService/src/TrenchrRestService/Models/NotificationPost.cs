@@ -26,7 +26,7 @@ namespace TrenchrRestService.Models
             PicturePath = (string)record["putanja_korisnika"];
         }
 
-        public long SaveToDB()
+        public long SaveToDBNotification()
         {
             var stmnt = "MATCH (ok:odrzan_kurs), (autor) " +
                        $"WHERE id(ok) = {KursID} AND id(autor) = {UserId} " +

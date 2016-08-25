@@ -1,6 +1,10 @@
 var brPolja = 3;
 var ime = "#opcija" + brPolja;
 var arr = [];
+//testirati na predmetu Automatsko rezonovanje
+var id_grupe = 760;
+var id_korisnika = 781;
+var k = 0;
 
 $( document ).ready(function() {
 
@@ -36,19 +40,32 @@ $( document ).ready(function() {
 
     //OBJAVA POST-a
     $('#publish').click(function() {
+        k++;
         var prosli = document.getElementById("groupPosts").innerHTML;
         //vrednost textarea
         var text = document.getElementById("groupPost").value;
         var objava = "";
         var glasanje = "";
+        var tip = "";
+        var ind = "0";
+        var dt = new Date();
+        var utcDate = dt.toUTCString();
+
+        var ime_korisnika = "";
+        var prezime_korisnika = "";
+        var slika = "";
+        var a = "slika";
+        var res_slika = a.concat(k.toString());
+
         arr = [];
         document.getElementById("publish").disabled = true;
         document.getElementById("publish").style.opacity = 0.5;
         document.getElementById("groupPost").value = "";
 
+
         //gornji deo, slika i tagovi
         objava += '<div class="tip">' +
-                    '<span id="slika">'+
+                    '<span id= '+res_slika+'>'+
                     '</span>' +
                     '<div class="mdl-grid tipovi" id="tipovi">' +
                         //ovde idu tagovi
@@ -97,33 +114,58 @@ $( document ).ready(function() {
             '</div>'+
             prosli;
 
+
+          $.get("http://localhost:12345/korisnici/" + id_korisnika, function(data) {
+
+            var korisnik = JSON.parse(data);
+            console.log(korisnik);
+
+            ime_korisnika = korisnik.Name; console.log(ime_korisnika);
+            prezime_korisnika = korisnik.Surname; console.log(prezime_korisnika);
+            slika = korisnik.PicturePath; console.log(slika);
+
+            if(slika == ""){
+              document.getElementById(res_slika).innerHTML += '<img src="images/default.png" class="demo-avatar" style="margin-right: 10px;">';
+              document.getElementById(res_slika).innerHTML += ime_korisnika + " " + prezime_korisnika;
+            }
+            else {
+              document.getElementById(res_slika).innerHTML += '<img src="'+ slika +'"  class="demo-avatar" style="margin-right: 10px;">';
+              document.getElementById(res_slika).innerHTML += ime_korisnika + " " + prezime_korisnika;
+            }
+
+        });
+
+
+
+
         if(imp != 0){
-
             document.getElementById("tipovi").innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Vazno</span></div>';
-
+            ind = "1";
         }
 
         if(mat != 0){
             document.getElementById("tipovi").innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center"> Materijali</span></div>';
-
+            tip = "mat";
         }
 
-        if(rez != 0){
+        else if(rez != 0){
             document.getElementById("tipovi").innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Rezultati</span></div>';
+            tip = "rez";
         }
 
-        if (glas != 0) {
+        else if (glas != 0) {
             document.getElementById("tipovi").innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Glasanje</span></div>';
+            tip = "glas";
         }
+
+        else
+            tip = "obav";
 
         console.log(objava);
         console.log(text);
 
+
         //dodavanje opcija za glasanje u objavu nakon teksta
-
-        //AJAX POZIV ZA UNOS U BAZU POST-a
-
-
 
         imp = 0;
         mat = 0;
@@ -134,13 +176,29 @@ $( document ).ready(function() {
         document.getElementById("vote").style.border = "0px solid teal";
         document.getElementById("important").style.border = "0px solid teal";
         document.getElementById("groupPost").placeholder = "Napisite post...";
+
+
+        //ajax poziv za insert u bazu
+
+        $.ajax({
+            type: 'post',
+            url: 'http://localhost:12345/postovi/obavestenja',
+            data: JSON.stringify( {
+                "KursID" : id_grupe,
+                "Caption" : "Test", //obrisati
+                "Type" : tip, //imam
+                "Text" : text,
+                "Important" : ind, //imam
+                "Time": utcDate, // var seconds = new Date().getTime() / 1000; ako cuvamo kao int
+                "UserId" : id_korisnika
+            }),
+            contentType: "application/json; charset=utf-8"
+        });
+
+
     });
 
 
-
-
-    //testirati na predmetu Automatsko rezonovanje
-    var id_grupe = 700;
     //GET za sve postove na odredjenoj grupi
     $.get("http://localhost:12345/postovi/" + id_grupe, function(data){
 

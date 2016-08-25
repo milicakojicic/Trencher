@@ -28,5 +28,21 @@ namespace TrenchrRestService.Models
             PicturePath = (string)record["putanja_korisnika"];
 
         }
+
+        public long SacuvajGlasanje()
+        {
+            var stmnt = "MATCH (ok:odrzan_kurs), (autor) " +
+                       $"WHERE id(ok) = {KursID} AND id(autor) = {UserId} " +
+                        " WITH ok,autor " +
+                        "CREATE (ok)-[:ima_post]->(o:glasanje{" +
+                        $" name : '{Caption}', " +
+                        $" tekst : '{Text}', " +
+                        $" tip : '{Type}', " +
+                        $" ind :' {Important}', " +
+                        $" vreme : '{Time.ToLocalTime()}', " +
+                         "})<-[:objavio]-(autor) RETURN id(o) as id";
+            var result = Neo4jClient.Execute(stmnt);
+            return (long)result.FirstOrDefault()["id"];
+        }
     }
 }

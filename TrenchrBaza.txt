@@ -125,13 +125,13 @@ create (PetarVukmirovic)-[:pohadja]->(niz16)
 create (IgorRodic)-[:pohadja]->(niz16)
 
 // Profesori
-create (SasaMalkov:profesor {name: "Sasa Malkov", ime:"Sasa", prezime: "Malkov",putanja:""})
-create (FilipMaric:profesor {name: "Filip Maric", ime:"Filip", prezime: "Maric",putanja:""})
-create (MilanTuba:profesor {name: "Milan Tuba", ime:"Milan", prezime: "Tuba",putanja:""})
-create (NenadMitic:profesor {name: "Nenad Mitic", ime:"Nenad", prezime: "Mitic",putanja:""})
-create (MilenaVujosevicJanicic:profesor {name: "Milena Vujosevic Janicic", ime:"Milena", prezime: "Vujosevic Janicic",putanja:""})
-create (MiodragZivkovic:profesor {name: "Miodrag Zivkovic", ime:"Miodrag", prezime: "Zivkovic",putanja:""})
-create (MladenNikolic:profesor {name: "Mladen Nikolic", ime:"Mladen", prezime: "Nikolic",putanja:""})
+create (SasaMalkov:profesor {name: "Sasa Malkov", ime:"Sasa", prezime: "Malkov",putanja:"", email: "bla@gmail.com"})
+create (FilipMaric:profesor {name: "Filip Maric", ime:"Filip", prezime: "Maric",putanja:"", email: "bla@gmail.com"})
+create (MilanTuba:profesor {name: "Milan Tuba", ime:"Milan", prezime: "Tuba",putanja:"", email: "bla@gmail.com"})
+create (NenadMitic:profesor {name: "Nenad Mitic", ime:"Nenad", prezime: "Mitic",putanja:"", email: "bla@gmail.com"})
+create (MilenaVujosevicJanicic:profesor {name: "Milena Vujosevic Janicic", ime:"Milena", prezime: "Vujosevic Janicic",putanja:"", email: "bla@gmail.com"})
+create (MiodragZivkovic:profesor {name: "Miodrag Zivkovic", ime:"Miodrag", prezime: "Zivkovic",putanja:"", email: "bla@gmail.com"})
+create (MladenNikolic:profesor {name: "Mladen Nikolic", ime:"Mladen", prezime: "Nikolic",putanja:"", email: "bla@gmail.com"})
 
 // Profesor -> Predmet
 create (SasaMalkov)-[:drzi]->(is16)
@@ -153,11 +153,11 @@ create (MiodragZivkovic)-[:na_fakultetu]->(matf)
 create (MladenNikolic)-[:na_fakultetu]->(matf)
 
 // Asistenti
-create (StasaVujicicStankovic:asistent {name: "Stasa Vujicic Stankovic", ime:"Stasa", prezime: "Vujicic Stankovic ", putanja:""})
-create (MilanBankovic:asistent {name: "Milan Bankovic", ime:"Milan", prezime: "Bankovic", putanja:""})
-create (StefanMiskovic:asistent {name: "Stefan Miskovic", ime:"Stefan", prezime: "Miskovic", putanja:""})
-create (MirjanaMaljkovic:asistent {name: "Mirjana Maljkovic", ime:"Mirjana", prezime: "Maljkovic", putanja:""})
-create (DanijelaPetrovic:asistent {name: "Danijela Petrovic", ime:"Danijela", prezime: "Petrovic", putanja:""})
+create (StasaVujicicStankovic:asistent {name: "Stasa Vujicic Stankovic", ime:"Stasa", prezime: "Vujicic Stankovic ", putanja:"", email: "bla@gmail.com"})
+create (MilanBankovic:asistent {name: "Milan Bankovic", ime:"Milan", prezime: "Bankovic", putanja:"", email: "bla@gmail.com"})
+create (StefanMiskovic:asistent {name: "Stefan Miskovic", ime:"Stefan", prezime: "Miskovic", putanja:"", email: "bla@gmail.com"})
+create (MirjanaMaljkovic:asistent {name: "Mirjana Maljkovic", ime:"Mirjana", prezime: "Maljkovic", putanja:"", email: "bla@gmail.com"})
+create (DanijelaPetrovic:asistent {name: "Danijela Petrovic", ime:"Danijela", prezime: "Petrovic", putanja:"", email: "bla@gmail.com"})
 
 // Profesor -> Predmet
 create (StasaVujicicStankovic)-[:drzi_vezbe]->(is16)
