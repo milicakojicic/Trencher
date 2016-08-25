@@ -2,8 +2,8 @@ var brPolja = 3;
 var ime = "#opcija" + brPolja;
 var arr = [];
 //testirati na predmetu Automatsko rezonovanje
-var id_grupe = 760;
-var id_korisnika = 781;
+var id_grupe = 829;
+var id_korisnika = 834;
 var k = 0;
 
 $( document ).ready(function() {
@@ -15,11 +15,9 @@ $( document ).ready(function() {
         var kurs = JSON.parse(data);
         console.log(kurs);
 
-        document.getElementById("ime_grupe").innerText += kurs.Name;
+        document.getElementById("ime_grupe").innerText += kurs.Name + " "+ kurs.Year;
 
     });
-
-
 
     //kada se krene pisati post
     $('#groupPost').bind('input propertychange', function() {
@@ -141,12 +139,13 @@ $( document ).ready(function() {
               document.getElementById(res_slika).innerHTML += '<img src="images/default.png" class="demo-avatar" style="margin-right: 10px;">';
               document.getElementById(res_slika).innerHTML += ime_korisnika + " " + prezime_korisnika;
             }
+
             else {
               document.getElementById(res_slika).innerHTML += '<img src="'+ slika +'"  class="demo-avatar" style="margin-right: 10px;">';
               document.getElementById(res_slika).innerHTML += ime_korisnika + " " + prezime_korisnika;
             }
 
-        });
+          });
 
 
 

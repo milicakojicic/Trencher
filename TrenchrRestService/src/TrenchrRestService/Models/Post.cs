@@ -14,7 +14,7 @@ namespace TrenchrRestService.Models
         public string Type { get; set; }
         public string Text { get; set; }
         public string Important { get; set; }
-        public DateTime Time{ get; set; }
+        public long Time{ get; set; }
 
         //dodatna polja vezana za autora post-a
         public long UserId { get; set; }

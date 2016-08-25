@@ -22,7 +22,7 @@ namespace TrenchrRestService.Models
             Type = (string)record["tip"];
             Text = (string)record["tekst"];
             Important = (string)record["indikator"];
-            Time = Convert.ToDateTime((string)record["vreme"]);
+            Time = (long)record["vreme"];
             UserId = (long)record["korisnik_id"];
             AuthorInfo = (string)record["ime_korisnika"];
             PicturePath = (string)record["putanja_korisnika"];
@@ -34,12 +34,12 @@ namespace TrenchrRestService.Models
             var stmnt = "MATCH (ok:odrzan_kurs), (autor) " +
                        $"WHERE id(ok) = {KursID} AND id(autor) = {UserId} " +
                         " WITH ok,autor " +
-                        "CREATE (ok)-[:ima_post]->(o:glasanje{" +
+                        "CREATE (ok)-[:ima_post]->(o:{" +
                         $" name : '{Caption}', " +
                         $" tekst : '{Text}', " +
                         $" tip : '{Type}', " +
                         $" ind :' {Important}', " +
-                        $" vreme : '{Time.ToLocalTime()}', " +
+                        $" vreme : '{Time}', " +
                          "})<-[:objavio]-(autor) RETURN id(o) as id";
             var result = Neo4jClient.Execute(stmnt);
             return (long)result.FirstOrDefault()["id"];

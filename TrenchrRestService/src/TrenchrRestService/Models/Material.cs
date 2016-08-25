@@ -21,7 +21,7 @@ namespace TrenchrRestService.Models
             Type = (string)record["tip"];
             Text = (string)record["tekst"];
             Important = (string)record["indikator"];
-            Time = Convert.ToDateTime((string)record["vreme"]);
+            Time = (long)record["vreme"];
             UserId = (long)record["korisnik_id"];
             AuthorInfo = (string)record["ime_korisnika"];
             PicturePath = (string)record["putanja_korisnika"];
@@ -37,7 +37,7 @@ namespace TrenchrRestService.Models
                         $" tekst : '{Text}', " +
                         $" tip : '{Type}', " +
                         $" ind :' {Important}', " +
-                        $" vreme : '{Time.ToLocalTime()}', " +
+                        $" vreme : '{Time}', " +
                         $" putanja : '{Path}'" +
                          "})<-[:objavio]-(autor) RETURN id(o) as id";
 
