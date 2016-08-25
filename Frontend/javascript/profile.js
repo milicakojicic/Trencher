@@ -2,7 +2,7 @@
  * Created by Ljubica on 8.8.2016.
  */
 //id studenta koji treba da se prikaze
-var id = 706 ;
+var id = 625 ;
 
 $(document).ready(function(){
     //dodati GET zahteve za fakultet i smer
@@ -15,6 +15,7 @@ $(document).ready(function(){
 
         var headerSlika = document.getElementById("korisnik");
 
+        //dodavanje slike studenta
         if(student.PicturePath == ""){
             headerSlika.innerHTML += '<img src="images/default.png" class="demo-avatar">'
         }
@@ -40,7 +41,7 @@ $(document).ready(function(){
                             '    <input class="mdl-textfield__input" id="surname" type="text" value="'+ student.Surname +'" disabled>'+
                             '</label>'+
                             '<label class="profileLabel">Indeks'+
-                            '    <input class="mdl-textfield__input" id="city" type="text" value="'+ student.Index+'" disabled>'+
+                            '    <input class="mdl-textfield__input" id="index" type="text" value="'+ student.Index+'" disabled>'+
                             '</label>'+
                             '<label class="profileLabel">Email '+
                             '    <input class="mdl-textfield__input" id="email" type="text" value="'+ student.Email+'" disabled> '+
@@ -52,7 +53,7 @@ $(document).ready(function(){
                             '    <input class="mdl-textfield__input" id="university" type="text" value="'+ student.University+'" disabled> '+
                             '</label>'+
                             '<label class="profileLabel">Smer '+
-                            '    <input class="mdl-textfield__input" id="smer" type="text" value="'+ student.Module+'" disabled> '+
+                            '    <input class="mdl-textfield__input" id="course" type="text" value="'+ student.Module+'" disabled> '+
                             '</label> '+
                             '<label class="profileLabel">Godina upisa '+
                             '<input class="mdl-textfield__input" id="year" type="text" value="'+ student.Year+'" disabled> '+
@@ -69,26 +70,75 @@ $(document).ready(function(){
 
     });
 
+    //NAPISATI PUT POZIV ZA UNOS KORISNIKA U BAZU
+    $('#save').click(function() {
+        var name = document.getElementById("name").value;
+        var surname = document.getElementById("surname").value;
+        var index = document.getElementById("index").value;
+        var email = document.getElementById("email").value;
+        var faculty = document.getElementById("faculty").value;
+        var university = document.getElementById("university").value;
+        var course = document.getElementById("course").value;
+        var year = document.getElementById("year").value;
+
+        $.ajax({
+            type: 'put',
+            url: 'url',
+            data: JSON.stringify( {
+                "ID" : id,
+                "Name" : name,
+                "Surname" : surname,
+                "Year" : year,
+                "Index" : index,
+                "Email" : email,
+                "Faculty" : faculty,
+                "University" : university,
+                "Module" : course
+            }),
+            contentType: "application/json; charset=utf-8"
+        });
+
+    });
+
+    $('#reset').click(function() {
+
+        $.get("http://localhost:12345/studenti/" + id, function(data){
+
+            var student = JSON.parse(data);
+            var div = document.getElementById("divProfil");
+            var divPic = document.getElementById("profile");
+
+            document.getElementById("name").value = student.Name;
+            document.getElementById("surname").value = student.Surname;
+            document.getElementById("index").value = student.Index;
+            document.getElementById("faculty").value = student.Faculty;
+            document.getElementById("email").value = student.Email;
+            document.getElementById("course").value = student.Module;
+            document.getElementById("year").value = student.Year;
+            document.getElementById("university").value = student.University;
+
+        });
+
+
+    });
+
 });
 
 function izmeniProfil() {
 
     document.getElementById("name").disabled = false;
     document.getElementById("surname").disabled = false;
+    document.getElementById("index").disabled = false;
     document.getElementById("email").disabled = false;
-    document.getElementById("date").disabled = false;
-    document.getElementById("city").disabled = false;
     document.getElementById("faculty").disabled = false;
+    document.getElementById("university").disabled = false;
+    document.getElementById("course").disabled = false;
+    document.getElementById("year").disabled = false;
 
     document.getElementById("edit").style.display="none";
     document.getElementById("save").style.display="inline";
-    document.getElementById("resetuj").style.display="inline";
+    document.getElementById("reset").style.display="inline";
 
     document.getElementById("name").focus();
-
-}
-
-//funkcija koja vraca formu na podatke iz baze
-function resetujFormu() {
 
 }

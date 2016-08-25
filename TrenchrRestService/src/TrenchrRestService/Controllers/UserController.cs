@@ -13,6 +13,7 @@ namespace TrenchrRestService.Controllers
     public class UserController : ApiController
     {
 
+        //uzimanje podataka o svim studenata
         [Route("studenti")]
         [HttpGet]
         public IActionResult GetAllStudents()
@@ -28,6 +29,7 @@ namespace TrenchrRestService.Controllers
 
         }
 
+        //uzimanje podataka o pojedinacnom studentu
         [Route("studenti/{id}")]
         [HttpGet]
         public IActionResult GetStudent(long id)
@@ -73,6 +75,9 @@ namespace TrenchrRestService.Controllers
                 return Ok(JsonConvert.SerializeObject(profesor, Formatting.Indented));
             }
 
-        } 
+        }
+
+        
+
     }
 }
