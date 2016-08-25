@@ -14,9 +14,11 @@ namespace TrenchrRestService.Controllers
     public class HeldCourseController : ApiController
     {
         
+
+        //svi kursevi
         [Route("kursevi")]
         [HttpGet]
-        public IActionResult GetAllGroups()
+        public IActionResult VratiSveGrupe()
         {
             var stmnt = "MATCH (o:odrzan_kurs) return id(o) as id, o.name as name, o.espb as espb, o.tip as tip, o.nivo as nivo, o.godina as godina";
             var resultCourses = Neo4jClient.Execute(stmnt);
@@ -27,9 +29,11 @@ namespace TrenchrRestService.Controllers
             return Ok(JsonConvert.SerializeObject(courses, Formatting.Indented));
         }
 
-        [Route("kursevi/{id}")]
+
+        //kursevi jedne osobe
+        [Route("studenti/{id}/kursevi")]
         [HttpGet]
-        public IActionResult GetGroups(long id)
+        public IActionResult VratiGrupeStudenta(long id)
         {
             var stmnt = $"MATCH (s:student)-[:pohadja]-(o:odrzan_kurs) where id(s) = {id} return id(o) as id, o.name as name, o.espb as espb, o.tip as tip, o.nivo as nivo, o.godina as godina";
             var resultCourses = Neo4jClient.Execute(stmnt);
@@ -41,6 +45,20 @@ namespace TrenchrRestService.Controllers
 
          
         }
-            
+
+        //jedan odredjen kurs
+        [Route("kursevi/{id}")]
+        [HttpGet]
+        public IActionResult VratiOdredjenuGrupu(long id)
+        {
+            var stmnt = $"MATCH (o:odrzan_kurs) where id(o) = {id} return id(o) as id, o.name as name, o.espb as espb, o.tip as tip, o.nivo as nivo, o.godina as godina";
+            var resultCourses = Neo4jClient.Execute(stmnt);
+            var courses = new HeldCourse(resultCourses.FirstOrDefault());
+
+            return Ok(JsonConvert.SerializeObject(courses, Formatting.Indented));
+        }
+
+
+
     }
 }

@@ -8,6 +8,19 @@ var k = 0;
 
 $( document ).ready(function() {
 
+    //ajax poziv za info o predmetu
+
+    $.get("http://localhost:12345/kursevi/" + id_grupe, function(data) {
+
+        var kurs = JSON.parse(data);
+        console.log(kurs);
+
+        document.getElementById("ime_grupe").innerText += kurs.Name;
+
+    });
+
+
+
     //kada se krene pisati post
     $('#groupPost').bind('input propertychange', function() {
 
