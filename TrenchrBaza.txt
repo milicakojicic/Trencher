@@ -176,31 +176,31 @@ create (MirjanaMaljkovic)-[:na_fakultetu]->(matf)
 create (DanijelaPetrovic)-[:na_fakultetu]->(matf)
 
 // Rezultati
-create (rezultati1:rezultati {name: "RezultatiPBP", tip:"rez", tekst: "Izasli rezultati kolokvijuma",putanja: "../rezultati",ind: "1",vreme: "12.05.2016. 12:57:42"})
-create (rezultati2:rezultati {name: "RezultatiIS", tip:"rez", tekst: "Izasli rezultati pismenog ispita",putanja: "../rezultati", ind: "0",vreme: "12.05.2016. 12:57:42"})
+create (rezultati1:rezultati {name: "RezultatiPBP", tip:"rez", tekst: "Izasli rezultati kolokvijuma",putanja: "../rezultati",ind: "1",vreme: 1472040644})
+create (rezultati2:rezultati {name: "RezultatiIS", tip:"rez", tekst: "Izasli rezultati pismenog ispita",putanja: "../rezultati", ind: "0",vreme: 1472213444})
 
 //Predmet -> Rezultati
 create (pbp16)-[:ima_post]->(rezultati1)
 create (is16)-[:ima_post]->(rezultati2)
 
 //Materijali
-create (materijali1:materijali {name: "MaterijaliMR",tip:"mat", tekst: "Skripta iz Mreznog racunarstva",putanja: "../materijali", ind: "1",vreme: "12.05.2016. 12:57:42"})
-create (materijali2:materijali {name: "MaterijaliAR", tip:"mat", tekst: "Odgovori na pitanja Automatsko rezonovanje",putanja: "../materijali", ind: "0",vreme: "12.05.2016. 12:57:42"})
+create (materijali1:materijali {name: "MaterijaliMR",tip:"mat", tekst: "Skripta iz Mreznog racunarstva",putanja: "../materijali", ind: "1",vreme: 1471954244})
+create (materijali2:materijali {name: "MaterijaliAR", tip:"mat", tekst: "Odgovori na pitanja Automatsko rezonovanje",putanja: "../materijali", ind: "0",vreme: 1471947044})
 
 //Predmet -> Materijali
 create (mr16)-[:ima_post]->(materijali1)
 create (ar16)-[:ima_post]->(materijali2)
 
 //Obavestenje 
-create (obavestenje1:obavestenje {name: "ObavestenjeMSNR", tip:"obav",tekst: "Treba predati rad do kraja nedelje", ind: "1",vreme: "12.05.2016. 12:57:42"})
-create (obavestenje2:obavestenje {name: "MaterijaliMR", tip:"obav", tekst: "Skripta iz Mreznog racunarstva",ind: "0",vreme: "12.05.2016. 12:57:42"})
+create (obavestenje1:obavestenje {name: "ObavestenjeMSNR", tip:"obav",tekst: "Treba predati rad do kraja nedelje", ind: "1",vreme: 1471860644})
+create (obavestenje2:obavestenje {name: "MaterijaliMR", tip:"obav", tekst: "Skripta iz Mreznog racunarstva",ind: "0",vreme: 1471860644})
 
 //Predmet -> Obavestenje
 create (pbp16)-[:ima_post]->(obavestenje1)
 create (ar16)-[:ima_post]->(obavestenje2)
 
 //Glsanje
-create (glasanje1:glasanje {name: "GlasanjeIP", tip:"glas", tekst: "Odredjivanje termina ispita",ind: "1",vreme: "12.05.2016. 12:57:42"})
+create (glasanje1:glasanje {name: "GlasanjeIP", tip:"glas", tekst: "Odredjivanje termina ispita",ind: "1",vreme: 1471774244})
 
 //Opcija glasanja
 create (opcija1:opcija {name: "Opcija1", tekst: "28.06.", brGlasova:"5"})
@@ -223,7 +223,7 @@ create (MilanTuba)-[:objavio]->(obavestenje2)
 create (LjubicaPeleksic)-[:objavio]->(glasanje1)
 
 // Komentari
-create (komentarObavestenje1:komentar {name: "komentarObavestenje1", tekst: "Hvala",vreme: "12.05.2016. 12:57:42"})
+create (komentarObavestenje1:komentar {name: "komentarObavestenje1", tekst: "Hvala",vreme: 1471774244})
 
 // Komentar -> Post
 create (komentarObavestenje1)-[:u_postu]->(obavestenje1)
@@ -232,8 +232,8 @@ create (komentarObavestenje1)-[:u_postu]->(obavestenje1)
 create (NemanjaSubotic)-[:komentarisao]->(komentarObavestenje1)
 
 //Poruka
-create (poruka1:poruka {name: "Poruka1", tekst: "Posalji mi vezbe iz ar-a", vreme: "12.05.2016. 12:57:42"})
-create (poruka2:poruka {name: "Poruka1", tekst: "Hocu", vreme: "12.05.2016. 12:57:42"})
+create (poruka1:poruka {name: "Poruka1", tekst: "Posalji mi vezbe iz ar-a", vreme: 1471774244})
+create (poruka2:poruka {name: "Poruka1", tekst: "Hocu", vreme: 1471860644})
 
 //Konverzacija
 create(konverzacija1:konverzacija{})
