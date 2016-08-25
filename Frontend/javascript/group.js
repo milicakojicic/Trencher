@@ -2,11 +2,19 @@ var brPolja = 3;
 var ime = "#opcija" + brPolja;
 var arr = [];
 //testirati na predmetu Automatsko rezonovanje
-var id_grupe = 760;
-var id_korisnika = 781;
+var id_grupe = 620;
+var id_korisnika = 625;
 var k = 0;
+var imp = 0;
+var rez = 0;
+var glas= 0;
+var mat = 0;
 
 $( document ).ready(function() {
+
+    var parametar = getQueryParams(document.location.search);
+    var idGrupe = parametar.id;
+    console.log(idGrupe);
 
     //kada se krene pisati post
     $('#groupPost').bind('input propertychange', function() {
@@ -28,14 +36,9 @@ $( document ).ready(function() {
 
     });
 
-
-    var parametar = getQueryParams(document.location.search);
-    var idGrupe = parametar.id;
-    console.log(idGrupe);
     //napisati GET zahtev za podatke o grupi za taj idGrupe
 
     //napisati POST za insert u bazu
-
 
 
     //OBJAVA POST-a
@@ -120,9 +123,9 @@ $( document ).ready(function() {
             var korisnik = JSON.parse(data);
             console.log(korisnik);
 
-            ime_korisnika = korisnik.Name; console.log(ime_korisnika);
-            prezime_korisnika = korisnik.Surname; console.log(prezime_korisnika);
-            slika = korisnik.PicturePath; console.log(slika);
+            ime_korisnika = korisnik.Name;
+            prezime_korisnika = korisnik.Surname;
+            slika = korisnik.PicturePath;
 
             if(slika == ""){
               document.getElementById(res_slika).innerHTML += '<img src="images/default.png" class="demo-avatar" style="margin-right: 10px;">';
@@ -166,7 +169,6 @@ $( document ).ready(function() {
 
 
         //dodavanje opcija za glasanje u objavu nakon teksta
-
         imp = 0;
         mat = 0;
         rez = 0;
@@ -198,7 +200,6 @@ $( document ).ready(function() {
 
     });
 
-
     //GET za sve postove na odredjenoj grupi
     $.get("http://localhost:12345/postovi/" + id_grupe, function(data){
 
@@ -215,8 +216,6 @@ $( document ).ready(function() {
 
             var str2 = "author";
             var res1 = str2.concat(i.toString());
-
-
 
             div.innerHTML += '<div class="tip">' +
                                  '<span id=' + res1+ '>'+
@@ -268,10 +267,7 @@ $( document ).ready(function() {
 
 });
 
-var imp = 0;
-var rez = 0;
-var glas= 0;
-var mat = 0;
+
 
 function getQueryParams(qs) {
     qs = qs.split('+').join(' ');
