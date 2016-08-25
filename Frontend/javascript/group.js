@@ -2,8 +2,8 @@ var brPolja = 3;
 var ime = "#opcija" + brPolja;
 var arr = [];
 //testirati na predmetu Automatsko rezonovanje
-var id_grupe = 829;
-var id_korisnika = 834;
+var id_grupe = 620;
+var id_korisnika = 625;
 var k = 0;
 
 $( document ).ready(function() {
@@ -404,9 +404,4 @@ function poslednjaOpcija() {
 
     }
 
-}
-
-function prokaziProfil(id) {
-
-    console.log(id);
 }

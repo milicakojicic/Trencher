@@ -1,24 +1,48 @@
+var id_korisnika = 625;
+var kurseviOsobe = "";
+var kurseviSvi = "";
+
 $(document).ready(function(){
-    $.get("http://localhost:12345/kursevi", function(data){
-
-        var kursevi = JSON.parse(data);
-        var div = document.getElementById("sveGrupe");
-
-        for(var i = 0; i < kursevi.length; i++){
 
 
-            div.innerHTML += '<div class="mdl-list__item predmeti"> '+
-                                '<span class="mdl-list__item-primary-content"> '+
-                                    '<i class="material-icons mdl-list__item-avatar">school</i> '+
-                                    '<span>' + kursevi[i].Name + '  ' + kursevi[i].Year + '</span> '+
-                                '</span> '+
-                                '<input type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect '+
-                                'mdl-button--accent join" value="Pridruzi se" onclick="pridruziSeGrupi(this.id)" id="' + kursevi[i].ID + '"> '+
-                            '</div> ';
+    //uzimanje podataka o svim kursevima
+    kurseviSvi = $.parseJSON(
+        $.ajax({
+            'async': false,
+            'type': "GET",
+            'dataType': 'json',
+            'global': false,
+            'url': "http://localhost:12345/kursevi"
+        }).responseText);
 
-        }
+    //MICI OVO JE ZA TEBE
+    //uzimanje podataka o kursevima prijaveljene osobe
+     kurseviOsobe = $.parseJSON(
+        $.ajax({
+            'async': false,
+            'type': "GET",
+            'dataType': 'json',
+            'global': false,
+            'url': "http://localhost:12345/studenti/625/kursevi"
+        }).responseText);
 
-    });
+    //div u kome treba da se prikazu kursevi
+    var div = document.getElementById("sveGrupe");
+
+    //prikazivanje kurseva koje prati ulogovana osoba sa dugmetom PRIDRUZEN
+    for(var i = 0; i < kurseviOsobe.length; i++){
+
+        div.innerHTML += '<div class="mdl-list__item predmeti"> '+
+            '<span class="mdl-list__item-primary-content"> '+
+            '<i class="material-icons mdl-list__item-avatar">school</i> '+
+            '<span>' + kurseviOsobe[i].Name + '  ' + kurseviOsobe[i].Year + '</span> '+
+            '</span> '+
+            '<input type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect '+
+            'mdl-button--accent join" value="Pridružen" onclick="pridruziSeGrupi(this.id)" id="' + kurseviOsobe[i].ID + '"> '+
+            '</div> ';
+
+    }
+
 
 });
 
