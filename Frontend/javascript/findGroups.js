@@ -1,4 +1,4 @@
-var id_korisnika = 676;
+var id_korisnika = 727;
 var kurseviOsobe = "";
 var kurseviSvi = "";
 //niz u kome se cuva ID svake grupe koju korisnik prati
@@ -74,6 +74,8 @@ $(document).ready(function(){
 
         idGrupe = this.id;
 
+        console.log(idGrupe + " " + id_korisnika);
+
         //ako je korisnik vec trazio da se pridruzi grupi, zahtev se ne salje
         if(!document.getElementById(idGrupe).value == "Pridruzi se"){
             console.log(document.getElementById(idGrupe).value);
@@ -86,7 +88,7 @@ $(document).ready(function(){
 
         $.ajax({
             type: 'post',
-            url: 'url',
+            url: 'http://localhost:12345/kursevi/prijavljivanje',
             data: JSON.stringify( {
                 "ID_korisnika" : id_korisnika,
                 "ID_grupe" : idGrupe
