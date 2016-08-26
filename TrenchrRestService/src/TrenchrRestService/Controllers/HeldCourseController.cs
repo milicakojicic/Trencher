@@ -42,8 +42,6 @@ namespace TrenchrRestService.Controllers
                 courses.Add(new HeldCourse(o));
 
             return Ok(JsonConvert.SerializeObject(courses, Formatting.Indented));
-
-         
         }
 
         //jedan odredjen kurs
@@ -58,6 +56,20 @@ namespace TrenchrRestService.Controllers
             return Ok(JsonConvert.SerializeObject(courses, Formatting.Indented));
         }
 
+
+        //vracanje opcija glasanja za dati post
+        [Route("postovi/{id}/opcije")]
+        [HttpGet]
+        public IActionResult VratiOpcijeGlasanja(long id)
+        {
+            var stmnt = $"MATCH (o:opcija)-[:u_glasanju]->(g:glasanje) where id(g) = {id} return id(o) as id, id(g) as roditelj_id, o.tekst as text, o.brGlasova as broj_glasova";
+            var rezOpcije = Neo4jClient.Execute(stmnt);
+            var opcije = new List<VoteOption>();
+            foreach (var o in rezOpcije)
+                opcije.Add(new VoteOption(o));
+
+            return Ok(JsonConvert.SerializeObject(opcije, Formatting.Indented));
+        }
 
 
     }

@@ -203,8 +203,8 @@ create (ar16)-[:ima_post]->(obavestenje2)
 create (glasanje1:glasanje {name: "GlasanjeIP", tip:"glas", tekst: "Odredjivanje termina ispita",ind: "1",vreme: 1471774244})
 
 //Opcija glasanja
-create (opcija1:opcija {name: "Opcija1", tekst: "28.06.", brGlasova:"5"})
-create (opcija2:opcija {name: "Opcija2", tekst: "27.05.", brGlasova:"4"})
+create (opcija1:opcija {name: "Opcija1", tekst: "28.06.", brGlasova:5})
+create (opcija2:opcija {name: "Opcija2", tekst: "27.05.", brGlasova:4})
 
 //Glasanje -> Opcija
 create (opcija1)-[:u_glasanju]->(glasanje1)
@@ -212,6 +212,11 @@ create (opcija2)-[:u_glasanju]->(glasanje1)
 
 //Predmet -> Glasanje
 create (ar16)-[:ima_post]->(glasanje1)
+
+//Korisnik -> glasanje
+create(MilicaKojicic)-[:glasao]->(opcija1)
+create(LjubicaPeleksic)-[:glasao]->(opcija2)
+
 
 //Osoba -> Objava
 create (MilicaKojicic)-[:objavio]->(rezultati1)

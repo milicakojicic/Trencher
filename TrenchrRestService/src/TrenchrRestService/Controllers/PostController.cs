@@ -94,7 +94,17 @@ namespace TrenchrRestService.Controllers
         public IActionResult NovoGlasanje([FromBody] JObject jsonBody)
         {
             var glasanje = JsonConvert.DeserializeObject<Vote>(jsonBody.ToString(), new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Ignore });
-            glasanje.SacuvajGlasanje();
+            var id = glasanje.SacuvajGlasanje();
+            string jsonString = JsonConvert.SerializeObject(id);
+            return Created("lokacija", jsonString);
+        }
+
+        [Route("postovi/glasanje/opcija")]
+        [HttpPost]
+        public IActionResult NovaOpcija([FromBody] JObject jsonBody)
+        {
+            var opcija = JsonConvert.DeserializeObject<VoteOption>(jsonBody.ToString(), new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Ignore });
+            opcija.SacuvajOpcijuGlasanja();
             return Created("lokacija", "radi");
         }
 

@@ -34,12 +34,12 @@ namespace TrenchrRestService.Models
             var stmnt = "MATCH (ok:odrzan_kurs), (autor) " +
                        $"WHERE id(ok) = {KursID} AND id(autor) = {UserId} " +
                         " WITH ok,autor " +
-                        "CREATE (ok)-[:ima_post]->(o:{" +
+                        "CREATE (ok)-[:ima_post]->(o:glasanje{" +
                         $" name : '{Caption}', " +
                         $" tekst : '{Text}', " +
                         $" tip : '{Type}', " +
                         $" ind :' {Important}', " +
-                        $" vreme : '{Time}', " +
+                        $" vreme : {Time} " +
                          "})<-[:objavio]-(autor) RETURN id(o) as id";
             var result = Neo4jClient.Execute(stmnt);
             return (long)result.FirstOrDefault()["id"];
