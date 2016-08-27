@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using TrenchrRestService;
@@ -77,7 +79,31 @@ namespace TrenchrRestService.Controllers
 
         }
 
-        
+        [Route("korisnici/{id}")]
+        [HttpPut]
+        public IActionResult updateUser([FromBody] JObject jsonBody, long id)
+        {
+            var stmnt = new StringBuilder("MATCH (u) SET ");
+            var updatedProperties = jsonBody.Properties();
+            var property = updatedProperties.First();
+            appendProperty(property, stmnt);
+            while (property.Next != null)
+            {
+                stmnt.Append(", ");
+                property = (JProperty)property.Next;
+                appendProperty(property, stmnt);
+            }
+            stmnt.Append($"WHERE id(u) = {id} ");
+            Neo4jClient.Execute(stmnt.ToString());
+            return Ok();
+        }
 
+        private void appendProperty(JProperty property, StringBuilder builder)
+        {
+            if (property.Value.Type == JTokenType.String)
+                builder.Append($"u.{property.Name} = '{property.Value}' ");
+            else
+                builder.Append($"u.{property.Name} = {property.Value} ");
+        }  
     }
 }
