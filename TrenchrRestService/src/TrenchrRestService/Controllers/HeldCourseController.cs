@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,6 +58,23 @@ namespace TrenchrRestService.Controllers
         }
 
 
+       
+       // prijavljivanje studenta na kurs
+        [Route("kursevi/prijavljivanje")]
+        [HttpPost]
+        public IActionResult PrijaviStudentaNaKurs([FromBody] JObject jsonBody)
+        {
+            dynamic par = jsonBody;
+            long id_korisnika = par.ID_korisnika;
+            long id_grupe = par.ID_grupe;
+
+            var stmnt = "match (ok:odrzan_kurs),(s:student) " + 
+                        $"WHERE id(ok) = {id_grupe} and id(s) = {id_korisnika} WITH ok,s CREATE (s)-[:pohadja]->(ok) " ;
+
+            var result = Neo4jClient.Execute(stmnt); 
+                    return Created("lokacija", "radi");
+        }
+
         //vracanje opcija glasanja za dati post
         [Route("postovi/{id}/opcije")]
         [HttpGet]
@@ -70,7 +88,6 @@ namespace TrenchrRestService.Controllers
 
             return Ok(JsonConvert.SerializeObject(opcije, Formatting.Indented));
         }
-
 
     }
 }

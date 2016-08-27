@@ -8,6 +8,7 @@ var opcije_za_glasanje = [];
 //testirati na predmetu Automatsko rezonovanje
 var id_grupe = 1037;
 var id_korisnika = 1042;
+
 var k = 0;
 
 $( document ).ready(function() {
@@ -192,6 +193,7 @@ $( document ).ready(function() {
                     'contentType': "application/json; charset=utf-8"
                 }).responseText);
 
+            document.getElementById(objava_glasanje).id = odgovor;
 
 
             for (var brojac = 0; brojac<opcije_za_glasanje.length; brojac++) {
@@ -247,8 +249,7 @@ $( document ).ready(function() {
             var str2 = "author";
             var res1 = str2.concat(i.toString());
 
-            var g = "postovi";
-            var f = g.concat(i.toString());
+            var odgovor1 = postovi[i].ID;
 
 
             div.innerHTML += '<div class="tip">' +
@@ -258,8 +259,8 @@ $( document ).ready(function() {
                                     //ovde idu tagovi
                                  '</div>' +
                              '</div>'+
-                             '<div class="objava" id='+f+'>' +
-                                 postovi[i].Text +
+                             '<div class="objava" id='+odgovor1+'>' +
+                                 postovi[i].Text + odgovor1 +
                              '</div>' +
                              '<div class="mdl-textfield mdl-js-textfield komentar">'+
                                  '<textarea class="mdl-textfield__input" type="text" rows="5" id="koment"></textarea>'+
@@ -284,7 +285,7 @@ $( document ).ready(function() {
 
                 console.log(postovi[i].Type);
                 console.log("Milica");
-                console.log(f);
+                console.log(odgovor1);
                 document.getElementById(res).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Glasanje</span></div>';
 
                 //vrati opcije i stavi ga u pravi post
@@ -294,7 +295,7 @@ $( document ).ready(function() {
                     var glasanje = JSON.parse(data);
 
                     for(var l = 0; l < glasanje.length; l++){
-                        document.getElementById(f).innerHTML += '' +
+                        document.getElementById(odgovor1).innerHTML += '' +
                             '<div class="mdl-grid glas_ceo" id="div_za_opcije">' +
                                 '<div class="mdl-cell mdl-cell--10-col opcija">' +
                                      glasanje[l].Text +
@@ -453,9 +454,4 @@ function poslednjaOpcija() {
 
     }
 
-}
-
-function prokaziProfil(id) {
-
-    console.log(id);
 }
