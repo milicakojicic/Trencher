@@ -101,9 +101,9 @@ namespace TrenchrRestService.Controllers
         private void appendProperty(JProperty property, StringBuilder builder)
         {
             if (property.Value.Type == JTokenType.String)
-                builder.Append($"u.{property.Name} = '{property.Value}' ");
+                builder.Append($"u.`{property.Name}` = '{property.Value}' ");
             else
-                builder.Append($"u.{property.Name} = {property.Value} ");
+                builder.Append($"u.`{property.Name}` = {property.Value} ");
         }  
     }
 }
