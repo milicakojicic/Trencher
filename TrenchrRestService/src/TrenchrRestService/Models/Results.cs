@@ -40,7 +40,7 @@ namespace TrenchrRestService.Models
                         $" tekst : '{Text}', " +
                         $" tip : '{Type}', " +
                         $" ind :' {Important}', " +
-                        $" vreme : '{Time}', " +
+                        $" vreme : {Time}, " +
                         $" putanja : '{Path}'" +
                          "})<-[:objavio]-(autor) RETURN id(o) as id";
 

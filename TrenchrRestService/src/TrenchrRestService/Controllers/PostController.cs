@@ -14,7 +14,7 @@ namespace TrenchrRestService.Controllers
     
     public class PostController : ApiController
     {
-
+        //TODO promeni rutu
         //postovi koji pripadaju nekom predmetu
         [Route("postovi/{id}")]
         [HttpGet]

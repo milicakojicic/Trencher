@@ -1,5 +1,5 @@
 //id studenta ciji je profil
-var id = 575;
+var id_korisnika = 825;
 
 function pogledajGrupu(idGrupe) {
     url = "group.html";
@@ -9,9 +9,7 @@ function pogledajGrupu(idGrupe) {
 $(document).ready(function() {
 
     //GET za sve grupe koje korisnik prati
-    $.get("http://localhost:12345/kursevi/" + id, function(data){
-
-        console.log(data);
+    $.get("http://localhost:12345/studenti/" + id_korisnika + "/kursevi", function(data){
 
         var kursevi = JSON.parse(data);
         var div = document.getElementById("mojeGrupe");
@@ -23,7 +21,7 @@ $(document).ready(function() {
             div.innerHTML += '<div class="mdl-list__item predmeti" onclick="pogledajGrupu(this.id)" id="'+ kursevi[i].ID +'"> '+
                                 '<span class="mdl-list__item-primary-content"> '+
                                 '<i class="material-icons mdl-list__item-avatar">school</i> '+
-                                '<span>' + kursevi[i].Name + kursevi[i].Year +'</span> '+
+                                '<span>' + kursevi[i].Name + " " +kursevi[i].Year +'</span> '+
                                 '</span> '+
                             '</div>';
 
@@ -33,7 +31,7 @@ $(document).ready(function() {
 
     });
 
-    //napisati GEt za sve postove koji su u grupama koje korisnik prati
+    //GET za sve postove koji su u grupama koje korisnik prati
 
 
 });

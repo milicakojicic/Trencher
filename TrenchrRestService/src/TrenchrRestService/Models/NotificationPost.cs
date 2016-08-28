@@ -36,7 +36,7 @@ namespace TrenchrRestService.Models
                         $" tekst : '{Text}', " +
                         $" tip : '{Type}', " +
                         $" ind :' {Important}', " +
-                        $" vreme : '{Time}'" +
+                        $" vreme : {Time}" +
                          "})<-[:objavio]-(autor) RETURN id(o) as id";
 
             var result = Neo4jClient.Execute(stmnt);
