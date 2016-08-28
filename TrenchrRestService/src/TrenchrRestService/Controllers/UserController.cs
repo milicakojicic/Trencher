@@ -13,7 +13,7 @@ using TrenchrRestService.Models;
 
 namespace TrenchrRestService.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class UserController : ApiController
     {
 

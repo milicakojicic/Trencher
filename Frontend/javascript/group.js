@@ -9,8 +9,8 @@ var mat = 0;
 var opcije_za_glasanje = [];
 
 //testirati na predmetu Automatsko rezonovanje
-var id_grupe = 820;
-var id_korisnika = 825;
+var id_grupe = 1155;
+var id_korisnika = 1161;
 
 $( document ).ready(function() {
 
