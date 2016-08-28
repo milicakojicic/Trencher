@@ -1,17 +1,21 @@
 var brPolja = 3;
 var ime = "#opcija" + brPolja;
 var arr = [];
-
+var imp = 0;
+var rez = 0;
+var glas= 0;
+var mat = 0;
 //niz opcija
 var opcije_za_glasanje = [];
 
 //testirati na predmetu Automatsko rezonovanje
-var id_grupe = 1037;
-var id_korisnika = 1042;
-
-var k = 0;
+var id_grupe = 1155;
+var id_korisnika = 1161;
 
 $( document ).ready(function() {
+
+    var parametar = getQueryParams(document.location.search);
+    var idGrupe = parametar.id;
 
     //ajax poziv za info o predmetu
     $.get("http://localhost:12345/kursevi/" + id_grupe, function(data) {
@@ -43,139 +47,82 @@ $( document ).ready(function() {
 
     });
 
-
-    var parametar = getQueryParams(document.location.search);
-    var idGrupe = parametar.id;
-    console.log(idGrupe);
-
     //OBJAVA POST-a
     $('#publish').click(function() {
-        k++; //svaki post ima jedinstven id
-        var prosli = document.getElementById("groupPosts").innerHTML;
+
         //vrednost textarea
         var text = document.getElementById("groupPost").value;
-        var objava = "";
-        var glasanje = "";
         var tip = "";
         var ind = "0";
         var seconds = new Date().getTime() / 1000;
-
-        var ime_korisnika = "";
-        var prezime_korisnika = "";
-        var slika = "";
-        var a = "slika";
-        var b = "tipovi";
-        var res_slika = a.concat(k.toString());
-        var tipovi = b.concat(k.toString());
-
-        var c = "objava";
-        var objava_glasanje = c.concat(k.toString());
-
         arr = [];
+        var path = "";
+
         document.getElementById("publish").disabled = true;
         document.getElementById("publish").style.opacity = 0.5;
         document.getElementById("groupPost").value = "";
 
-
-        //gornji deo, slika i tagovi
-        objava += '<div class="tip">' +
-                    '<span id= '+res_slika+'>'+
-                    '</span>' +
-                    '<div class="mdl-grid tipovi" id='+ tipovi +'>' +
-                        //ovde idu tagovi
-                    '</div>' +
-                  '</div>';
-
-        if(glas != 0){
-
-            glasanje+= "<br>";
-
-            for(var i = 1; i <= brPolja; i++) {
-                if(document.getElementById("opcija" + i) != null){
-
-                    opcije_za_glasanje.push( document.getElementById("opcija" + i).value);
-
-                    glasanje += '<div class="mdl-grid glas_ceo">' +
-
-                        '<div class="mdl-cell mdl-cell--10-col opcija">' +
-                        document.getElementById("opcija" + i).value +
-                        '</div>' +
-                        '<div class="mdl-cell mdl-cell--1-col">' +
-                        '<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox2"> '+
-                        '<input type="checkbox" id="checkbox2" class="mdl-checkbox__input"> ' +
-                        '</label>' +
-                        '</div>'+
-                        '<div class="mdl-cell mdl-cell--1-col glas">' +
-                        '2+' +
-                        '</div>' +
-                        '</div>';
-
-                    }
-
-                document.getElementById("opcija" + i).value = "";
-            }
-
-            document.getElementById("poll").style.display = "none";
-
-        }
-
-
-
-        document.getElementById("groupPosts").innerHTML = objava +
-            '<div class="objava" id= '+objava_glasanje+'> ' +
-            text + glasanje +  '</div>' + '<div class="mdl-textfield mdl-js-textfield komentar">'+
-            '<textarea class="mdl-textfield__input" type="text" rows="5" id="koment1"></textarea>'+
-            '<label class="mdl-textfield__label" for="koment1">Napišite komentar...</label>'+
-            '</div>'+
-            prosli;
-
-
-          $.get("http://localhost:12345/korisnici/" + id_korisnika, function(data) {
-
-            var korisnik = JSON.parse(data);
-            console.log(korisnik);
-
-            ime_korisnika = korisnik.Name; console.log(ime_korisnika);
-            prezime_korisnika = korisnik.Surname; console.log(prezime_korisnika);
-            slika = korisnik.PicturePath; console.log(slika);
-
-            if(slika == ""){
-              document.getElementById(res_slika).innerHTML += '<img src="images/default.png" class="demo-avatar" style="margin-right: 10px;">';
-              document.getElementById(res_slika).innerHTML += ime_korisnika + " " + prezime_korisnika;
-            }
-
-            else {
-              document.getElementById(res_slika).innerHTML += '<img src="'+ slika +'"  class="demo-avatar" style="margin-right: 10px;">';
-              document.getElementById(res_slika).innerHTML += ime_korisnika + " " + prezime_korisnika;
-            }
-
-          });
-
-
         if(imp != 0){
-            document.getElementById(tipovi).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Vazno</span></div>';
             ind = "1";
-
         }
 
         if(mat != 0){
-            document.getElementById(tipovi).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center"> Materijali</span></div>';
             tip = "mat";
+            //AJAX za unos materijala
+            $.ajax({
+                'type': 'post',
+                'async': false,
+                'url': 'http://localhost:12345/postovi/materijali',
+                'data': JSON.stringify({
+                    "KursID": id_grupe,
+                    "Caption": "Test", //obrisati
+                    "Type": tip, //imam
+                    "Text": text,
+                    "Important": ind, //imam
+                    "Time": seconds,
+                    "UserId": id_korisnika,
+                    "Path" : path
+                }),
+                'contentType': "application/json; charset=utf-8"
+            });
         }
 
         else if(rez != 0){
-            document.getElementById(tipovi).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Rezultati</span></div>';
             tip = "rez";
+            //AJAX za unos rezultata
+            $.ajax({
+                'type': 'post',
+                'async': false,
+                'url': 'http://localhost:12345/postovi/rezultati',
+                'data': JSON.stringify({
+                    "KursID": id_grupe,
+                    "Caption": "Test", //obrisati
+                    "Type": tip, //imam
+                    "Text": text,
+                    "Important": ind, //imam
+                    "Time": seconds,
+                    "UserId": id_korisnika,
+                    "Path" : path
+                }),
+                'contentType': "application/json; charset=utf-8"
+            });
         }
 
         else if (glas != 0) {
-            document.getElementById(tipovi).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Glasanje</span></div>';
             tip = "glas";
 
-
+            //uzimanje unetih opcija glasanja
+            for(var i = 1; i <= brPolja; i++) {
+                if(document.getElementById("opcija" + i) != null){
+                    opcije_za_glasanje.push( document.getElementById("opcija" + i).value);
+                }
+                //ciscenje opcija za sl glasanje
+                document.getElementById("opcija" + i).value = "";
+            }
+            //sklanjanje opcija za glasanje
+            document.getElementById("poll").style.display = "none";
 
             //ajax poziv za insert u bazu i vracanje id-a unetog posta
-
             var odgovor = $.parseJSON(
                 $.ajax({
                     'type': 'post',
@@ -193,13 +140,11 @@ $( document ).ready(function() {
                     'contentType': "application/json; charset=utf-8"
                 }).responseText);
 
-            document.getElementById(objava_glasanje).id = odgovor;
-
-
-            for (var brojac = 0; brojac<opcije_za_glasanje.length; brojac++) {
+            for (var brojac = 0; brojac < opcije_za_glasanje.length; brojac++) {
                 //pridruzivanje opcije postu
                 $.ajax({
                     'type': 'post',
+                    'async' : false,
                     'url': 'http://localhost:12345/postovi/glasanje/opcija',
                     'data': JSON.stringify({
                         "ParentID": odgovor,
@@ -208,17 +153,17 @@ $( document ).ready(function() {
                     'contentType': "application/json; charset=utf-8"
                 });
             }
+
+            //brisanje niza za opcije
+            opcije_za_glasanje = [];
         }
 
-        else
+        else {
             tip = "obav";
+            //AJAX za unos obavestenja
+        }
 
-        console.log(objava);
-        console.log(text);
-
-
-        //dodavanje opcija za glasanje u objavu nakon teksta
-
+        //resetovanje indikatore za vrstu posta i sklanjanje bordera i opcija za postove
         imp = 0;
         mat = 0;
         rez = 0;
@@ -229,38 +174,144 @@ $( document ).ready(function() {
         document.getElementById("important").style.border = "0px solid teal";
         document.getElementById("groupPost").placeholder = "Napisite post...";
 
-    }); //KRAJ PRITISKA NA DUGME
+        document.getElementById("rezultati").style.display = "none";
+        document.getElementById("materijali").style.display = "none";
 
+        document.getElementById("vote").disabled = false;
+        document.getElementById("materials").disabled = false;
+        document.getElementById("results").disabled = false;
+
+
+        //brisanje sadrzaja strane i ucitavanje postova sa unetim postom
+        document.getElementById("groupPosts").innerHTML = "";
+
+        //GET za sve postove sortirane po vremenu objave
+        $.get("http://localhost:12345/postovi/" + id_grupe, function(data){
+
+            var postovi = JSON.parse(data);
+            //div gde se prikazuju postovi
+            var div = document.getElementById("groupPosts");
+
+            //prolazi se kroz sve postove
+            for(var i = 0; i < postovi.length; i++){
+
+                var id_posta = postovi[i].ID;
+
+                console.log("ID_posta 1 " + id_posta);
+
+                //pravljenje id za html elemente
+                var autor = "autor" + id_posta;
+                var tipovi = "tipovi" + id_posta;
+
+                div.innerHTML += '<div class="tip">' +
+                    '<span id=' + autor + '>'+
+                        // ubacivanje autora
+                    '</span>' +
+                    '<div class="mdl-grid tipovi" id=' + tipovi + '>' +
+                        //ovde idu tagovi
+                    '</div>' +
+                    '</div>'+
+                    '<div class="objava" id='+ id_posta +'>' +
+                    postovi[i].Text + id_posta +
+                    '</div>' +
+                    '<div class="mdl-textfield mdl-js-textfield komentar">'+
+                    '<textarea class="mdl-textfield__input" type="text" rows="5" id="koment"></textarea>'+
+                    '<label class="mdl-textfield__label" for="koment">Napišite komentar...</label>'+
+                    '</div>';
+
+
+                if (postovi[i].Important === "1") {
+                    document.getElementById(tipovi).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Vazno</span></div>';
+                }
+
+                if (postovi[i].Type === "mat") {
+                    document.getElementById(tipovi).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Materijali</span></div>';
+                }
+
+                else if (postovi[i].Type === "rez") {
+                    document.getElementById(tipovi).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Rezultati</span></div>';
+                }
+
+                else if (postovi[i].Type === "glas") {
+
+                    document.getElementById(tipovi).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Glasanje</span></div>';
+
+                    console.log("ID_posta 2 " + id_posta);
+
+                    //vrati opcije i stavi ga u pravi post
+                    $.ajax({
+                        'type': 'get',
+                        'url': 'http://localhost:12345/postovi/' + id_posta + '/opcije',
+                        'async': false,
+                        'success' : function(data) {
+                            var glasanje = JSON.parse(data);
+
+                            console.log("ID_posta 3 " + id_posta);
+
+                            for(var l = 0; l < glasanje.length; l++){
+                                document.getElementById(id_posta).innerHTML += '' +
+                                    '<div class="mdl-grid glas_ceo">' +
+                                    '<div class="mdl-cell mdl-cell--10-col opcija">' +
+                                    glasanje[l].Text +
+                                    '</div>' +
+                                    '<div class="mdl-cell mdl-cell--1-col">' +
+                                    '<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox2"> '+
+                                    '<input type="checkbox" id="checkbox2" class="mdl-checkbox__input"> ' +
+                                    '</label>' +
+                                    '</div>'+
+                                    '<div class="mdl-cell mdl-cell--1-col glas">' +
+                                    glasanje[l].BrojGlasova +
+                                    '</div>' +
+                                    '</div>';
+                            }
+                        }
+                    });
+
+                }
+
+
+                //profil slika za autora posta
+                if(postovi[i].PicturePath == ""){
+                    document.getElementById(autor).innerHTML += '<img src="images/default.png" class="demo-avatar" style="margin-right: 10px;">';
+                    document.getElementById(autor).innerHTML += postovi[i].AuthorInfo;
+                }
+                else {
+                    document.getElementById(autor).innerHTML += '<img src="'+ postovi[i].PicturePath +'"  class="demo-avatar" style="margin-right: 10px;">';
+                    document.getElementById(autor).innerHTML += postovi[i].AuthorInfo;
+                }
+
+            }
+
+        });
+
+    }); //KRAJ PRITISKA NA DUGME
 
     //GET za sve postove na odredjenoj grupi
     $.get("http://localhost:12345/postovi/" + id_grupe, function(data){
 
-        console.log(data);
-
         var postovi = JSON.parse(data);
+        //div gde se prikazuju postovi
         var div = document.getElementById("groupPosts");
 
         //prolazi se kroz sve postove
         for(var i = 0; i < postovi.length; i++){
 
-            var str1 = "post";
-            var res = str1.concat(i.toString());
+            var id_posta = postovi[i].ID;
 
-            var str2 = "author";
-            var res1 = str2.concat(i.toString());
-
-            var odgovor1 = postovi[i].ID;
-
+            //pravljenje id za html elemente
+            var autor = "autor" + id_posta;
+            var tipovi = "tipovi" + id_posta;
 
             div.innerHTML += '<div class="tip">' +
-                                 '<span id=' + res1+ '>'+
+                                 '<span id=' + autor + '>'+
+                                    // ubacivanje autora
                                  '</span>' +
-                                 '<div class="mdl-grid tipovi" id=' + res + '>' +
+                                 '<div class="mdl-grid tipovi" id=' + tipovi + '>' +
                                     //ovde idu tagovi
                                  '</div>' +
                              '</div>'+
-                             '<div class="objava" id='+odgovor1+'>' +
-                                 postovi[i].Text + odgovor1 +
+                             '<div class="objava" id='+ id_posta +'>' +
+                                 postovi[i].Text +
                              '</div>' +
                              '<div class="mdl-textfield mdl-js-textfield komentar">'+
                                  '<textarea class="mdl-textfield__input" type="text" rows="5" id="koment"></textarea>'+
@@ -269,59 +320,59 @@ $( document ).ready(function() {
 
 
             if (postovi[i].Important === "1") {
-                document.getElementById(res).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Vazno</span></div>';
+                document.getElementById(tipovi).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Vazno</span></div>';
             }
 
             if (postovi[i].Type === "mat") {
-                document.getElementById(res).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Materijali</span></div>';
+                document.getElementById(tipovi).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Materijali</span></div>';
             }
 
-
             else if (postovi[i].Type === "rez") {
-                document.getElementById(res).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Rezultati</span></div>';
+                document.getElementById(tipovi).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Rezultati</span></div>';
             }
 
             else if (postovi[i].Type === "glas") {
 
-                console.log(postovi[i].Type);
-                console.log("Milica");
-                console.log(odgovor1);
-                document.getElementById(res).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Glasanje</span></div>';
+                document.getElementById(tipovi).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Glasanje</span></div>';
 
                 //vrati opcije i stavi ga u pravi post
-                $.get("http://localhost:12345/postovi/" + postovi[i].ID + "/opcije", function(data){
+                $.ajax({
+                    'type': 'get',
+                    'url': 'http://localhost:12345/postovi/' + id_posta + '/opcije',
+                    'async': false,
+                    'success' : function(data) {
+                        var glasanje = JSON.parse(data);
 
-
-                    var glasanje = JSON.parse(data);
-
-                    for(var l = 0; l < glasanje.length; l++){
-                        document.getElementById(odgovor1).innerHTML += '' +
-                            '<div class="mdl-grid glas_ceo" id="div_za_opcije">' +
+                        for(var l = 0; l < glasanje.length; l++){
+                            document.getElementById(id_posta).innerHTML += '' +
+                                '<div class="mdl-grid glas_ceo">' +
                                 '<div class="mdl-cell mdl-cell--10-col opcija">' +
-                                     glasanje[l].Text +
+                                glasanje[l].Text +
                                 '</div>' +
                                 '<div class="mdl-cell mdl-cell--1-col">' +
-                                    '<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox2"> '+
-                                    '<input type="checkbox" id="checkbox2" class="mdl-checkbox__input"> ' +
-                                    '</label>' +
+                                '<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox2"> '+
+                                '<input type="checkbox" id="checkbox2" class="mdl-checkbox__input"> ' +
+                                '</label>' +
                                 '</div>'+
                                 '<div class="mdl-cell mdl-cell--1-col glas">' +
-                                   glasanje[l].BrojGlasova +
+                                glasanje[l].BrojGlasova +
                                 '</div>' +
-                            '</div>';
+                                '</div>';
+                        }
                     }
                 });
+
             }
 
 
-            //profil slika
+            //profil slika za autora posta
             if(postovi[i].PicturePath == ""){
-                document.getElementById(res1).innerHTML += '<img src="images/default.png" class="demo-avatar" style="margin-right: 10px;">';
-                document.getElementById(res1).innerHTML += postovi[i].AuthorInfo;
+                document.getElementById(autor).innerHTML += '<img src="images/default.png" class="demo-avatar" style="margin-right: 10px;">';
+                document.getElementById(autor).innerHTML += postovi[i].AuthorInfo;
             }
             else {
-                document.getElementById(res1).innerHTML += '<img src="'+ postovi[i].PicturePath +'"  class="demo-avatar" style="margin-right: 10px;">';
-                document.getElementById(res1).innerHTML += postovi[i].AuthorInfo;
+                document.getElementById(autor).innerHTML += '<img src="'+ postovi[i].PicturePath +'"  class="demo-avatar" style="margin-right: 10px;">';
+                document.getElementById(autor).innerHTML += postovi[i].AuthorInfo;
             }
 
         }
@@ -330,11 +381,7 @@ $( document ).ready(function() {
 
 });
 
-var imp = 0;
-var rez = 0;
-var glas= 0;
-var mat = 0;
-
+//uzimanje argumenata iz url-a
 function getQueryParams(qs) {
     qs = qs.split('+').join(' ');
 
@@ -349,6 +396,7 @@ function getQueryParams(qs) {
     return params;
 }
 
+//stavljanje bordera oko prikaza VAZNO
 function dodajVazno() {
     if(imp == 0) {
         document.getElementById("important").style.border = "1px solid teal";
@@ -360,6 +408,7 @@ function dodajVazno() {
     }
 }
 
+//stavljanje bordera oko prikaza REZULTATI i dugmeta za UPLOAD
 function dodajRezultati() {
     if(rez == 0) {
         document.getElementById("results").style.border = "1px solid teal";
@@ -368,6 +417,9 @@ function dodajRezultati() {
         document.getElementById("rezultati").style.display = "block";
         document.getElementById("rezultati").innerHTML += ' <label for="files_results" class="btn">Dodajte rezultate</label>' +
             '<input id="files_results" style="visibility:hidden;" type="file">';
+
+        document.getElementById("vote").disabled = true;
+        document.getElementById("materials").disabled = true;
     }
     else {
         document.getElementById("results").style.border = "0px solid teal";
@@ -375,29 +427,35 @@ function dodajRezultati() {
 
         document.getElementById("rezultati").style.display = "none";
         document.getElementById("rezultati").innerHTML = "";
+
+        document.getElementById("vote").disabled = false;
+        document.getElementById("materials").disabled = false;
     }
 
 }
 
+//stavljanje bordera oko prikaza GLASANJE
 function dodajGlasanje() {
     if(glas == 0) {
         document.getElementById("vote").style.border = "1px solid teal";
         document.getElementById("poll").style.display = "block";
         glas = 1;
+
+        document.getElementById("results").disabled = true;
+        document.getElementById("materials").disabled = true;
     }
     else {
         document.getElementById("vote").style.border = "0px solid teal";
         document.getElementById("poll").style.display = "none";
         glas = 0;
+
+        document.getElementById("results").disabled = false;
+        document.getElementById("materials").disabled = false;
     }
-
-
-
-    console.log(arr);
-
 
 }
 
+//stavljanje bordera oko prikaza MATERIJALI i dugmeta za UPLOAD
 function dodajMaterijali() {
     if(mat == 0) {
         document.getElementById("materials").style.border = "1px solid teal";
@@ -407,12 +465,19 @@ function dodajMaterijali() {
         document.getElementById("materijali").innerHTML += ' <label for="files" class="btn">Dodajte materijale</label>' +
            '<input id="files" style="visibility:hidden;" type="file">';
 
+        document.getElementById("vote").disabled = true;
+        document.getElementById("results").disabled = true;
+
     }
     else {
         document.getElementById("materials").style.border = "0px solid teal";
         mat = 0;
         document.getElementById("materijali").style.display = "none";
         document.getElementById("materijali").innerHTML = "";
+
+        document.getElementById("vote").disabled = false;
+        document.getElementById("results").disabled = false;
+
     }
 }
 
