@@ -177,6 +177,11 @@ $( document ).ready(function() {
         document.getElementById("rezultati").style.display = "none";
         document.getElementById("materijali").style.display = "none";
 
+        document.getElementById("vote").disabled = false;
+        document.getElementById("materials").disabled = false;
+        document.getElementById("results").disabled = false;
+
+
         //brisanje sadrzaja strane i ucitavanje postova sa unetim postom
         document.getElementById("groupPosts").innerHTML = "";
 

@@ -32,7 +32,7 @@ $(document).ready(function() {
     });
 
     //GET za sve postove koji su u grupama koje korisnik prati
-    $.get("http://localhost:12345/student/" + id_korisnika + '/predmeti/kursevi', function(data){
+    $.get("http://localhost:12345/studenti/" + id_korisnika + '/kursevi/postovi', function(data){
         //svi postovi koji treba da se prikazu
         var postovi = JSON.parse(data);
 
