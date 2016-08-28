@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -12,6 +13,7 @@ using TrenchrRestService.Models;
 
 namespace TrenchrRestService.Controllers
 {
+    [Authorize]
     public class UserController : ApiController
     {
 

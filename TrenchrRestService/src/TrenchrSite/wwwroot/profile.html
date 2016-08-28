@@ -1,0 +1,167 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Profile</title>
+
+    <link rel="shortcut icon" href="images/logoT.JPG">
+
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.grey-orange.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #view-source {
+            position: fixed;
+            display: block;
+            right: 0;
+            bottom: 0;
+            margin-right: 40px;
+            margin-bottom: 40px;
+            z-index: 900;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="demo-blog mdl-layout mdl-js-layout has-drawer is-upgraded mdl-layout--fixed-header">
+
+
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
+            mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <span>
+                    <img src="images/logoT.JPG" style="width: 25px; height: 25px;"/>
+                </span>
+
+                <span class="trenchr">Moj profil</span>
+
+                <div class="mdl-layout-spacer"></div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+                  mdl-textfield--floating-label mdl-textfield--align-right">
+                    <label class="mdl-button mdl-js-button mdl-button--icon"
+                           for="fixed-header-drawer-exp">
+                        <i class="material-icons">search</i>
+                    </label>
+                    <div class="mdl-textfield__expandable-holder">
+                        <input class="mdl-textfield__input" type="text" name="sample"
+                               id="fixed-header-drawer-exp" placeholder="pretraži grupe" list="grupe">
+                        <datalist id="grupe">
+                            <option value="Internet Explorer">
+                            <option value="Firefox">
+                            <option value="Chrome">
+                            <option value="Opera">
+                            <option value="Safari">
+                        </datalist>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+            <header class="demo-drawer-header">
+                <span id="korisnik">
+                </span>
+                <span id="mail">
+                </span>
+            </header>
+
+
+            <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
+                <a class="mdl-navigation__link" href="default.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation" style="margin-right: 20px;">home</i>Početna  <span class="notification notification_hidden"> 10 </span></a>
+                <a class="mdl-navigation__link" href="inbox.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation" style="margin-right: 20px;">chat</i>Poruke  <span class="notification notification_hidden"> 10 </span></a>
+                <a class="mdl-navigation__link" href="findGroups.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation" style="margin-right: 20px;">school</i>Pretraži grupe</a>
+                <a class="mdl-navigation__link" href="profile.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation" style="margin-right: 20px;">face</i>Moj profil</a>
+                <div class="mdl-layout-spacer"></div>
+            </nav>
+
+        </div>
+
+    <main class="default mdl-layout__content">
+
+        <div class="center" id="profile">
+
+        </div>
+
+        <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--5-col"></div>
+            <div class="mdl-cell mdl-cell--2-col">
+                <label class="mdl-button mdl-js-button mdl-button--icon" id="editPic" for="editButton">
+                    <i class="material-icons">mode_edit</i>
+                </label>
+                <input class="mdl-button mdl-js-button" id="editButton"
+                       type="file" value="">
+                </input>
+            </div>
+            <div class="mdl-cell mdl-cell--5-col"></div>
+        </div>
+
+        <div class="center">
+
+            <form class="profileForm" id="pForm">
+                <div class="mdl-textfield mdl-js-textfield" id="divProfil">
+
+                </div>
+
+                <div class="profileButton">
+                    <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="edit"
+                           onclick="izmeniProfil()" type="button" value="Izmeni">
+                    </input>
+                    <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="save"
+                           type="button" value="Sačuvaj">
+                    </input>
+                    <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="reset"
+                           type="button" value="Resetuj">
+                    </input>
+
+                </div>
+
+            </form>
+        </div>
+
+
+
+
+        <!-- Copyright desno-->
+        <footer class="mdl-mini-footer">
+            <div class="mdl-mini-footer--left-section">
+                <span>&copy Copyright MATF</span>
+            </div>
+        </footer>
+
+    </main>
+
+    <div class="mdl-layout__obfuscator"></div>
+</div>
+
+<script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+<script src="javascript/profile.js"></script>
+
+</body>
+
+<script>
+    Array.prototype.forEach.call(document.querySelectorAll('.mdl-card__media'), function(el) {
+        var link = el.querySelector('a');
+        if(!link) {
+            return;
+        }
+        var target = link.getAttribute('href');
+        if(!target) {
+            return;
+        }
+        el.addEventListener('click', function() {
+            location.href = target;
+        });
+    });
+</script>
+</html>
