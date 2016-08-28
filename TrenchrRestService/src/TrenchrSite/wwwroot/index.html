@@ -1,0 +1,226 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Trenchr</title>
+
+    <link rel="shortcut icon" href="images/logoT.JPG">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.grey-orange.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+    #view-source {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
+    }
+    </style>
+  </head>
+
+  <body>
+    <div class="demo-blog mdl-layout mdl-js-layout has-drawer is-upgraded">
+
+      <main class="mdl-layout__content">
+        <div class="demo-blog__posts mdl-grid">
+
+            <div class="index"></div>
+
+            <div class="mdl-card headline on-the-road-again mdl-cell mdl-cell--12-col mdl-color-text--grey-50">
+                <span id="headlineSpan">Trenchr</span>
+                <span id="underHeadline">Socijalna mreža za studente</span>
+            </div>
+
+            <div class="mdl-card on-the-road-again mdl-cell mdl-cell--12-col">
+                <div class="mdl-card__title mdl-color-text--grey-50">
+                    <h3>Kome je namenjen Trenchr?</h3>
+                </div>
+
+            <div class="mdl-cell--12-col mdl-grid mdl-color-text--grey-600 mdl-card__supporting-text">
+              <div class="mdl-cell--6-col mdl-grid" style="margin-left:100px;">
+                <h4 align="center"> Studentima </h4>
+                <div class="mdl-cell--12-col mdl-grid">
+                   Servis je prevashodno namenjen studentima svih fakulteta u Srbiji i omogućava im,
+                   kako da pregledaju, tako i da postavljaju sadržaje vezane za predmete koje slušaju na svom smeru
+                   i tekućoj godini.
+
+                </div>
+              </div>
+
+              <div class="mdl-cell--6-col mdl-grid" style="margin-left:100px;">
+                <h4>Profesorima</h4>
+                <div class="mdl-cell--12-col mdl-grid">
+                  Profesorima je omogućeno samo postavljanje informacija i materijala na grupi određenog predmeta.
+                </div>
+              </div>
+            </div>
+
+
+            <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
+
+                  <div>
+                    <div  class="content-grid mdl-grid" style="margin-left:125px;">
+                      <div class="mdl-cell mdl-cell--6-col">
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white show-modal-reg" id="registrovanje">Registrujte se</button>
+                      </div>
+                      <div class="mdl-cell mdl-cell--6-col">
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white close show-modal-log" id="logovanje">Ulogujte se</button>
+                      </div>
+                    </div>
+
+                  <dialog class="mdl-dialog">
+                   <div class="mdl-dialog__content">
+                     <form action="#">
+                         <div class="mdl-textfield mdl-js-textfield">
+                           <input class="mdl-textfield__input" type="text" id="username-log"/>
+                           <label class="mdl-textfield__label" for="username-log">Korisničko ime</label>
+                         </div>
+
+                         <div class="mdl-textfield mdl-js-textfield">
+                           <input class="mdl-textfield__input" type="text" id="pass-log"/>
+                           <label class="mdl-textfield__label" for="pass-log">Lozinka</label>
+                         </div>
+
+                         <span  class="mdl-cell--12-col mdl-grid">
+                           <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white">Potvrdi</button>
+                           <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white close odustani">Odustani</button>
+                         </span>
+                       </form>
+                   </div>
+                 </dialog>
+
+                 <dialog class="mdl-dialog dialog-reg">
+                  <div class="mdl-dialog__content">
+                    <form action="#">
+
+                      <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="text" id="email-reg"/>
+                        <label class="mdl-textfield__label" for="email-reg">Email</label>
+                      </div>
+
+                        <div class="mdl-textfield mdl-js-textfield">
+                          <input class="mdl-textfield__input" type="text" id="name-reg"/>
+                          <label class="mdl-textfield__label" for="name-reg">Ime</label>
+                        </div>
+
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <input class="mdl-textfield__input" type="text" id="surname-reg"/>
+                            <label class="mdl-textfield__label" for="surname-reg">Prezime</label>
+                        </div>
+
+                        <div class="mdl-textfield mdl-js-textfield">
+                          <input class="mdl-textfield__input" type="text" id="pass-reg"/>
+                          <label class="mdl-textfield__label" for="pass-reg">Lozinka</label>
+                        </div>
+
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <input class="mdl-textfield__input" type="text" id="pass1-reg"/>
+                            <label class="mdl-textfield__label" for="pass1-reg">Potvrda lozinke</label>
+                        </div>
+
+
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <input class="mdl-textfield__input" type="text" id="city-reg"/>
+                            <label class="mdl-textfield__label" for="city-reg">Grad</label>
+                        </div>
+
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <input class="mdl-textfield__input" type="text" id="faculty-reg"/>
+                            <label class="mdl-textfield__label" for="faculty-reg">Fakultet </label>
+                        </div>
+
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <input class="mdl-textfield__input" type="text" id="smer-reg"/>
+                            <label class="mdl-textfield__label" for="smer-reg">Smer</label>
+                        </div>
+
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <input class="mdl-textfield__input" type="text" id="year-reg"/>
+                            <label class="mdl-textfield__label" for="year-reg">Godina upisa</label>
+                        </div>
+
+                        <span  class="mdl-cell--12-col mdl-grid">
+                          <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white">Potvrdi</button>
+                          <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white close odustani">Odustani</button>
+                        </span>
+                      </form>
+                  </div>
+                </dialog>
+
+
+                <script>
+                //logovanje dijalog
+                 var dialog = document.querySelector('dialog');
+                 var showModalButton = document.querySelector('.show-modal-log');
+                 if (! dialog.showModal) {
+                   dialogPolyfill.registerDialog(dialog);
+                 }
+                 showModalButton.addEventListener('click', function() {
+                   dialog.showModal();
+                 });
+                 dialog.querySelector('.close').addEventListener('click', function() {
+                   dialog.close();
+                 });
+
+                //registracija dijalog
+                 var dialog1 = document.querySelector('.dialog-reg');
+                 var showModalButton1 = document.querySelector('.show-modal-reg');
+                 if (! dialog1.showModal) {
+                   dialogPolyfill.registerDialog(dialog1);
+                 }
+                 showModalButton1.addEventListener('click', function() {
+                   dialog1.showModal();
+                 });
+                 dialog1.querySelector('.close').addEventListener('click', function() {
+                   dialog1.close();
+                 });
+
+                </script>
+
+              </div>
+            </div>
+          </div> <!--drugi div-->
+
+        </div>
+
+        <!-- Copyright desno-->
+        <footer class="mdl-mini-footer">
+          <div class="mdl-mini-footer--left-section">
+              <span>&copy Copyright MATF</span>
+          </div>
+        </footer>
+
+      </main>
+
+      <div class="mdl-layout__obfuscator"></div>
+    </div>
+
+    <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+  </body>
+
+  <script>
+    Array.prototype.forEach.call(document.querySelectorAll('.mdl-card__media'), function(el) {
+      var link = el.querySelector('a');
+      if(!link) {
+        return;
+      }
+      var target = link.getAttribute('href');
+      if(!target) {
+        return;
+      }
+      el.addEventListener('click', function() {
+        location.href = target;
+      });
+    });
+  </script>
+</html>

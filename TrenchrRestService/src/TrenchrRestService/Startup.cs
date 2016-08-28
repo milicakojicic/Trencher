@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Cors;
-
+using System.IdentityModel.Tokens.Jwt;
 
 namespace TrenchrRestService
 {
@@ -38,6 +38,7 @@ namespace TrenchrRestService
         {
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
+            
             services.AddCors(options => 
             {
                 options.AddPolicy("AllowAll",
@@ -57,6 +58,17 @@ namespace TrenchrRestService
             app.UseApplicationInsightsRequestTelemetry();
 
             app.UseApplicationInsightsExceptionTelemetry();
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap = new Dictionary<string, string>();
+
+            app.UseJwtBearerAuthentication(new JwtBearerOptions()
+            {
+                Authority = "http://localhost:9300",
+                RequireHttpsMetadata = false,
+                Audience = "http://localhost:9300/resources",
+                AutomaticAuthenticate = true
+
+            });
+
             app.UseCors("AllowAll");
             app.UseMvc();
         }
