@@ -69,7 +69,6 @@ namespace TrenchrRestService
 
             });
 
-
             app.UseCors("AllowAll");
             app.UseMvc();
         }
