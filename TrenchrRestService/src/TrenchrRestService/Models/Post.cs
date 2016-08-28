@@ -21,6 +21,5 @@ namespace TrenchrRestService.Models
         public string PicturePath { get; set; }
         public string AuthorInfo { get; set; }
 
-
     }
 }

@@ -2,7 +2,7 @@
  * Created by Ljubica on 8.8.2016.
  */
 //id studenta koji treba da se prikaze
-var id = 625 ;
+var id = 1043 ;
 
 $(document).ready(function(){
     //dodati GET zahteve za fakultet i smer
