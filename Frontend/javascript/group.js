@@ -90,6 +90,7 @@ $( document ).ready(function() {
 
             glasanje+= "<br>";
 
+            opcije_za_glasanje = [];
             for(var i = 1; i <= brPolja; i++) {
                 if(document.getElementById("opcija" + i) != null){
 
@@ -453,5 +454,28 @@ function poslednjaOpcija() {
         }
 
     }
+
+}
+
+//dodavanje mogucnost da se postavi komentar na ENTER
+var komentar = document.getElementById("koment");
+
+komentar.addEventListener("keydown", function (e) {
+    if (e.keyCode === 13 && !e.shiftKey) {
+        if(!e.shiftKey){
+            ostavi_komentar(id_posta);
+        }
+    }
+});
+
+function ostavi_komentar(id_posta) {
+    var div = document.getElementById("komentar");
+
+    div.innerHTML += '<div> ' +
+                        komentar.value +
+                     '</div> ';
+
+    komentar.value = "";
+    komentar.placeholder = "Napisite komentar...";
 
 }
