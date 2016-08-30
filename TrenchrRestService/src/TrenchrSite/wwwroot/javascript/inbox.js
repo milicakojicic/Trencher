@@ -31,7 +31,6 @@ poruka.addEventListener("keydown", function (e) {
         if(!e.shiftKey){
             posalji(e);
         }
-
     }
 });
 
