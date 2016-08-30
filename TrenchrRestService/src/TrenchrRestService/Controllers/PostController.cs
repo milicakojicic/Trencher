@@ -137,11 +137,11 @@ namespace TrenchrRestService.Controllers
 
 
         //najskoriji postovi za predmete ciji je ulogovani korisnik clan
-        [Route("studenti/{id}/kursevi/postovi")]
+        [Route("student/{id}/predmeti/postovi")]
         [HttpGet]
         public IActionResult VratiPostoveZaHome(long id)
         {
-            var stmnt = $"match (s:student)-[:pohadja]->(o:odrzan_kurs)-[:ima_post]->(post) where id(s) = {id} return id(o) as kurs_id, id(post) as id, post.tip as tip, post.name as naslov, post.putanja as putanja, post.tekst as tekst, post.ind as indikator, post.vreme as vreme, id(s) as korisnik_id, s.name as ime_korisnika, s.putanja as putanja_korisnika";
+            var stmnt = $"match (s:student)-[:pohadja]->(o:odrzan_kurs)-[:ima_post]->(post)-[:objavio]->(neko) where id(s) = {id} return id(o) as kurs_id, id(post) as id, post.tip as tip, post.name as naslov, post.putanja as putanja, post.tekst as tekst, post.ind as indikator, post.vreme as vreme, id(s) as korisnik_id, s.name as ime_korisnika, s.putanja as putanja_korisnika";
             var resultPosts = Neo4jClient.Execute(stmnt);
 
             //mozda nam nekad bude trebalo
@@ -182,20 +182,6 @@ namespace TrenchrRestService.Controllers
             }
             return Ok(JsonConvert.SerializeObject(posts, Formatting.Indented));
 
-        }
-
-        //vracanje opcija glasanja za dati post
-        [Route("postovi/{id}/opcije")]
-        [HttpGet]
-        public IActionResult VratiOpcijeGlasanja(long id)
-        {
-            var stmnt = $"MATCH (o:opcija)-[:u_glasanju]->(g:glasanje) where id(g) = {id} return id(o) as id, id(g) as roditelj_id, o.tekst as text, o.brGlasova as broj_glasova";
-            var rezOpcije = Neo4jClient.Execute(stmnt);
-            var opcije = new List<VoteOption>();
-            foreach (var o in rezOpcije)
-                opcije.Add(new VoteOption(o));
-
-            return Ok(JsonConvert.SerializeObject(opcije, Formatting.Indented));
         }
 
     }

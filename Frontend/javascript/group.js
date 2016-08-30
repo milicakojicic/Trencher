@@ -212,7 +212,7 @@ $( document ).ready(function() {
                     '</div>' +
                     '</div>'+
                     '<div class="objava" id='+ id_posta +'>' +
-                    postovi[i].Text + id_posta +
+                    postovi[i].Text +
                     '</div>' +
                     '<div class="mdl-textfield mdl-js-textfield komentar">'+
                     '<textarea class="mdl-textfield__input" type="text" rows="5" id="koment"></textarea>'+
