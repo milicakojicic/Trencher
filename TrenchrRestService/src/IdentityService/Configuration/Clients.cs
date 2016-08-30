@@ -25,73 +25,39 @@ namespace IdentityService.Configuration
                     AllowedScopes = new List<string>
                     {
                         "api1"
-                    } 
+                    }
                 },
 
                 new Client
                 {
-                    ClientName = "MVC6 Demo Client",
-                    ClientId = "mvc6",
-
+                    Enabled = true,
+                    ClientName = "JS Client",
+                    ClientId = "js",
                     Flow = Flows.Implicit,
 
                     RedirectUris = new List<string>
                     {
-                        "http://localhost:9090/signin-oidc",
+                        "http://localhost:56668/popup.html",
+                        "http://localhost:56668/silent-renew.html"
                     },
+
                     PostLogoutRedirectUris = new List<string>
                     {
-                        "http://localhost:9090/",
+                        "http://localhost:56668/index.html"
                     },
-
-                    // access to identity data and api1
-                    AllowedScopes = new List<string>
-                    {
-                        "openid",
-                        "email",
-                        "profile",
-                        "api1"
-                    }
-                },
-                new Client
-                {
-                    ClientId = "esmifavorito",
-                    ClientName = "esmifavorito-client",
-                    Enabled = true,
-                    ClientSecrets = new List<Secret>
-                    {
-                        new Secret("esmifavorito".Sha256()) //PQ/pIgjXnBfK67kOxGxz9Eykft6CKPkPewR3jUNEkZo=
-                    },
-
-                    Flow = Flows.ResourceOwner,
-
-                    //RequireConsent = false,
-                    //AllowRememberConsent = false,
-                    //ClientUri = "http",
-                    RedirectUris = new List<string>
-                    {
-                        "https://localhost:44304",
-                    },
-
-                  
 
                     AllowedCorsOrigins = new List<string>
                     {
-                        "https://localhost:44304",
-                        "http://localhost:50655",
-                        "chrome-extension://fdmmgilgnpjigdojojpjoooidkmcomcm",
-                        "*",
+                        "http://localhost:56668"
                     },
 
-                    PostLogoutRedirectUris = new List<string>
+                    //AllowAccessToAllScopes = true,
+                    AccessTokenLifetime = 60,
+                    AllowedScopes = new List<string>
                     {
-                        "https://localhost:44304",
-                    },
+                        "openid", "profile", "email", "api1"
+                    }
 
-                    AccessTokenType = AccessTokenType.Jwt,
-                    IdentityTokenLifetime = 3000,
-                    AccessTokenLifetime = 3600,
-                    AuthorizationCodeLifetime = 300
                 }
             };
         }
