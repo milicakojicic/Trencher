@@ -1146,9 +1146,18 @@ input {
     font-size: 20px;
 }
 
-.komentar {
+#komentar {
+    display: block;
+    width: 100%;
+}
+
+#komentarDiv {
     width: 100%;
     background-color: whitesmoke;
     margin-bottom: 20px;
-    border-top: 1px solid gainsboro;
+}
+
+
+.ikonica_header {
+    margin-right: 10%;
 }

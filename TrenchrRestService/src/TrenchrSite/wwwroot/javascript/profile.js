@@ -1,11 +1,21 @@
-/**
- * Created by Ljubica on 8.8.2016.
- */
+
 //id studenta koji treba da se prikaze
-var id = 1043 ;
+var id = 1249 ;
 
 $(document).ready(function(){
-    //dodati GET zahteve za fakultet i smer
+
+
+    //svi kursevi studenta kojima on pripada, da bi se prikaza
+    $.ajax({
+        url:'http://localhost:12345/studenti/' + id + '/kursevi',
+        type:'GET',
+        dataType: 'json',
+        success: function( json ) {
+            $.each(json, function(i, value) {
+                $('#grupe').append($('<option>').attr('value', value.Name + " " + value.Year));
+            });
+        }
+    });
 
     $.get("http://localhost:12345/studenti/" + id, function(data){
 

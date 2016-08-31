@@ -21,6 +21,8 @@ create (ip:kurs {name:"Istrazivanje podataka", espb: 8, opis: "Opis kursa"})
 create (msnr:kurs {name:"Metodologija strucnog i naucnog rada", espb: 4, opis: "Opis kursa"})
 create (kiaa2:kurs {name:"Konstrukcija i analiza algoritama 2", espb: 8, opis: "Opis kursa"})
 create (niz:kurs {name:"Naucno izracunavanje", espb: 8, opis: "Opis kursa"})
+create (bioinf:kurs {name:"Bioinformatika", espb: 8, opis: "Opis kursa"})
+
 
 // Smer -> Kurs
 create (matfI)-[:sadrzi_kurs]->(mr)
@@ -31,6 +33,8 @@ create (matfI)-[:sadrzi_kurs]->(ip)
 create (matfI)-[:sadrzi_kurs]->(msnr)
 create (matfI)-[:sadrzi_kurs]->(kiaa2)
 create (matfI)-[:sadrzi_kurs]->(niz)
+create (matfI)-[:sadrzi_kurs]->(bioinf)
+
 
 // Odrzani kursevi
 create (mr16:odrzan_kurs {name:"Mrezno racunarstvo", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
@@ -39,8 +43,9 @@ create (is16:odrzan_kurs {name:"Informacioni sistemi", espb: 8, tip: "obavezni",
 create (ar16:odrzan_kurs {name:"Automatsko rezonovanje", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
 create (ip16:odrzan_kurs {name:"Istrazivanje podataka", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
 create (msnr16:odrzan_kurs {name:"Metodologija strucnog i naucnog rada", espb: 4, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
-create (kiaa2_16:odrzan_kurs {name:"Konstrukcija i analiza algoritama 2", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
-create (niz16:odrzan_kurs {name:"Naucno izracunavanje", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
+create (kiaa2_16:odrzan_kurs {name:"Konstrukcija i analiza algoritama 2", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016
+create (bioinf_16:odrzan_kurs {name:"Bioinformatika", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
+
 
 // Kursevi -> Odrzani kursevi
 create (mr)-[:odrzan]->(mr16)
@@ -51,6 +56,7 @@ create (ip)-[:odrzan]->(ip16)
 create (msnr)-[:odrzan]->(msnr16)
 create (kiaa2)-[:odrzan]->(kiaa2_16)
 create (niz)-[:odrzan]->(niz16)
+create (bioinf)-[:odrzan]->(bioinf_16)
 
 // Studenti
 create (MilicaKojicic:student {name: "Milica Kojicic", ime:"Milica", prezime: "Kojicic", generacija: 2012, indeks: "1066/2015", email: "bla@gmail.com",putanja:"images/milica.jpg"})

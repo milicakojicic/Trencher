@@ -137,11 +137,19 @@ namespace TrenchrRestService.Controllers
 
 
         //najskoriji postovi za predmete ciji je ulogovani korisnik clan
-        [Route("student/{id}/predmeti/postovi")]
+        [Route("studenti/{id}/kursevi/postovi")]
         [HttpGet]
         public IActionResult VratiPostoveZaHome(long id)
         {
-            var stmnt = $"match (s:student)-[:pohadja]->(o:odrzan_kurs)-[:ima_post]->(post)-[:objavio]->(neko) where id(s) = {id} return id(o) as kurs_id, id(post) as id, post.tip as tip, post.name as naslov, post.putanja as putanja, post.tekst as tekst, post.ind as indikator, post.vreme as vreme, id(s) as korisnik_id, s.name as ime_korisnika, s.putanja as putanja_korisnika";
+
+            //SVI postovi
+            var stmnt = $"match (o:odrzan_kurs)-[:ima_post]->(post)<-[:objavio]-(neko) return id(o) as kurs_id, id(post) as id, "+ 
+                        "post.tip as tip, post.name as naslov," + 
+                        "post.putanja as putanja, post.tekst as tekst," +
+                        "post.ind as indikator, post.vreme as vreme," +
+                        "id(neko) as korisnik_id, neko.ime as ime_korisnika, neko.putanja as putanja_korisnika " +
+                        "order by vreme desc limit 20";
+
             var resultPosts = Neo4jClient.Execute(stmnt);
 
             //mozda nam nekad bude trebalo
@@ -150,8 +158,10 @@ namespace TrenchrRestService.Controllers
             var votes = new List<Vote>();
             var notifications = new List<NotificationPost>();
 
-            //lista postova koji se vracaju
             var posts = new List<Post>();
+
+            //lista postova koji se vracaju
+            var finalPosts = new List<Post>();
 
             foreach (var o in resultPosts)
             {
@@ -180,8 +190,44 @@ namespace TrenchrRestService.Controllers
                 }
 
             }
-            return Ok(JsonConvert.SerializeObject(posts, Formatting.Indented));
 
+            //sad nam treba da su ti postovi bas u grupama koje korisnik prati
+            //trebaju nam sve grupe korisnika 
+
+            var stmnt1 = $"MATCH (s:student)-[:pohadja]-(o:odrzan_kurs) where id(s) = {id} return id(o) as id, o.name as name, o.espb as espb, o.tip as tip, o.nivo as nivo, o.godina as godina";
+            var resultCourses = Neo4jClient.Execute(stmnt1);
+            var courses = new List<HeldCourse>();
+            foreach (var o in resultCourses)
+                courses.Add(new HeldCourse(o));
+
+            /* da li se id grupe tog korisnika nalazi u listi postova koji su vraceni (post u sebi ima polje kursa kome pripada),
+            ako da  - onda ih ispisujemo */
+
+            int i, j;
+
+            for (i = 0; i < courses.ToArray().Length; i++) {
+                for (j = 0; j < posts.ToArray().Length; j++) {
+                    if (courses[i].ID == posts[j].KursID)
+                        finalPosts.Add(posts[j]);
+                }
+            }
+
+            return Ok(JsonConvert.SerializeObject(finalPosts, Formatting.Indented));
+
+        }
+
+
+        //vracanje opcija glasanja za dati post
+        [Route("postovi/{id}/opcije")]
+        [HttpGet]
+        public IActionResult VratiOpcijeGlasanja(long id)
+        {
+            var stmnt = $"MATCH (o:opcija)-[:u_glasanju]->(g:glasanje) where id(g) = {id} return id(o) as id, id(g) as roditelj_id, o.tekst as text, o.brGlasova as broj_glasova";
+            var rezOpcije = Neo4jClient.Execute(stmnt);
+            var opcije = new List<VoteOption>();
+            foreach (var o in rezOpcije)
+                opcije.Add(new VoteOption(o));
+            return Ok(JsonConvert.SerializeObject(opcije, Formatting.Indented));
         }
 
     }

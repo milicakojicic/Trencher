@@ -106,6 +106,7 @@ namespace TrenchrRestService.Controllers
                 builder.Append($"u.`{property.Name}` = '{property.Value}' ");
             else
                 builder.Append($"u.`{property.Name}` = {property.Value} ");
-        }  
+        }
+
     }
 }

@@ -1,5 +1,5 @@
 //id studenta ciji je profil
-var id_korisnika = 953;
+var id_korisnika = 1249;
 
 function pogledajGrupu(idGrupe) {
     url = "group.html";
@@ -29,6 +29,18 @@ $(document).ready(function() {
 
         div.innerHTML += '</div>';
 
+    });
+
+    //svi kursevi studenta kojima on pripada, da bi se prikazao u search-u
+    $.ajax({
+        url:'http://localhost:12345/studenti/' + id_korisnika + '/kursevi',
+        type:'GET',
+        dataType: 'json',
+        success: function( json ) {
+            $.each(json, function(i, value) {
+                $('#trazi_grupe').append($('<option>').attr('value', value.Name + " " + value.Year));
+            });
+        }
     });
 
     //GET za sve postove koji su u grupama koje korisnik prati

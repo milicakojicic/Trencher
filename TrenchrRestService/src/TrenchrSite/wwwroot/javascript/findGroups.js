@@ -1,4 +1,7 @@
-var id_korisnika = 727;
+
+//testirati na predmetu Automatsko rezonovanje
+var id_korisnika = 1249;
+
 var kurseviOsobe = "";
 var kurseviSvi = "";
 //niz u kome se cuva ID svake grupe koju korisnik prati
@@ -14,10 +17,14 @@ $(document).ready(function(){
             'type': "GET",
             'dataType': 'json',
             'global': false,
-            'url': "http://localhost:12345/kursevi"
+            'url': "http://localhost:12345/kursevi",
+            success: function( json ) {
+                $.each(json, function(i, value) {
+                    $('#sve_grupe').append($('<option>').attr('value', value.Name + " " + value.Year));
+                });
+            }
         }).responseText);
 
-    //MICI OVO JE ZA TEBE
     //uzimanje podataka o kursevima prijaveljene osobe
      kurseviOsobe = $.parseJSON(
         $.ajax({
@@ -25,7 +32,12 @@ $(document).ready(function(){
             'type': "GET",
             'dataType': 'json',
             'global': false,
-            'url': "http://localhost:12345/studenti/"+id_korisnika+"/kursevi"
+            'url': "http://localhost:12345/studenti/"+id_korisnika+"/kursevi",
+            success: function( json ) {
+                $.each(json, function(i, value) {
+                    $('#trazi_grupe').append($('<option>').attr('value', value.Name + " " + value.Year));
+                });
+            }
         }).responseText);
 
     //div u kome treba da se prikazu kursevi

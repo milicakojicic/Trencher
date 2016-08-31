@@ -1,5 +1,6 @@
 var focus = 0,
     blur = 0;
+var id_korisnika = 1249;
 
 $( document ).ready(function() {
 
@@ -13,6 +14,18 @@ $( document ).ready(function() {
         if (this.value.length) {
             document.getElementById("posaljiPoruku").disabled = false;
             document.getElementById("posaljiPoruku").style.opacity = 1;
+        }
+    });
+
+    //svi kursevi studenta kojima on pripada, da bi se prikaza
+    $.ajax({
+        url:'http://localhost:12345/studenti/' + id_korisnika + '/kursevi',
+        type:'GET',
+        dataType: 'json',
+        success: function( json ) {
+            $.each(json, function(i, value) {
+                $('#trazi_grupe').append($('<option>').attr('value', value.Name + " " + value.Year));
+            });
         }
     });
 

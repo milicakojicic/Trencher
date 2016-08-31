@@ -9,8 +9,8 @@ var mat = 0;
 var opcije_za_glasanje = [];
 
 //testirati na predmetu Automatsko rezonovanje
-var id_grupe = 1155;
-var id_korisnika = 1161;
+var id_grupe = 1242;
+var id_korisnika = 1249;
 
 $( document ).ready(function() {
 
@@ -27,6 +27,19 @@ $( document ).ready(function() {
 
     });
 
+
+    //svi kursevi studenta kojima on pripada, da bi se prikazao u search-u
+    $.ajax({
+        url:'http://localhost:12345/studenti/' + id_korisnika + '/kursevi',
+        type:'GET',
+        dataType: 'json',
+        success: function( json ) {
+            $.each(json, function(i, value) {
+                $('#grupe').append($('<option>').attr('value', value.Name + " " + value.Year));
+            });
+        }
+    });
+
     //kada se krene pisati post
     $('#groupPost').bind('input propertychange', function() {
 
@@ -41,11 +54,6 @@ $( document ).ready(function() {
         }
     });
 
-    $('#koment').bind('input propertychange', function() {
-
-        document.getElementById("koment").placeholder = " ";
-
-    });
 
     //OBJAVA POST-a
     $('#publish').click(function() {
@@ -113,7 +121,8 @@ $( document ).ready(function() {
 
             //uzimanje unetih opcija glasanja
             for(var i = 1; i <= brPolja; i++) {
-                if(document.getElementById("opcija" + i) != null){
+                //da ne bismo prikazivali prazne opcije
+                if(document.getElementById("opcija" + i).value != ''){
                     opcije_za_glasanje.push( document.getElementById("opcija" + i).value);
                 }
                 //ciscenje opcija za sl glasanje
@@ -160,7 +169,22 @@ $( document ).ready(function() {
 
         else {
             tip = "obav";
-            //AJAX za unos obavestenja
+
+            $.ajax({
+                'type': 'post',
+                'async': false,
+                'url': 'http://localhost:12345/postovi/obavestenja',
+                'data': JSON.stringify({
+                    "KursID": id_grupe,
+                    "Caption": "Test", //obrisati
+                    "Type": tip, //imam
+                    "Text": text,
+                    "Important": ind, //imam
+                    "Time": seconds,
+                    "UserId": id_korisnika
+                }),
+                'contentType': "application/json; charset=utf-8"
+            });
         }
 
         //resetovanje indikatore za vrstu posta i sklanjanje bordera i opcija za postove
@@ -212,12 +236,16 @@ $( document ).ready(function() {
                     '</div>' +
                     '</div>'+
                     '<div class="objava" id='+ id_posta +'>' +
-                    postovi[i].Text + id_posta +
+                    postovi[i].Text +
                     '</div>' +
-                    '<div class="mdl-textfield mdl-js-textfield komentar">'+
-                    '<textarea class="mdl-textfield__input" type="text" rows="5" id="koment"></textarea>'+
-                    '<label class="mdl-textfield__label" for="koment">Napišite komentar...</label>'+
+                    '<div class="mdl-textfield mdl-js-textfield komentarDiv">'+
+                        '<textarea class="mdl-textfield__input" type="text" rows="5" id="komentar"></textarea>'+
+                        '<label class="mdl-textfield__label" for="komentar">Napišite komentar...</label>'+
                     '</div>';
+
+                $('#komentar').bind('input propertychange', function () {
+                    document.getElementById("komentar").placeholder = " ";
+                });
 
 
                 if (postovi[i].Important === "1") {
@@ -313,10 +341,12 @@ $( document ).ready(function() {
                              '<div class="objava" id='+ id_posta +'>' +
                                  postovi[i].Text +
                              '</div>' +
-                             '<div class="mdl-textfield mdl-js-textfield komentar">'+
-                                 '<textarea class="mdl-textfield__input" type="text" rows="5" id="koment"></textarea>'+
-                                 '<label class="mdl-textfield__label" for="koment">Napišite komentar...</label>'+
-                             '</div>';
+                             '<form>' +
+                             '<div class="mdl-textfield mdl-js-textfield" id="komentarDiv">' +
+                                    '<textarea class="mdl-textfield__input center" type="text" rows= "3" id="komentar" ></textarea>' +
+                                    '<label class="mdl-textfield__label" for="komentar">Napisi komentar...</label> ' +
+                            '</div>'+
+                            '</form>';
 
 
             if (postovi[i].Important === "1") {
@@ -520,3 +550,9 @@ function poslednjaOpcija() {
     }
 
 }
+
+
+
+
+
+

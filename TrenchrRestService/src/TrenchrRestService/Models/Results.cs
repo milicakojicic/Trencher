@@ -19,7 +19,6 @@ namespace TrenchrRestService.Models
             Path = (string)record["putanja"];
             ID = (long)record["id"];
             KursID = (long)record["kurs_id"];
-            Caption = (string)record["naslov"];
             Type = (string)record["tip"];
             Text = (string)record["tekst"];
             Important = (string)record["indikator"];
@@ -36,7 +35,6 @@ namespace TrenchrRestService.Models
                        $"WHERE id(ok) = {KursID} AND id(autor) = {UserId} " +
                         " WITH ok,autor " +
                         "CREATE (ok)-[:ima_post]->(o:rezultati{" +
-                        $" name : '{Caption}', " +
                         $" tekst : '{Text}', " +
                         $" tip : '{Type}', " +
                         $" ind :' {Important}', " +
