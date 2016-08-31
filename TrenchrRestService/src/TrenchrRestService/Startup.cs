@@ -62,9 +62,9 @@ namespace TrenchrRestService
 
             app.UseJwtBearerAuthentication(new JwtBearerOptions()
             {
-                Authority = "http://localhost:9300",
+                Authority = "https://localhost:44300",
                 RequireHttpsMetadata = false,
-                Audience = "http://localhost:9300/resources",
+                Audience = "http://localhost:44300/resources",
                 AutomaticAuthenticate = true
 
             });

@@ -75,18 +75,19 @@ namespace IdentityService
                                 .UseInMemoryScopes(Scopes.Get()),
 
                 SigningCertificate = new X509Certificate2(certFile, "idsrv3test"),
-                RequireSsl = false,
-                LoggingOptions = new LoggingOptions { EnableHttpLogging = true, EnableKatanaLogging = true, EnableWebApiDiagnostics = true, WebApiDiagnosticsIsVerbose = true }
+                RequireSsl = true,
+                LoggingOptions = new LoggingOptions
+                {
+                    EnableHttpLogging = true,
+                    EnableKatanaLogging = true,
+                    EnableWebApiDiagnostics = true,
+                    WebApiDiagnosticsIsVerbose = true
+                }
             };
 
             app.UseIdentityServer(idsrvOptions);
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseMvc();
         }
     }
 }
