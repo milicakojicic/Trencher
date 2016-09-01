@@ -81,6 +81,17 @@ namespace TrenchrRestService.Controllers
 
         }
 
+        [Route("korisnici/{id}/slika")]
+        [HttpPut]
+        public IActionResult updatePicture([FromBody] JObject jsonBody, long id)
+        {
+            dynamic param = jsonBody;
+            string putanja = param.picture_path;
+            string stmnt = $"MATCH (u) SET u.putanja = {putanja} WHERE id(u) = {id}";
+            Neo4jClient.Execute(stmnt);
+            return Ok();
+        }
+
         [Route("korisnici/{id}")]
         [HttpPut]
         public IActionResult updateUser([FromBody] JObject jsonBody, long id)

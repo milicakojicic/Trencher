@@ -43,7 +43,7 @@ create (is16:odrzan_kurs {name:"Informacioni sistemi", espb: 8, tip: "obavezni",
 create (ar16:odrzan_kurs {name:"Automatsko rezonovanje", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
 create (ip16:odrzan_kurs {name:"Istrazivanje podataka", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
 create (msnr16:odrzan_kurs {name:"Metodologija strucnog i naucnog rada", espb: 4, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
-create (kiaa2_16:odrzan_kurs {name:"Konstrukcija i analiza algoritama 2", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016
+create (kiaa2_16:odrzan_kurs {name:"Konstrukcija i analiza algoritama 2", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
 create (bioinf_16:odrzan_kurs {name:"Bioinformatika", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
 
 
@@ -251,5 +251,3 @@ create (MilicaKojicic)-[:poslao_poruku]->(poruka2)
 //Osoba -> Konverzacija
 create (MilicaKojicic)-[:u_konverzaciji]->(konverzacija1)
 create (LjubicaPeleksic)-[:u_konverzaciji]->(konverzacija1)
-
-
