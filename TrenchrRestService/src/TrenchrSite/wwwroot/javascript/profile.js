@@ -1,6 +1,6 @@
 
 //id studenta koji treba da se prikaze
-var id = 1249 ;
+var id = 1248 ;
 
 $(document).ready(function(){
 

@@ -41,9 +41,6 @@ $( document ).ready(function() {
         }
     });
 
-    $('#komentar').bind('input propertychange', function () {
-        document.getElementById("komentar").placeholder = " ";
-    });
 
 });
 
@@ -265,6 +262,11 @@ $( document ).ready(function() {
                         '<label class="mdl-textfield__label" for="komentar">Napišite komentar...</label>'+
                     '</div>';
 
+
+
+                $('#komentar').bind('input propertychange', function () {
+                    document.getElementById("komentar").placeholder = " ";
+                });
 
 
                 if (postovi[i].Important === "1") {
