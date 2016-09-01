@@ -16,11 +16,12 @@
     <link rel="stylesheet" href="material-gray-orange.css">
     <link rel="stylesheet" href="styles.css">
 
-    <script src = "javascript/jquery.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src = "javascript/material.js"></script>
 
+    <link href="select2.min.css" rel="stylesheet" />
+    <script src="javascript/select2.min.js"></script>
 
-    <script src="javascript/inbox.js"></script>
 
 
     <style>
@@ -95,16 +96,10 @@
                 <div class="mdl-cell mdl-cell--2-col"></div>
                 <div class="mdl-cell mdl-cell--8-col" id="primalac">
 
-                    <div class="mdl-textfield mdl-js-textfield" id="pretraziOsobe">
-                        <input list="osobe" class="mdl-textfield__input" name="traziOsobe" id="inputTraziOsobe" placeholder="Izaberi osobu...">
-                        <datalist id="osobe">
-                            <option value="Internet Explorer">
-                            <option value="Firefox">
-                            <option value="Chrome">
-                            <option value="Opera">
-                            <option value="Safari">
-                        </datalist>
-                    </div>
+
+                        <select class="js-example-data-array" id="pretraziOsobe" name="osobe" data-placeholder="Odaberite osobu" multiple>
+                        </select>
+
 
 
                 </div>
@@ -170,6 +165,10 @@
 
         <div class="mdl-layout__obfuscator"></div>
     </div>
+
+
+    <script src="javascript/inbox.js"></script>
+
 
 
 </body>

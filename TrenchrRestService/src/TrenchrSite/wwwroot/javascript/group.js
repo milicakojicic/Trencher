@@ -12,7 +12,41 @@ var opcije_za_glasanje = [];
 var id_grupe = 1242;
 var id_korisnika = 1249;
 
+
+
 $( document ).ready(function() {
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        var komentar_prom = document.getElementById(komentar);
+        komentar_prom.addEventListener("keydown", function (e) {
+            if (e.keyCode === 13 && !e.shiftKey) {
+                if (!e.shiftKey) {
+                    console.log(document.getElementById(komentar).value);
+                }
+            }
+        });
+    });
+
+    $('#groupPost').bind('input propertychange', function() {
+
+        document.getElementById("publish").disabled = true;
+        document.getElementById("publish").style.opacity = 0.5;
+        document.getElementById("groupPost").placeholder = " ";
+
+        if(this.value.length){
+            document.getElementById("publish").disabled = false;
+            document.getElementById("publish").style.opacity = 1;
+
+        }
+    });
+
+    $('#komentar').bind('input propertychange', function () {
+        document.getElementById("komentar").placeholder = " ";
+    });
+
+});
+
 
     var parametar = getQueryParams(document.location.search);
     var idGrupe = parametar.id;
@@ -27,7 +61,6 @@ $( document ).ready(function() {
 
     });
 
-
     //svi kursevi studenta kojima on pripada, da bi se prikazao u search-u
     $.ajax({
         url:'http://localhost:12345/studenti/' + id_korisnika + '/kursevi',
@@ -41,18 +74,7 @@ $( document ).ready(function() {
     });
 
     //kada se krene pisati post
-    $('#groupPost').bind('input propertychange', function() {
 
-        document.getElementById("publish").disabled = true;
-        document.getElementById("publish").style.opacity = 0.5;
-        document.getElementById("groupPost").placeholder = " ";
-
-        if(this.value.length){
-            document.getElementById("publish").disabled = false;
-            document.getElementById("publish").style.opacity = 1;
-
-        }
-    });
 
 
     //OBJAVA POST-a
@@ -83,7 +105,6 @@ $( document ).ready(function() {
                 'url': 'http://localhost:12345/postovi/materijali',
                 'data': JSON.stringify({
                     "KursID": id_grupe,
-                    "Caption": "Test", //obrisati
                     "Type": tip, //imam
                     "Text": text,
                     "Important": ind, //imam
@@ -104,7 +125,6 @@ $( document ).ready(function() {
                 'url': 'http://localhost:12345/postovi/rezultati',
                 'data': JSON.stringify({
                     "KursID": id_grupe,
-                    "Caption": "Test", //obrisati
                     "Type": tip, //imam
                     "Text": text,
                     "Important": ind, //imam
@@ -139,7 +159,6 @@ $( document ).ready(function() {
                     'url': 'http://localhost:12345/postovi/glasanje',
                     'data': JSON.stringify({
                         "KursID": id_grupe,
-                        "Caption": "Test", //obrisati
                         "Type": tip, //imam
                         "Text": text,
                         "Important": ind, //imam
@@ -176,7 +195,6 @@ $( document ).ready(function() {
                 'url': 'http://localhost:12345/postovi/obavestenja',
                 'data': JSON.stringify({
                     "KursID": id_grupe,
-                    "Caption": "Test", //obrisati
                     "Type": tip, //imam
                     "Text": text,
                     "Important": ind, //imam
@@ -226,6 +244,7 @@ $( document ).ready(function() {
                 //pravljenje id za html elemente
                 var autor = "autor" + id_posta;
                 var tipovi = "tipovi" + id_posta;
+                var komentar = "komentari" + id_posta;
 
                 div.innerHTML += '<div class="tip">' +
                     '<span id=' + autor + '>'+
@@ -238,14 +257,14 @@ $( document ).ready(function() {
                     '<div class="objava" id='+ id_posta +'>' +
                     postovi[i].Text +
                     '</div>' +
+                    '<div id = '+ komentar + '>' +
+                        //ovde idu svi redom komentari
+                    '</div>' +
                     '<div class="mdl-textfield mdl-js-textfield komentarDiv">'+
                         '<textarea class="mdl-textfield__input" type="text" rows="5" id="komentar"></textarea>'+
                         '<label class="mdl-textfield__label" for="komentar">Napišite komentar...</label>'+
                     '</div>';
 
-                $('#komentar').bind('input propertychange', function () {
-                    document.getElementById("komentar").placeholder = " ";
-                });
 
 
                 if (postovi[i].Important === "1") {
@@ -313,6 +332,7 @@ $( document ).ready(function() {
         });
 
     }); //KRAJ PRITISKA NA DUGME
+
 
     //GET za sve postove na odredjenoj grupi
     $.get("http://localhost:12345/postovi/" + id_grupe, function(data){
@@ -409,7 +429,9 @@ $( document ).ready(function() {
 
     });
 
-});
+
+
+
 
 //uzimanje argumenata iz url-a
 function getQueryParams(qs) {
@@ -550,6 +572,9 @@ function poslednjaOpcija() {
     }
 
 }
+
+
+
 
 
 
