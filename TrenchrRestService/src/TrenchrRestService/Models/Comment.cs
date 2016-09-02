@@ -30,7 +30,7 @@ namespace TrenchrRestService.Models
             Time = (long)record["vreme"];
             UserID = (long)record["user_id"];
             AuthorInfo = (string)record["ime"];
-            PicturePath = (string)record["prezime"];
+            PicturePath = (string)record["putanja"];
 
         }
 
@@ -39,10 +39,10 @@ namespace TrenchrRestService.Models
             var stmnt = "MATCH (post), (autor) " +
                        $"WHERE id(post) = {ParentID} AND id(autor) = {UserID} " +
                         " WITH post, autor " +
-                        "CREATE (k:komentar {" +
+                        "CREATE (autor)-[:komentarisao]->(k:komentar {" +
                         $" tekst: '{Text}', " +
                         $" vreme : {Time}" +
-                        "})-[:u_postu]->(post)<-[:komentarisao]-(autor) RETURN id(k) as id";
+                        "})-[:u_postu]->(post) RETURN id(k) as id";
 
              var result = Neo4jClient.Execute(stmnt);
             return (long)result.FirstOrDefault()["id"];

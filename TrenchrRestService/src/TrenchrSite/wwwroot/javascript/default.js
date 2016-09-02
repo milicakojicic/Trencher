@@ -59,6 +59,8 @@ $(document).ready(function() {
             //pravljenje id za html elemente
             var autor = "autor" + id_posta;
             var tipovi = "tipovi" + id_posta;
+            var komentar = "komentari_" + id_posta;
+            var komentar_tekst = "komentar_tekst_" + id_posta;
 
             div.innerHTML += '<div class="tip">' +
                 '<span id=' + autor + '>'+
@@ -71,10 +73,21 @@ $(document).ready(function() {
                 '<div class="objava" id='+ id_posta +'>' +
                 postovi[i].Text +
                 '</div>' +
-                '<div class="mdl-textfield mdl-js-textfield komentar">'+
-                '<textarea class="mdl-textfield__input" type="text" rows="5" id="koment"></textarea>'+
-                '<label class="mdl-textfield__label" for="koment">Napišite komentar...</label>'+
+                '<div id = ' + komentar + '>' +
+                    //ovde idu svi redom komentari
+                '</div>' +
+                '<div class="mdl-textfield mdl-js-textfield komentarDiv">'+
+                '<textarea class="mdl-textfield__input" type="text" rows="5" id=' + komentar_tekst + ' placeholder="Napisite komentar"></textarea>'+
                 '</div>';
+
+
+            $(".komentarDiv").css({"background-color": "whitesmoke", "margin-bottom":"20px", "width":"100%"});
+            $("#" + komentar_tekst).css({"background-color": "whitesmoke", "display":"block", "width":"100%"});
+
+            $('body').on('click', '#' + komentar_tekst, function() {
+                console.log("mic");
+                document.getElementById(komentar_tekst).setAttribute("placeholder", "");
+            });
 
 
             if (postovi[i].Important === "1") {

@@ -126,7 +126,7 @@ namespace TrenchrRestService.Controllers
         [HttpGet]
         public IActionResult VratiKomentare(long id)
         {
-            var stmnt = $"match (s:student)-[:komentarisao]->(k:komentar)-[:u_postu]->(post) where id(post) = {id} return id(k) as id, id(post) as parent_id, k.vreme as vreme, k.tekst as tekst, id(s) as user_id, s.ime as ime, s.prezime as prezime";
+            var stmnt = $"match (s:student)-[:komentarisao]->(k:komentar)-[:u_postu]->(post) where id(post) = {id} return id(k) as id, id(post) as parent_id, k.vreme as vreme, k.tekst as tekst, id(s) as user_id, s.name as ime, s.putanja as putanja";
             var rezKomentari = Neo4jClient.Execute(stmnt);
             var komentari = new List<Comment>();
             foreach (var o in rezKomentari)

@@ -1144,17 +1144,6 @@ input {
     font-size: 20px;
 }
 
-#komentar {
-    display: block;
-    width: 100%;
-}
-
-#komentarDiv {
-    width: 100%;
-    background-color: whitesmoke;
-    margin-bottom: 20px;
-}
-
 
 .ikonica_header {
     margin-right: 10%;
