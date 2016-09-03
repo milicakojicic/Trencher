@@ -10,7 +10,7 @@ var opcije_za_glasanje = [];
 
 //testirati na predmetu Automatsko rezonovanje
 var id_grupe = 1242;
-var id_korisnika = 1249;
+var id_korisnika = 1251;
 
 
 
@@ -216,7 +216,6 @@ $( document ).ready(function() {
 
         //GET za sve postove sortirane po vremenu objave
 
-
         $.ajax({
 
             url: 'http://localhost:12345/postovi/' + id_grupe,
@@ -237,7 +236,7 @@ $( document ).ready(function() {
                     var autor = "autor_" + id_posta;
                     var tipovi = "tipovi_" + id_posta;
                     var komentar = "komentari_" + id_posta;
-                    var komentar_tekst = "komentar_tekst_" + id_posta;
+                    var komentar_tekst = "kom_" + id_posta;
 
                     div.innerHTML += '<div class="tip">' +
                         '<span id=' + autor + '>'+
@@ -259,9 +258,11 @@ $( document ).ready(function() {
                         '</div>';
 
 
+
+
+                    $("#" + komentar).css({"background-color": "whitesmoke"});
                     $(".komentarDiv").css({"background-color": "whitesmoke", "margin-bottom":"20px", "width":"100%"});
                     $("#" + komentar_tekst).css({"background-color": "whitesmoke", "display":"block", "width":"100%"});
-
 
 
                     $('body').on('click', '#' + komentar_tekst, function() {
@@ -270,7 +271,40 @@ $( document ).ready(function() {
                     });
 
 
-                    console.log(id_posta);
+                    $('body').on('keydown', '#' + komentar_tekst, function(e) {
+                        if (e.keyCode === 13 && !e.shiftKey) {
+                            if (!e.shiftKey) {
+
+                                var id = e.target.id;
+                                var res = id.split("_");
+
+                                var vrednost = $(this).val();
+                                console.log(komentar_tekst);
+                                console.log(vrednost);
+                                var seconds = new Date().getTime() / 1000;
+
+                                $.ajax({
+                                    'type': 'post',
+                                    'async': false,
+                                    'url': 'http://localhost:12345/postovi/komentari',
+                                    'data': JSON.stringify({
+                                        "ParentID": res[1],
+                                        "UserID": id_korisnika, //imam
+                                        "Text": vrednost,
+                                        "Time": seconds
+                                    }),
+                                    'contentType': "application/json; charset=utf-8",
+                                    success: function(komentarVrednost) {
+
+                                        console.log("Uspesan unos komentara");
+                                    }
+                                });
+
+                            }
+                        }
+                    });
+
+
                     $.ajax({
                         url:'http://localhost:12345/postovi/' + id_posta + '/komentari',
                         type:'GET',
@@ -278,12 +312,28 @@ $( document ).ready(function() {
                         async: false,
                         success: function(komentarVrednost) {
 
-                            console.log(komentarVrednost);
                             for(var i = 0; i < komentarVrednost.length; i++) {
                                 console.log(komentarVrednost[i].Text);
 
-                                document.getElementById(komentar).innerText += komentarVrednost[i].Text;
+                                var koment= i;
+
+                                if(komentarVrednost[i].PicturePath == ""){
+                                    document.getElementById(komentar).innerHTML += '<div><span id='+ koment +'>' +
+                                        '<img src="images/default.png" class="demo-avatar" style="margin-right: 10px;margin-left: 20px; margin-bottom: 10px">' +
+                                        komentarVrednost[i].AuthorInfo + " " + komentarVrednost[i].Text +
+                                        '</span>' +
+                                        '</div>';
+                                }
+                                else {
+                                    document.getElementById(komentar).innerHTML += '<div><span id='+ koment +'>' +
+                                        '<img src="'+ komentarVrednost[i].PicturePath +'" class="demo-avatar" style="margin-right: 10px;margin-left: 20px; margin-bottom: 10px">' +
+                                        komentarVrednost[i].AuthorInfo + " " + komentarVrednost[i].Text +
+                                        '</span>' +
+                                        '</div>';
+                                }
+
                             }
+
                         }
                     });
 
@@ -351,9 +401,6 @@ $( document ).ready(function() {
         });
 
 
-
-
-
         //izmedju
 
     }); //KRAJ PRITISKA NA DUGME
@@ -382,7 +429,7 @@ $.ajax({
             var autor = "autor_" + id_posta;
             var tipovi = "tipovi_" + id_posta;
             var komentar = "komentari_" + id_posta;
-            var komentar_tekst = "komentar_tekst_" + id_posta;
+            var komentar_tekst = "kom_" + id_posta;
 
             div.innerHTML += '<div class="tip">' +
                 '<span id=' + autor + '>'+
@@ -399,14 +446,16 @@ $.ajax({
                     //ovde idu svi redom komentari
                 '</div>' +
                 '<div class="mdl-textfield mdl-js-textfield komentarDiv">'+
-                '<textarea class="mdl-textfield__input" type="text" rows="5" id=' + komentar_tekst + '  placeholder="Napisite komentar"></textarea>'+
+                '<textarea class="mdl-textfield__input" type="text" rows="5" id=' + komentar_tekst + '  placeholder="Napišite komentar...." style="margin-inside: 20px"></textarea>'+
                 ''+
                 '</div>';
 
 
+
+
+            $("#" + komentar).css({"background-color": "whitesmoke"});
             $(".komentarDiv").css({"background-color": "whitesmoke", "margin-bottom":"20px", "width":"100%"});
             $("#" + komentar_tekst).css({"background-color": "whitesmoke", "display":"block", "width":"100%"});
-
 
 
             $('body').on('click', '#' + komentar_tekst, function() {
@@ -415,7 +464,40 @@ $.ajax({
             });
 
 
-            console.log(id_posta);
+            $('body').on('keydown', '#' + komentar_tekst, function(e) {
+                if (e.keyCode === 13 && !e.shiftKey) {
+                    if (!e.shiftKey) {
+
+                        var id = e.target.id;
+                        var res = id.split("_");
+
+                        var vrednost = $(this).val();
+                        console.log(komentar_tekst);
+                        console.log(vrednost);
+                        var seconds = new Date().getTime() / 1000;
+
+                        $.ajax({
+                            'type': 'post',
+                            'async': false,
+                            'url': 'http://localhost:12345/postovi/komentari',
+                            'data': JSON.stringify({
+                                "ParentID": res[1],
+                                "UserID": id_korisnika, //imam
+                                "Text": vrednost,
+                                "Time": seconds
+                            }),
+                            'contentType': "application/json; charset=utf-8",
+                            success: function(komentarVrednost) {
+
+                                console.log("Uspesan unos komentara");
+                            }
+                        });
+
+                    }
+                }
+            });
+
+
             $.ajax({
                 url:'http://localhost:12345/postovi/' + id_posta + '/komentari',
                 type:'GET',
@@ -425,12 +507,29 @@ $.ajax({
 
                     for(var i = 0; i < komentarVrednost.length; i++) {
                         console.log(komentarVrednost[i].Text);
-                        document.getElementById(komentar).innerText += komentarVrednost[i].Text;
+
+                        var koment= i;
+
+                        if(komentarVrednost[i].PicturePath == ""){
+                            document.getElementById(komentar).innerHTML += '<div><span id='+ koment +'>' +
+                                '<img src="images/default.png" class="demo-avatar" style="margin-right: 10px;margin-left: 20px; margin-bottom: 10px">' +
+                                komentarVrednost[i].AuthorInfo + " " + komentarVrednost[i].Text +
+                                '</span>' +
+                                '</div>';
+                        }
+                        else {
+                            document.getElementById(komentar).innerHTML += '<div><span id='+ koment +'>' +
+                                '<img src="'+ komentarVrednost[i].PicturePath +'" class="demo-avatar" style="margin-right: 10px;margin-left: 20px; margin-bottom: 10px">' +
+                                komentarVrednost[i].AuthorInfo + " " + komentarVrednost[i].Text +
+                                '</span>' +
+                                '</div>';
+                        }
 
                     }
 
                 }
             });
+
 
             if (postovi[i].Important === "1") {
                 document.getElementById(tipovi).innerHTML += '<div class="mdl-cell mdl-cell--3-col tipPosta"> <span class="center">Vazno</span></div>';
@@ -638,9 +737,6 @@ function poslednjaOpcija() {
     }
 
 }
-
-
-
 
 
 
