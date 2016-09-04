@@ -20,6 +20,5 @@ namespace TrenchrRestService.Models
         public long UserId { get; set; }
         public string PicturePath { get; set; }
         public string AuthorInfo { get; set; }
-
     }
 }

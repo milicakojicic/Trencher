@@ -11,7 +11,6 @@ using TrenchrRestService.Models;
 
 namespace TrenchrRestService.Controllers
 {
-    
     public class PostController : ApiController
     {
         //TODO promeni rutu
@@ -58,8 +57,8 @@ namespace TrenchrRestService.Controllers
                 }
 
             }
+
             return Ok(JsonConvert.SerializeObject(posts, Formatting.Indented));
-         
         }
 
         [Route("postovi/obavestenja")]
@@ -110,7 +109,6 @@ namespace TrenchrRestService.Controllers
             return Created("lokacija", "radi");
         }
 
-
         //pravljenje komentara za dati post
         [Route("postovi/komentari")]
         [HttpPost]
@@ -135,13 +133,11 @@ namespace TrenchrRestService.Controllers
             return Ok(JsonConvert.SerializeObject(komentari, Formatting.Indented));
         }
 
-
         //najskoriji postovi za predmete ciji je ulogovani korisnik clan
         [Route("studenti/{id}/kursevi/postovi")]
         [HttpGet]
         public IActionResult VratiPostoveZaHome(long id)
         {
-
             //SVI postovi
             var stmnt = $"match (o:odrzan_kurs)-[:ima_post]->(post)<-[:objavio]-(neko) return id(o) as kurs_id, id(post) as id, "+ 
                         "post.tip as tip, post.name as naslov," + 
@@ -213,9 +209,7 @@ namespace TrenchrRestService.Controllers
             }
 
             return Ok(JsonConvert.SerializeObject(finalPosts, Formatting.Indented));
-
         }
-
 
         //vracanje opcija glasanja za dati post
         [Route("postovi/{id}/opcije")]
@@ -229,7 +223,6 @@ namespace TrenchrRestService.Controllers
                 opcije.Add(new VoteOption(o));
             return Ok(JsonConvert.SerializeObject(opcije, Formatting.Indented));
         }
-
     }
 }
 

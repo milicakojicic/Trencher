@@ -12,18 +12,16 @@ namespace TrenchrRestService.Controllers
     [Route("/")]
     public class DefaultController : ApiController
     {
-        /*
         [HttpGet]
         public IActionResult GetAllPosts()
         {
             var list = new List<Post>()
             {
-                new Post() { Title = "Vazno!!! RS2", Content = "Moramo autentifikaciju i autoriziju da resimo" },
-                new Post() { Title = "KIA2 Vezbe", Content = "Nemamo vezbe prve nedelje" }
+                new Post() { Caption = "Vazno!!! RS2", Text = "Moramo autentifikaciju i autoriziju da resimo" },
+                new Post() { Caption = "KIA2 Vezbe", Text = "Nemamo vezbe prve nedelje" }
             };
 
             string json = JsonConvert.SerializeObject(list, Formatting.Indented);
-
             return Ok(json);
         }
 
@@ -31,7 +29,6 @@ namespace TrenchrRestService.Controllers
         [HttpGet]
         public IActionResult GetPosts()
         {
-
             return Ok("radi");
         }
 
@@ -39,17 +36,15 @@ namespace TrenchrRestService.Controllers
         [HttpGet]
         public IActionResult GetPost(int id)
         {
-            var post = new Post() { Title = "Vazno!!! RS2", Content = "Moramo autentifikaciju i autoriziju da resimo" };
+            var post = new Post() { Caption = "Vazno!!! RS2", Text = "Moramo autentifikaciju i autoriziju da resimo" };
             var json = JsonConvert.SerializeObject(post);
             return Ok(json);
         }
-
 
         [Route("profile")]
         [HttpGet]
         public IActionResult GetProfile()
         {
-
             return Ok("radi");
         }
 
@@ -57,8 +52,7 @@ namespace TrenchrRestService.Controllers
         [HttpGet]
         public IActionResult GetSubjects()
         {
-
             return Ok("radi");
-        } */
+        }
     }
 }

@@ -8,7 +8,6 @@ namespace TrenchrRestService.Models
 {
     public class Student : User
     {
-       
         public long Year { get; set; }
         public string Index { get; set; }
 
@@ -16,7 +15,6 @@ namespace TrenchrRestService.Models
         public string Faculty { get; set; }
         public string Module { get; set; }
         public string University { get; set; }
-
 
         public Student() { }
 

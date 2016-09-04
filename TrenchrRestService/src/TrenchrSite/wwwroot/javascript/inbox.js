@@ -17,7 +17,7 @@ $( document ).ready(function() {
         }
     });
 
-    //svi kursevi studenta kojima on pripada, da bi se prikaza
+    //svi kursevi studenta kojima on pripada, da bi se prikazali
     $.ajax({
         url: 'http://localhost:12345/studenti/' + id_korisnika + '/kursevi',
         type: 'GET',
@@ -29,10 +29,7 @@ $( document ).ready(function() {
         }
     });
 
-
     var studenti = [];
-
-
     var state = "";
 
     $.ajax({
@@ -50,11 +47,9 @@ $( document ).ready(function() {
                 a.text = [osobe[i].Name + " " + osobe[i].Surname, osobe[i].PicturePath];
 
                 studenti.push(a);
-
             }
         }
     });
-
 
     console.log(studenti);
 
@@ -106,21 +101,45 @@ $( document ).ready(function() {
     function posalji(e) {
         var div = document.getElementById("poruke");
 
-        div.innerHTML += '<div class="mdl-grid divZaPoruku"> ' +
-            '<div class="mdl-cell mdl-cell--6-col"> ' +
-            '</div> ' +
-            '<div class="mdl-cell mdl-cell--6-col"> ' +
-            '<div class="pojedinacnaPorukaDiv "> ' +
-            '<span class="pojedinacnaPorukaMoja">' + poruka.value + '</span> ' +
-            '</div> ' +
-            '</div> ' +
-            '</div> ';
+        //div.innerHTML += '<div class="mdl-grid divZaPoruku"> ' +
+        //    '<div class="mdl-cell mdl-cell--6-col"> ' +
+        //    '</div> ' +
+        //    '<div class="mdl-cell mdl-cell--6-col"> ' +
+        //    '<div class="pojedinacnaPorukaDiv "> ' +
+        //    '<span class="pojedinacnaPorukaMoja">' + poruka.value + '</span> ' +
+        //    '</div> ' +
+        //    '</div> ' +
+        //    '</div> ';
+
+        //cuvanje poruke u bazi
+        $.ajax({
+            'type': 'get',
+            'url': 'http://localhost:12345/postovi/' + id_posta + '/opcije',
+            'async': false,
+            'success': function (data) {
+                var glasanje = JSON.parse(data);
+
+                for (var l = 0; l < glasanje.length; l++) {
+                    document.getElementById(id_posta).innerHTML += '' +
+                        '<div class="mdl-grid glas_ceo">' +
+                        '<div class="mdl-cell mdl-cell--10-col opcija">' +
+                        glasanje[l].Text +
+                        '</div>' +
+                        '<div class="mdl-cell mdl-cell--1-col">' +
+                        '<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox2"> ' +
+                        '<input type="checkbox" id="checkbox2" class="mdl-checkbox__input"> ' +
+                        '</label>' +
+                        '</div>' +
+                        '<div class="mdl-cell mdl-cell--1-col glas">' +
+                        glasanje[l].BrojGlasova +
+                        '</div>' +
+                        '</div>';
+                }
+            }
+        });
 
         div.scrollTop = div.scrollHeight;
         poruka.value = "";
         poruka.placeholder = "Napisi poruku...";
-
     }
 });
-
-

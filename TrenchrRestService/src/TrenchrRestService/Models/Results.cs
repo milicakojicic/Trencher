@@ -15,7 +15,6 @@ namespace TrenchrRestService.Models
 
         public Results(IRecord record)
         {
-
             Path = (string)record["putanja"];
             ID = (long)record["id"];
             KursID = (long)record["kurs_id"];
@@ -26,13 +25,12 @@ namespace TrenchrRestService.Models
             UserId = (long)record["korisnik_id"];
             AuthorInfo = (string)record["ime_korisnika"];
             PicturePath = (string)record["putanja_korisnika"];
-
         }
 
         public long SacuvajRezultate()
         {
             var stmnt = "MATCH (ok:odrzan_kurs), (autor) " +
-                       $"WHERE id(ok) = {KursID} AND id(autor) = {UserId} " +
+                        $"WHERE id(ok) = {KursID} AND id(autor) = {UserId} " +
                         " WITH ok,autor " +
                         "CREATE (ok)-[:ima_post]->(o:rezultati{" +
                         $" tekst : '{Text}', " +
@@ -40,11 +38,10 @@ namespace TrenchrRestService.Models
                         $" ind :' {Important}', " +
                         $" vreme : {Time}, " +
                         $" putanja : '{Path}'" +
-                         "})<-[:objavio]-(autor) RETURN id(o) as id";
+                        "})<-[:objavio]-(autor) RETURN id(o) as id";
 
             var result = Neo4jClient.Execute(stmnt);
             return (long)result.FirstOrDefault()["id"];
         }
-
     }
 }
