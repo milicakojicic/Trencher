@@ -82,36 +82,49 @@
                 <div class="mdl-cell mdl-cell--3-col"></div>
 
                 <div class="mdl-cell mdl-cell--6-col srednji_div" id="formaAdmin">
-                    <form action="#">
+                    <form action="#" id = "forma">
 
-                        <div class="mdl-textfield mdl-js-textfield">
-                            <input class="mdl-textfield__input" type="text" id="naziv_predmeta"/>
-                            <label class="mdl-textfield__label" for="naziv_predmeta">Naziv predmeta</label>
+
+                        <div class="mdl-select mdl-js-select mdl-select--floating-label" >
+                            <select class="mdl-select__input" id="naziv_predmeta" name="naziv_predmeta">
+                            </select>
+                            <label class="mdl-select__label" for="naziv_predmeta">Naziv predmeta</label>
                         </div>
 
-                        <div class="mdl-textfield mdl-js-textfield">
-                            <input class="mdl-textfield__input" type="text" id="fakultet"/>
-                            <label class="mdl-textfield__label" for="fakultet">Fakultet</label>
+                        <div class="mdl-select mdl-js-select mdl-select--floating-label">
+                            <select class="mdl-select__input" id="nivo" name="nivo">
+                                <option value=""></option>
+                                <option value="osnovne studije">osnovne studije</option>
+                                <option value="master studije">master studije</option>
+                                <option value="doktorske studije">doktorske studije</option>
+                            </select>
+                            <label class="mdl-select__label" for="nivo">Nivo</label>
                         </div>
 
-                        <div class="mdl-textfield mdl-js-textfield">
-                            <input class="mdl-textfield__input" type="text" id="smer"/>
-                            <label class="mdl-textfield__label" for="smer">Smer</label>
+                        <div class="mdl-select mdl-js-select mdl-select--floating-label">
+                            <select class="mdl-select__input" id="tip" name="tip">
+                                <option value=""></option>
+                                <option value="obavezni">obavezni</option>
+                                <option value="izborni">izborni</option>
+                            </select>
+                            <label class="mdl-select__label" for="tip">Tip</label>
                         </div>
+
+
 
                         <div class="mdl-select mdl-js-select mdl-select--floating-label">
                             <select class="mdl-select__input" id="skolska_godina" name="skolska_godina">
                                 <option value=""></option>
-                                <option value="option1">2016/2017</option>
-                                <option value="option2">2017/2018</option>
-                                <option value="option3">2018/2019</option>
-                                <option value="option4">2019/2020</option>
-                                <option value="option5">2020/2021</option>
-                                <option value="option6">2021/2022</option>
-                                <option value="option7">2022/2023</option>
-                                <option value="option8">2023/2024</option>
-                                <option value="option9">2024/2025</option>
-                                <option value="option10">2025/2026</option>
+                                <option value="2016/2017">2016/2017</option>
+                                <option value="2017/2018">2017/2018</option>
+                                <option value="2018/2019">2018/2019</option>
+                                <option value="2019/2020">2019/2020</option>
+                                <option value="2020/2021">2020/2021</option>
+                                <option value="2021/2022">2021/2022</option>
+                                <option value="2022/2023">2022/2023</option>
+                                <option value="2023/2024">2023/2024</option>
+                                <option value="2024/2025">2024/2025</option>
+                                <option value="2025/2026">2025/2026</option>
                             </select>
                             <label class="mdl-select__label" for="skolska_godina">Školska godina</label>
                         </div>
@@ -123,8 +136,8 @@
                         <div class="mdl-grid">
                             <div class="mdl-cell mdl-cell--3-col"></div>
                             <div class="mdl-cell mdl-cell--6-col">
-                                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white" id="potvrdi_pravljenje">Potvrdi</button>
-                                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white close" id="odustani_pravljenje">Odustani</button>
+                                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white" id="potvrdi_pravljenje" onclick="unesi_predmet()" >Potvrdi</button>
+                                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white" id="odustani_pravljenje" type="reset">Odustani</button>
                             </div>
                             <div class="mdl-cell mdl-cell--3-col"></div>
 

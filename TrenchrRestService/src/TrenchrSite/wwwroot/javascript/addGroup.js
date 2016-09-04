@@ -162,3 +162,86 @@ componentHandler.register({
     cssClass: 'mdl-js-select',
     widget: true
 });
+
+
+$.ajax({
+    url:'http://localhost:12345/kursevi_neodrzani',
+    type:'GET',
+    dataType: 'json',
+    success: function( json ) {
+        $('#naziv_predmeta').append('<option value=""></option>');
+        $.each(json, function(i, value) {
+            var id = value.ID + "," + value.Espb + "," + value.Name;
+            $('#naziv_predmeta').append('<option value="'+id+'">'+value.Name+ ", " + value.Faculty + ", " + value.Module + '</option>');
+        });
+    }
+});
+
+
+
+function unesi_predmet() {
+
+    arr = [];
+
+    var naziv = document.getElementById("naziv_predmeta").value;
+    arr.push(naziv);
+
+    var nivo = document.getElementById("nivo").value;
+    arr.push(nivo);
+
+    var tip = document.getElementById("tip").value;
+    arr.push(tip);
+
+    var godina = document.getElementById("skolska_godina").value;
+    arr.push(godina);
+
+
+    for (var i =0; i<arr.length; i++) {
+        if (arr[i] == "") {
+            alert("Niste odabrali sva polja");
+            document.getElementById("forma").reset();
+            return;
+        }
+
+    }
+
+
+    console.log(document.getElementById("naziv_predmeta").value);
+    console.log(document.getElementById("nivo").value);
+    console.log(document.getElementById("tip").value);
+    console.log(document.getElementById("skolska_godina").value);
+
+    //ajax poziv za unos nove grupe
+    //da bismo dobili naziv nove grupe
+
+    var res = naziv.split(",");
+    console.log(res[0]);
+    console.log(res[1]);
+
+    var id_kursa = res[0];
+    var espb = res[1];
+    var name = res[2];
+
+    $.ajax({
+        'type': 'post',
+        'async': false,
+        'url': 'http://localhost:12345/kursevi/novi_kurs',
+        'data': JSON.stringify({
+            "Name" : name,
+            "Espb": espb,
+            "Type" : tip,
+            "Level" : nivo,
+            "Year": godina,
+            "CourseID": id_kursa
+        }),
+        'contentType': "application/json; charset=utf-8",
+        success: function(kurs) {
+
+            window.alert("Uspesan unos kursa");
+        }
+    });
+
+
+}
+
+

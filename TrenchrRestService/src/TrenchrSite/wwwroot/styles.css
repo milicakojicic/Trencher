@@ -1152,3 +1152,7 @@ input {
 #pretraziOsobe {
     width: 100%;
 }
+
+#potvrdiPravljenje {
+    opacity: 0.5;
+}

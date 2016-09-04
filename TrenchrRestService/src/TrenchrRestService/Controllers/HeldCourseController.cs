@@ -75,8 +75,18 @@ namespace TrenchrRestService.Controllers
                     return Created("lokacija", "radi");
         }
 
-      
-      
+
+        [Route("kursevi/novi_kurs")]
+        [HttpPost]
+        public IActionResult DodajKurs([FromBody] JObject jsonBody)
+        {
+            var kurs = JsonConvert.DeserializeObject<HeldCourse>(jsonBody.ToString(), new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Ignore });
+            kurs.SacuvajKurs();
+            return Created("lokacija", "radi");
+        }
+
+
+
 
 
     }

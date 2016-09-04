@@ -14,6 +14,10 @@ namespace TrenchrRestService.Models
         public string Type { get; set; }
         public string Level { get; set; }
         public string Year { get; set; }
+       
+        //treba nam za unos, da znamo sa kojim kursom je povezana grupa
+        public long CourseID { get; set; }
+        
 
         public HeldCourse() { }
 
@@ -25,6 +29,26 @@ namespace TrenchrRestService.Models
             Type = (string)record["tip"];
             Level = (string)record["nivo"];
             Year = (string)record["godina"];
+
+        }
+
+
+        public long SacuvajKurs()
+        {
+            var stmnt = "MATCH (kurs) " +
+                        $"WHERE id(kurs) = {CourseID} " +
+                        " WITH kurs " +
+                        " CREATE (kurs)-[:odrzan]->(o:odrzan_kurs {" +
+                        $" name: '{Name}', " +
+                        $" espb : {Espb}, " +
+                        $" tip: '{Type}', " +
+                        $" nivo: '{Level}', " +
+                        $" godina: '{Year}' " +
+                        "}) RETURN id(o) as id";
+
+        
+            var result = Neo4jClient.Execute(stmnt);
+            return (long)result.FirstOrDefault()["id"];
         }
     }
 }
