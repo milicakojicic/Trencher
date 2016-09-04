@@ -10,7 +10,7 @@ namespace TrenchrRestService.Models
     {
         public long ID { get; set; }
         public string Text { get; set; }
-        public long Time { get; set; }
+        public DateTime Time { get; set; }
         
         // post na koji se odnosi
         public long ParentID { get; set; }
@@ -27,26 +27,24 @@ namespace TrenchrRestService.Models
             ID = (long)record["id"];
             ParentID = (long)record["parent_id"];
             Text = (string)record["tekst"];
-            Time = (long)record["vreme"];
+            Time = (DateTime)record["vreme"];
             UserID = (long)record["user_id"];
             AuthorInfo = (string)record["ime"];
             PicturePath = (string)record["putanja"];
-
         }
 
         public long SacuvajKomentar()
         {
             var stmnt = "MATCH (post), (autor) " +
-                       $"WHERE id(post) = {ParentID} AND id(autor) = {UserID} " +
+                        $"WHERE id(post) = {ParentID} AND id(autor) = {UserID} " +
                         " WITH post, autor " +
                         "CREATE (autor)-[:komentarisao]->(k:komentar {" +
                         $" tekst: '{Text}', " +
                         $" vreme : {Time}" +
                         "})-[:u_postu]->(post) RETURN id(k) as id";
 
-             var result = Neo4jClient.Execute(stmnt);
+            var result = Neo4jClient.Execute(stmnt);
             return (long)result.FirstOrDefault()["id"];
         }
-
     }
 }

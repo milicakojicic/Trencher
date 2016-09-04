@@ -29,7 +29,7 @@ namespace TrenchrRestService.Models
         public long SacuvajMaterijale()
         {
             var stmnt = "MATCH (ok:odrzan_kurs), (autor) " +
-                       $"WHERE id(ok) = {KursID} AND id(autor) = {UserId} " +
+                        $"WHERE id(ok) = {KursID} AND id(autor) = {UserId} " +
                         " WITH ok,autor " +
                         "CREATE (ok)-[:ima_post]->(o:materijali{" +
                         $" tekst : '{Text}', " +
@@ -37,12 +37,10 @@ namespace TrenchrRestService.Models
                         $" ind :' {Important}', " +
                         $" vreme : {Time}, " +
                         $" putanja : '{Path}'" +
-                         "})<-[:objavio]-(autor) RETURN id(o) as id";
+                        "})<-[:objavio]-(autor) RETURN id(o) as id";
 
             var result = Neo4jClient.Execute(stmnt);
             return (long)result.FirstOrDefault()["id"];
         }
-
-
     }
 }

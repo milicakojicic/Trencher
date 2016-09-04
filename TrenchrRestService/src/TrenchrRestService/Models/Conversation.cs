@@ -11,6 +11,5 @@ namespace TrenchrRestService.Models
         public List<Message> Messages { get; set; }
         public List<User> Users { get; set; }
         public string Name { get; set; }
-
     }
 }

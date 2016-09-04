@@ -13,7 +13,6 @@ namespace TrenchrRestService.Models
 
         public NotificationPost(IRecord record)
         {
-
             ID = (long)record["id"];
             KursID = (long)record["kurs_id"];
             Type = (string)record["tip"];
@@ -28,14 +27,14 @@ namespace TrenchrRestService.Models
         public long SaveToDBNotification()
         {
             var stmnt = "MATCH (ok:odrzan_kurs), (autor) " +
-                       $"WHERE id(ok) = {KursID} AND id(autor) = {UserId} " +
+                        $"WHERE id(ok) = {KursID} AND id(autor) = {UserId} " +
                         " WITH ok,autor " +
                         "CREATE (ok)-[:ima_post]->(o:obavestenje{" +
                         $" tekst : '{Text}', " +
                         $" tip : '{Type}', " +
                         $" ind :' {Important}', " +
                         $" vreme : {Time}" +
-                         "})<-[:objavio]-(autor) RETURN id(o) as id";
+                        "})<-[:objavio]-(autor) RETURN id(o) as id";
 
             var result = Neo4jClient.Execute(stmnt);
             return (long)result.FirstOrDefault()["id"];

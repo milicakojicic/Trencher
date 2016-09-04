@@ -238,15 +238,15 @@ create (komentarObavestenje1)-[:u_postu]->(obavestenje1)
 create (NemanjaSubotic)-[:komentarisao]->(komentarObavestenje1)
 
 //Poruka
-create (poruka1:poruka {name: "Poruka1", tekst: "Posalji mi vezbe iz ar-a", vreme: 1471774244})
-create (poruka2:poruka {name: "Poruka1", tekst: "Hocu", vreme: 1471860644})
+create (poruka1:poruka {name: "Poruka1", poslao: "LjubicaID", tekst: "Posalji mi vezbe iz ar-a", vreme: 1471774244})
+create (poruka2:poruka {name: "Poruka1", poslao: "MilicaID", tekst: "Hocu", vreme: 1471860644})
 
 //Konverzacija
 create(konverzacija1:konverzacija{})
 
-//Osoba -> Poruka
-create (LjubicaPeleksic)-[:poslao_poruku]->(poruka1)
-create (MilicaKojicic)-[:poslao_poruku]->(poruka2)
+//Konverzacija -> Poruka
+create (konverzacija1)-[:sadrzi_poruku]->(poruka1)
+create (konverzacija1)-[:sadrzi_poruku]->(poruka2)
 
 //Osoba -> Konverzacija
 create (MilicaKojicic)-[:u_konverzaciji]->(konverzacija1)

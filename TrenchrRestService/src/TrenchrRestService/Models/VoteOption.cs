@@ -28,7 +28,6 @@ namespace TrenchrRestService.Models
             BrojGlasova = (long)record["broj_glasova"];
         }
 
-
         //vezi je za odredjeno glasanje, i inicijalno je broj glasova 0
         //OVDE NE RADI KONVERZIJA json number->long videti kako to
         //ParentId je id posta koji nije deo json-a
