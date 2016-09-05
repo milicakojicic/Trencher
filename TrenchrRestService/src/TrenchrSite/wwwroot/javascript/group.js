@@ -213,7 +213,7 @@ $( document ).ready(function() {
 
         //GET za sve postove sortirane po vremenu objave
 
-       // location.reload();
+       //location.reload();
 
         //izmedju
 
@@ -411,9 +411,11 @@ $.ajax({
 
                         for(var l = 0; l < glasanje.length; l++){
 
-                            var id_checkbox = glasanje[l].ID;
+                            var id_checkbox = glasanje[l].ID + "_" + id_posta;
                             console.log("Id opcije:" +id_checkbox);
                             console.log(id_posta);
+
+                            var brGlasova = "brGlasova" + glasanje[l].ID;
 
                             document.getElementById(id_posta).innerHTML += '' +
                                 '<div class="mdl-grid glas_ceo">' +
@@ -421,9 +423,9 @@ $.ajax({
                                 glasanje[l].Text +
                                 '</div>' +
                                 '<div class="mdl-cell mdl-cell--1-col">' + id_checkbox +
-                                '<input type="checkbox" id='+id_checkbox+' class="mdl-checkbox__input" onclick="povecajBrojGlasova()"> ' +
+                                '<input type="checkbox" id='+id_checkbox+' class="mdl-checkbox__input " onclick="povecajBrojGlasova(this.id)"> ' +
                                 '</div>'+
-                                '<div class="mdl-cell mdl-cell--1-col glas">' +
+                                '<div class="mdl-cell mdl-cell--1-col glas" id='+brGlasova+'>' +
                                 glasanje[l].BrojGlasova +
                                 '</div>' +
                                 '</div>';
@@ -595,11 +597,36 @@ function poslednjaOpcija() {
 
 
 
-function povecajBrojGlasova() {
+function povecajBrojGlasova(id) {
 
     //vraca bas taj id opcije
-    var id_opcije = this.id;
-    console.log(id_opcije);
+    console.log("U fji: " + id);
+
+    //id_opcije razmak id_posta
+    var res = id.split("_");
+
+    console.log("Id opcije:" + res[0]);
+    console.log("Id posta: " + res[1]);
+
+    //ajax za update
+    $.ajax({
+        type: 'put',
+        async: false,
+        url: 'http://localhost:12345/opcije/' + res[0],
+        contentType: "application/json; charset=utf-8"
+    });
+
+
+    $.ajax({
+        url:'http://localhost:12345/postovi/' + res[1] + '/opcije/' + res[0],
+        type:'GET',
+        async: false,
+        dataType: 'json',
+        success: function( data ) {
+            console.log(data);
+            document.getElementById("brGlasova" + res[0]).innerHTML = data[0].BrojGlasova;
+        }
+    });
 
 }
 

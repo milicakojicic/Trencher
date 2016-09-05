@@ -238,6 +238,33 @@ namespace TrenchrRestService.Controllers
                 opcije.Add(new VoteOption(o));
             return Ok(JsonConvert.SerializeObject(opcije, Formatting.Indented));
         }
+
+
+        //jedna odredjena opcija jednog odredjenog posta
+        [Route("postovi/{id1}/opcije/{id2}")]
+        [HttpGet]
+        public IActionResult VratiOpcijeGlasanja(long id1, long id2)
+        {
+            var stmnt = $"MATCH (o:opcija)-[:u_glasanju]->(g:glasanje) where id(g) = {id1} and id(o) = {id2} return id(o) as id, id(g) as roditelj_id, o.tekst as text, o.brGlasova as broj_glasova";
+            var rezOpcije = Neo4jClient.Execute(stmnt);
+            var opcije = new List<VoteOption>();
+            foreach (var o in rezOpcije)
+                opcije.Add(new VoteOption(o));
+            return Ok(JsonConvert.SerializeObject(opcije, Formatting.Indented));
+        }
+
+
+        [Route("opcije/{id}")]
+        [HttpPut]
+        public IActionResult updateOption([FromBody] JObject jsonBody, long id)
+        {
+          
+            string stmnt = $"MATCH (u) WHERE id(u) = {id} SET u.brGlasova = u.brGlasova + 1";
+            Neo4jClient.Execute(stmnt);
+            return Ok();
+        }
+
+
     }
 }
 
