@@ -2,6 +2,7 @@
 //id studenta koji treba da se prikaze
 var id = 1248 ;
 
+
 $(document).ready(function(){
 
 
@@ -89,21 +90,17 @@ $(document).ready(function(){
         var faculty = document.getElementById("faculty").value;
         var university = document.getElementById("university").value;
         var course = document.getElementById("course").value;
-        var year = document.getElementById("year").value;
+        var year = parseInt(document.getElementById("year").value);
 
         $.ajax({
             type: 'put',
-            url: 'url',
+            url: 'http://localhost:12345/korisnici/' + id,
             data: JSON.stringify( {
-                "ID" : id,
-                "Name" : name,
-                "Surname" : surname,
-                "Year" : year,
-                "Index" : index,
-                "Email" : email,
-                "Faculty" : faculty,
-                "University" : university,
-                "Module" : course
+                "ime" : name,
+                "prezime" : surname,
+                "generacija" : year,
+                "indeks" : index,
+                "email" : email
             }),
             contentType: "application/json; charset=utf-8"
         });
@@ -152,3 +149,5 @@ function izmeniProfil() {
     document.getElementById("name").focus();
 
 }
+
+

@@ -196,6 +196,7 @@ function unesi_predmet() {
     arr.push(godina);
 
 
+    //ako nisu odabrana sva polja
     for (var i =0; i<arr.length; i++) {
         if (arr[i] == "") {
             alert("Niste odabrali sva polja");

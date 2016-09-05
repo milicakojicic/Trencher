@@ -87,9 +87,10 @@ namespace TrenchrRestService.Controllers
         [HttpPut]
         public IActionResult updateUser([FromBody] JObject jsonBody, long id)
         {
-            var stmnt = new StringBuilder("MATCH (u) SET ");
+            var stmnt = new StringBuilder($"MATCH (u) WHERE id(u) = {id} SET ");
             var updatedProperties = jsonBody.Properties();
             var property = updatedProperties.First();
+           
             appendProperty(property, stmnt);
             while (property.Next != null)
             {
@@ -97,7 +98,7 @@ namespace TrenchrRestService.Controllers
                 property = (JProperty)property.Next;
                 appendProperty(property, stmnt);
             }
-            stmnt.Append($"WHERE id(u) = {id} ");
+            
             Neo4jClient.Execute(stmnt.ToString());
             return Ok();
         }

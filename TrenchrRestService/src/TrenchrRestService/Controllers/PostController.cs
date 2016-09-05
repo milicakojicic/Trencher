@@ -115,8 +115,9 @@ namespace TrenchrRestService.Controllers
         public IActionResult NapraviKomentar([FromBody] JObject jsonBody)
         {
             var komentar = JsonConvert.DeserializeObject<Comment>(jsonBody.ToString(), new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Ignore });
-            komentar.SacuvajKomentar();
-            return Created("lokacija", "radi");
+            var id = komentar.SacuvajKomentar();
+            string jsonString = JsonConvert.SerializeObject(id);
+            return Created("lokacija", jsonString);
         }
 
         //vracanje komentara nekog posta
@@ -124,7 +125,21 @@ namespace TrenchrRestService.Controllers
         [HttpGet]
         public IActionResult VratiKomentare(long id)
         {
-            var stmnt = $"match (s:student)-[:komentarisao]->(k:komentar)-[:u_postu]->(post) where id(post) = {id} return id(k) as id, id(post) as parent_id, k.vreme as vreme, k.tekst as tekst, id(s) as user_id, s.name as ime, s.putanja as putanja";
+            var stmnt = $"match (s:student)-[:komentarisao]->(k:komentar)-[:u_postu]->(post) where id(post) = {id} return id(k) as id, id(post) as parent_id, k.vreme as vreme, k.tekst as tekst, id(s) as user_id, s.name as ime, s.putanja as putanja order by k.vreme asc";
+            var rezKomentari = Neo4jClient.Execute(stmnt);
+            var komentari = new List<Comment>();
+            foreach (var o in rezKomentari)
+                komentari.Add(new Comment(o));
+
+            return Ok(JsonConvert.SerializeObject(komentari, Formatting.Indented));
+        }
+
+        //jedan odredjen komentar koji pripada nekom postu
+        [Route("postovi/{id1}/komentari/{id2}")]
+        [HttpGet]
+        public IActionResult VratiKomentar(long id1, long id2)
+        {
+            var stmnt = $"match (s:student)-[:komentarisao]->(k:komentar)-[:u_postu]->(post) where id(post) = {id1} and id(k) = {id2} return id(k) as id, id(post) as parent_id, k.vreme as vreme, k.tekst as tekst, id(s) as user_id, s.name as ime, s.putanja as putanja order by k.vreme asc";
             var rezKomentari = Neo4jClient.Execute(stmnt);
             var komentari = new List<Comment>();
             foreach (var o in rezKomentari)
