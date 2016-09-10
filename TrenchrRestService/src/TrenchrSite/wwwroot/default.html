@@ -85,7 +85,6 @@
             <div class="mdl-layout-spacer"></div>
         </nav>
     </div>
-
     
     <main class="default mdl-layout__content">
 
@@ -103,7 +102,23 @@
     <div class="mdl-layout__obfuscator"></div>
 </div>
 
+    <div id="widgetCount"></div>
 </body>
+
+<script src="~/Scripts/jquery.signalR-2.2.1.js"></script>
+<script src="/signalr/hubs"></script>
+
+<script>
+        $(function () {
+            var widgetHub = $.connection.widgetHub;
+
+            widgetHub.client.updateMessageCount = function (count) {
+                $("#widgetCount").text("Widget created " + count);
+            };
+
+            $.connection.hub.start().done();
+        });
+</script>
 
 <script>
     Array.prototype.forEach.call(document.querySelectorAll('.mdl-card__media'), function(el) {

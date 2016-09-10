@@ -57,7 +57,6 @@ namespace IdentityService.Configuration
                     {
                         "openid", "profile", "email", "api1"
                     }
-
                 }
             };
         }

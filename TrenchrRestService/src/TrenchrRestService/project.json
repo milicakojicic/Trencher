@@ -17,7 +17,16 @@
     "Microsoft.AspNetCore.Cors": "1.0.0",
     "IdentityServer3": "2.5.2",
     "System.IdentityModel.Tokens.Jwt": "5.0.0",
-    "Microsoft.AspNetCore.Authentication.JwtBearer": "1.0.0"
+    "Microsoft.AspNetCore.Authentication.JwtBearer": "1.0.0",
+    "Microsoft.AspNet.SignalR": "2.2.1",
+    "Microsoft.AspNet.SignalR.Client": "2.2.1",
+    "Microsoft.AspNet.SignalR.Core": "2.2.1",
+    "Microsoft.AspNet.SignalR.JS": "2.2.1",
+    "Microsoft.AspNet.Identity.Owin": "2.2.1",
+    "Microsoft.AspNet.Identity.Core": "2.2.1",
+    "Microsoft.Owin.Security.OAuth": "3.0.1",
+    "Microsoft.Owin.Security.Cookies": "3.0.1",
+    "AspNet.Hosting.Katana.Extensions": "1.0.0-alpha3-final"
   },
 
   "tools": {

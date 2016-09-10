@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNet.SignalR;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+using TrenchrRestService.Hubs;
 using TrenchrRestService.Models;
 
 namespace TrenchrRestService.Controllers
@@ -68,6 +70,11 @@ namespace TrenchrRestService.Controllers
         [HttpPost]
         public IActionResult NapisiPoruku([FromBody] JObject jsonBody)
         {
+            // slanje SignalR signala da je napisana nova poruka
+            NotificationHub.MessageCount++;
+            var widgetHubContext = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+            widgetHubContext.Clients.All.updateMessageCount(NotificationHub.MessageCount);
+
             var poruka = JsonConvert.DeserializeObject<Message>(jsonBody.ToString(), new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Ignore });
             poruka.SacuvajPoruku();
             return Created("lokacija", "radi");

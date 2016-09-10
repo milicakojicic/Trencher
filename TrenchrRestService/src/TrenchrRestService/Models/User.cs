@@ -14,6 +14,8 @@ namespace TrenchrRestService.Models
         public string Email { get; set; }
         public string PicturePath { get; set; }
 
+        public User() { }
+
         public User(IRecord record)
         {
             ID = (long)record["id"];

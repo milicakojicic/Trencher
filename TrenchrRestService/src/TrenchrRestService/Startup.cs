@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Cors;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.Owin;
+using Owin;
 
 namespace TrenchrRestService
 {
@@ -46,6 +48,7 @@ namespace TrenchrRestService
                                       .AllowAnyHeader()
                                       .AllowAnyOrigin());
             });
+
             services.AddMvc();
         }
 
@@ -70,7 +73,6 @@ namespace TrenchrRestService
             });
 
             app.UseCors("AllowAll");
-            app.UseMvc();
         }
     }
 }

@@ -8,14 +8,13 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using TrenchrRestService;
 using TrenchrRestService.Models;
+using TrenchrRestService.Hubs;
+using Microsoft.AspNet.SignalR;
 
 namespace TrenchrRestService.Controllers
 {
-    
     public class HeldCourseController : ApiController
     {
-        
-
         //svi kursevi
         [Route("kursevi")]
         [HttpGet]
@@ -30,12 +29,16 @@ namespace TrenchrRestService.Controllers
             return Ok(JsonConvert.SerializeObject(courses, Formatting.Indented));
         }
 
-
         //kursevi jedne osobe
         [Route("studenti/{id}/kursevi")]
         [HttpGet]
         public IActionResult VratiGrupeStudenta(long id)
         {
+            // slanje SignalR signala da je napisana nova poruka
+            NotificationHub.MessageCount++;
+            var widgetHubContext = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+            widgetHubContext.Clients.All.updateMessageCount(NotificationHub.MessageCount);
+
             var stmnt = $"MATCH (s:student)-[:pohadja]-(o:odrzan_kurs) where id(s) = {id} return id(o) as id, o.name as name, o.espb as espb, o.tip as tip, o.nivo as nivo, o.godina as godina";
             var resultCourses = Neo4jClient.Execute(stmnt);
             var courses = new List<HeldCourse>();
@@ -57,9 +60,7 @@ namespace TrenchrRestService.Controllers
             return Ok(JsonConvert.SerializeObject(courses, Formatting.Indented));
         }
 
-
-       
-       // prijavljivanje studenta na kurs
+        // prijavljivanje studenta na kurs
         [Route("kursevi/prijavljivanje")]
         [HttpPost]
         public IActionResult PrijaviStudentaNaKurs([FromBody] JObject jsonBody)
@@ -75,7 +76,6 @@ namespace TrenchrRestService.Controllers
                     return Created("lokacija", "radi");
         }
 
-
         [Route("kursevi/novi_kurs")]
         [HttpPost]
         public IActionResult DodajKurs([FromBody] JObject jsonBody)
@@ -84,10 +84,5 @@ namespace TrenchrRestService.Controllers
             kurs.SacuvajKurs();
             return Created("lokacija", "radi");
         }
-
-
-
-
-
     }
 }
