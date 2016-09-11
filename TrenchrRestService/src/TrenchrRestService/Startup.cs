@@ -69,10 +69,10 @@ namespace TrenchrRestService
                 RequireHttpsMetadata = false,
                 Audience = "http://localhost:44300/resources",
                 AutomaticAuthenticate = true
-
             });
 
             app.UseCors("AllowAll");
+            app.UseMvc();
         }
     }
 }

@@ -110,9 +110,9 @@
 
 <script>
         $(function () {
-            var widgetHub = $.connection.widgetHub;
+            var NotificationHub = $.connection.NotificationHub;
 
-            widgetHub.client.updateMessageCount = function (count) {
+            NotificationHub.client.updateMessageCount = function (count) {
                 $("#widgetCount").text("Widget created " + count);
             };
 
