@@ -16,10 +16,12 @@
     <link rel="stylesheet" href="material-gray-orange.css">
     <link rel="stylesheet" href="styles.css">
 
-    <script src = "javascript/jquery.js"></script>
-    <script src = "javascript/material.js"></script>
+    <script src = "javascript/jquery-2.1.1.js"></script>
+    <script src = "javascript/jquery.signalR-2.2.1.js"></script>
+    <script src = "http://localhost:12345/signalr/hubs"></script>
 
-    <script src="javascript/default.js"></script>
+    <script src = "javascript/material.js"></script>
+    <script src = "javascript/default.js"></script>
 
     <style>
         #view-source {
@@ -33,7 +35,7 @@
         }
     </style>
 
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-1.10.2.js"></script>-->
 </head>
 
 <body>
@@ -87,7 +89,7 @@
     </div>
     
     <main class="default mdl-layout__content">
-
+        <button style="width:150px" onclick="test()">TEST</button>
         <div class="mdl-grid">
             <div class="mdl-cell mdl-cell--1-col"></div>
             <div class="mdl-cell mdl-cell--6-col srednji_div" id="postoviGrupe"></div>
@@ -102,23 +104,12 @@
     <div class="mdl-layout__obfuscator"></div>
 </div>
 
-    <div id="widgetCount"></div>
+
+
+
+    
+
 </body>
-
-<script src="~/Scripts/jquery.signalR-2.2.1.js"></script>
-<script src="/signalr/hubs"></script>
-
-<script>
-        $(function () {
-            var NotificationHub = $.connection.NotificationHub;
-
-            NotificationHub.client.updateMessageCount = function (count) {
-                $("#widgetCount").text("Widget created " + count);
-            };
-
-            $.connection.hub.start().done();
-        });
-</script>
 
 <script>
     Array.prototype.forEach.call(document.querySelectorAll('.mdl-card__media'), function(el) {

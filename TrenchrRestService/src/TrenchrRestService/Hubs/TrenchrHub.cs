@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Hubs;
 
 namespace TrenchrRestService.Hubs
 {
-    public class NotificationHub : Hub
+    [HubName("trenchrhub")]
+    public class TrenchrHub : Hub
     {
-        public static int NotificationCount { get; set; }
-        public static int MessageCount { get; set; }
     }
 }

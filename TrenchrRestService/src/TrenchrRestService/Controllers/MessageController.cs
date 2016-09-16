@@ -71,9 +71,8 @@ namespace TrenchrRestService.Controllers
         public IActionResult NapisiPoruku([FromBody] JObject jsonBody)
         {
             // slanje SignalR signala da je napisana nova poruka
-            NotificationHub.MessageCount++;
-            var widgetHubContext = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-            widgetHubContext.Clients.All.updateMessageCount(NotificationHub.MessageCount);
+            var context = GlobalHost.ConnectionManager.GetHubContext<TrenchrHub>();
+            context.Clients.All.newMessage("Nova poruka");
 
             var poruka = JsonConvert.DeserializeObject<Message>(jsonBody.ToString(), new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Ignore });
             poruka.SacuvajPoruku();

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Cors;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Owin;
 using Owin;
+using TrenchRestService;
 
 namespace TrenchrRestService
 {
@@ -40,8 +41,8 @@ namespace TrenchrRestService
         {
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
-            
-            services.AddCors(options => 
+
+            services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",
                     bulider => bulider.AllowAnyMethod()
@@ -71,6 +72,7 @@ namespace TrenchrRestService
                 AutomaticAuthenticate = true
             });
 
+            app.UseSignalR2();
             app.UseCors("AllowAll");
             app.UseMvc();
         }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNet.SignalR;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using TrenchrRestService;
+using TrenchrRestService.Hubs;
 using TrenchrRestService.Models;
 
 namespace TrenchrRestService.Controllers
@@ -65,6 +67,10 @@ namespace TrenchrRestService.Controllers
         [HttpPost]
         public IActionResult NovoObavestenje([FromBody] JObject jsonBody)
         {
+            // slanje SignalR signala da je napisan novi post
+            var context = GlobalHost.ConnectionManager.GetHubContext<TrenchrHub>();
+            context.Clients.All.newPost("Novo obavestenje");
+
             var obavestenje = JsonConvert.DeserializeObject<NotificationPost>(jsonBody.ToString(), new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Ignore });
             obavestenje.SaveToDBNotification();
             return Created("lokacija", "radi");
@@ -74,6 +80,10 @@ namespace TrenchrRestService.Controllers
         [HttpPost]
         public IActionResult NoviMaterijali([FromBody] JObject jsonBody)
         {
+            // slanje SignalR signala da je napisan novi post
+            var context = GlobalHost.ConnectionManager.GetHubContext<TrenchrHub>();
+            context.Clients.All.newPost("Nov materijal");
+
             var materijali = JsonConvert.DeserializeObject<Material>(jsonBody.ToString(), new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Ignore });
             materijali.SacuvajMaterijale();
             return Created("lokacija", "radi");
@@ -83,6 +93,10 @@ namespace TrenchrRestService.Controllers
         [HttpPost]
         public IActionResult NoviRezultati([FromBody] JObject jsonBody)
         {
+            // slanje SignalR signala da je napisan novi post
+            var context = GlobalHost.ConnectionManager.GetHubContext<TrenchrHub>();
+            context.Clients.All.newPost("Novi rezultati");
+
             var rezultati = JsonConvert.DeserializeObject<Results>(jsonBody.ToString(), new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Ignore });
             rezultati.SacuvajRezultate();
             return Created("lokacija", "radi");
@@ -93,6 +107,10 @@ namespace TrenchrRestService.Controllers
         [HttpPost]
         public IActionResult NovoGlasanje([FromBody] JObject jsonBody)
         {
+            // slanje SignalR signala da je napisan novi post
+            var context = GlobalHost.ConnectionManager.GetHubContext<TrenchrHub>();
+            context.Clients.All.newPost("Novo glasanje");
+
             var glasanje = JsonConvert.DeserializeObject<Vote>(jsonBody.ToString(), new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Ignore });
             var id = glasanje.SacuvajGlasanje();
             string jsonString = JsonConvert.SerializeObject(id);
