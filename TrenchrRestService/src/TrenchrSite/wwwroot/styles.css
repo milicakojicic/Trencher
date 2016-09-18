@@ -698,7 +698,6 @@ h3,h4 {
     border-radius: 24px;
 }
 
-
 .demo-options li {
     margin: 4px 0;
 }
@@ -1057,7 +1056,8 @@ footer {
 .messages {
     height: 370px;
     background-color: whitesmoke;
-    overflow-y: scroll;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .message {
@@ -1155,4 +1155,33 @@ input {
 
 #potvrdiPravljenje {
     opacity: 0.5;
+}
+
+#notifikacija {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    width: 20%;
+    padding: 10px;
+    background-color: darkorange;
+    text-align: center;
+    visibility: hidden;
+}
+
+#procitajPoruku {
+    background-color: teal;
+    color: white;
+}
+
+#posiljalacPoruke {
+    color: white;
+}
+
+#tekstPoruke {
+    color: white;
+}
+
+#notifikacijaHeader {
+    font-size: 20px;
+    color: teal;
 }

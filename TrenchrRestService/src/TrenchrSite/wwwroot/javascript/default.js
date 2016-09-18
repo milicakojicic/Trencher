@@ -6,65 +6,32 @@ function pogledajGrupu(idGrupe) {
     window.location.href = url + "?id=" + idGrupe;
 }
 
-
-var HubProxy;
-function test() {
-    // var connection = $.hubConnection('http://localhost:12345/signalr', { useDefaultPath: false });
-    // var HubProxy = connection.createHubProxy('trenchrHub');
-
-    //console.log(HubProxy);
-    //console.log(HubProxy.server);
-    //HubProxy.server.newMessage("ovo je neka poruka");
-    $.get("http://localhost:12345/studenti/" + id_korisnika + "/kursevi", function (data) {
-
-        var kursevi = JSON.parse(data);
-        var div = document.getElementById("mojeGrupe");
-
-        div.innerHTML += '<div class="demo-list-action mdl-list ">';
-
-        for (var i = 0; i < kursevi.length; i++) {
-
-            div.innerHTML += '<div class="mdl-list__item predmeti" onclick="pogledajGrupu(this.id)" id="' + kursevi[i].ID + '"> ' +
-                '<span class="mdl-list__item-primary-content"> ' +
-                '<i class="material-icons mdl-list__item-avatar">school</i> ' +
-                '<span>' + kursevi[i].Name + " " + kursevi[i].Year + '</span> ' +
-                '</span> ' +
-                '</div>';
-
-        }
-
-        div.innerHTML += '</div>';
-
-    });
+function procitajPoruku() {
+    window.location = '/inbox.html';
 }
 
 $(document).ready(function() {
 
+    //pravljenje konekcije na server
     var connection = $.hubConnection('http://localhost:12345/signalr', { useDefaultPath: false });
     HubProxy = connection.createHubProxy('trenchrhub');
-    HubProxy.on('newMessage', function (message) {
-        console.log('Poruka ' + message);
+
+    //signali koje klijent prima
+    HubProxy.on('newMessage', function (tekst, posiljalac_id, posiljalacIme, id_konv) {
+        //if (posiljalac_id != id_korisnika) {
+            document.getElementById("posiljalacPoruke").innerHTML = "<span style='color: teal;'>Posiljalac: </span>" + posiljalacIme;
+            document.getElementById("tekstPoruke").innerHTML = "<span style='color: teal;'>Poruka: </span>" + tekst;
+            id_konverzacije = id_konv;
+            document.getElementById("notifikacija").style = "visibility: visible;";
+        //}
     });
-    //connection.start({ jsonp: true })
-    //    .done(function () { console.log("Sljaka"); })
-    //    .fail(function () { console.log("Ne sljaka miki"); });
 
-    //var contosoChatHubProxy = $.connection.contosoChatHub;
-    //contosoChatHubProxy.client.addContosoChatMessageToPage = function (name, message) {
-    //    console.log(name + ' ' + message);
-    //};
-
-    //var conn = $.hubConnection('http://localhost:12345/signalr', {useDefaultPath: false});
+    //konektovanje na server
     connection.start({ jsonp: true })
-        .done(function () { console.log("Sljaka"); console.log(connection); })
-        .fail(function () { console.log("Ne sljaka miki"); });
-
-    //$.connection.hubConnection.start()
-    //    .done(function () { console.log("Sljaka"); })
-    //    .fail(function () { console.log("Ne sljaka miki"); });
+        .done(function () { console.log("SignalR connected"); })
+        .fail(function () { console.log("SignalR connection failed"); });
 
     //GET za sve grupe koje korisnik prati
-
     //svi kursevi studenta kojima on pripada, da bi se prikazao u search-u
     $.ajax({
         url: 'http://localhost:12345/studenti/' + id_korisnika + '/kursevi',

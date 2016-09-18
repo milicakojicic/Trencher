@@ -51,13 +51,11 @@ namespace TrenchrRestService.Controllers
                     votes.Add(new Vote(o));
                     posts.Add(new Vote(o));
                 }
-
                 else if ((string)o["tip"] == "obav")
                 {
                     notifications.Add(new NotificationPost(o));
                     posts.Add(new NotificationPost(o));
                 }
-
             }
 
             return Ok(JsonConvert.SerializeObject(posts, Formatting.Indented));

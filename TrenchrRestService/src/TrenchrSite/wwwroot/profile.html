@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 
 <html lang="en">
 <head>
@@ -16,9 +16,11 @@
     <link rel="stylesheet" href="material-gray-orange.css">
     <link rel="stylesheet" href="styles.css">
 
-    <script src = "javascript/jquery.js"></script>
-    <script src = "javascript/material.js"></script>
+    <script src="javascript/jquery-2.1.1.js"></script>
+    <script src="javascript/jquery.signalR-2.2.1.js"></script>
+    <script src="http://localhost:12345/signalr/hubs"></script>
 
+    <script src = "javascript/material.js"></script>
     <script src="javascript/profile.js"></script>
 
     <style>
@@ -37,7 +39,6 @@
 <body>
 
 <div class="demo-blog mdl-layout mdl-js-layout has-drawer is-upgraded mdl-layout--fixed-header">
-
 
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
             mdl-layout--fixed-header">
@@ -121,13 +122,21 @@
                     <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="reset"
                            type="button" value="Resetuj">
                     </input>
-
                 </div>
-
             </form>
         </div>
 
-
+        <!-- Notifikacioni prozor -->
+        <div class="mdl-grid" id="notifikacioniProzor">
+            <div class="mdl-cell mdl-cell--8-col"></div>
+            <div class="mdl-cell mdl-cell--2-col" id="notifikacija">
+                <span id="notifikacijaHeader"> NOVA PORUKA </span> <br />
+                <span id="posiljalacPoruke"> test </span> <br />
+                <span id="tekstPoruke"> test </span> <br />
+                <button id="procitajPoruku" onclick="procitajPoruku()"> Procitaj </button>
+            </div>
+            <div class="mdl-cell mdl-cell--2-col"></div>
+        </div>
     </main>
 
     <div class="mdl-layout__obfuscator"></div>

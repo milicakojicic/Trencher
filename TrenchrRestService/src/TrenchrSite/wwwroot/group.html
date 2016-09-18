@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 
 <html lang="en">
 <head>
@@ -16,11 +16,12 @@
     <link rel="stylesheet" href="material-gray-orange.css">
     <link rel="stylesheet" href="styles.css">
 
-    <script src = "https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="javascript/jquery-2.1.1.js"></script>
+    <script src="javascript/jquery.signalR-2.2.1.js"></script>
+    <script src="http://localhost:12345/signalr/hubs"></script>
    <!-- <script src = "javascript/material.js"></script>-->
 
     <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
-
 
     <style>
         #view-source {
@@ -234,26 +235,32 @@
 
                 <!--ovde se prikazuju postovi-->
 
-
             </div>
-
 
             <div class="mdl-cell mdl-cell--2-col"></div>
         </div> <!--grid-->
 
-
+        <!-- Notifikacioni prozor -->
+        <div class="mdl-grid" id="notifikacioniProzor">
+            <div class="mdl-cell mdl-cell--8-col"></div>
+            <div class="mdl-cell mdl-cell--2-col" id="notifikacija">
+                <span id="notifikacijaHeader"> NOVA PORUKA </span> <br />
+                <span id="posiljalacPoruke"> test </span> <br />
+                <span id="tekstPoruke"> test </span> <br />
+                <button id="procitajPoruku" onclick="procitajPoruku()"> Procitaj </button>
+            </div>
+            <div class="mdl-cell mdl-cell--2-col"></div>
+        </div>
     </main>
 
     <div class="mdl-layout__obfuscator"></div>
 </div>
 </div>
 
-
 <script src="javascript/group.js"></script>
 
 
 </body>
-
 
 <script>
     Array.prototype.forEach.call(document.querySelectorAll('.mdl-card__media'), function(el) {

@@ -70,12 +70,20 @@ namespace TrenchrRestService.Controllers
         [HttpPost]
         public IActionResult NapisiPoruku([FromBody] JObject jsonBody)
         {
-            // slanje SignalR signala da je napisana nova poruka
-            var context = GlobalHost.ConnectionManager.GetHubContext<TrenchrHub>();
-            context.Clients.All.newMessage("Nova poruka");
-
             var poruka = JsonConvert.DeserializeObject<Message>(jsonBody.ToString(), new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Ignore });
             poruka.SacuvajPoruku();
+
+            var stmnt = $"match (s:student) where id(s) = {poruka.UserID} return s.ime + ' ' + s.prezime as ime";
+            var stmt_rez = Neo4jClient.Execute(stmnt);
+            string posiljalacIme = "";
+
+            foreach (var o in stmt_rez)
+                posiljalacIme = o.Values.ElementAt(0).Value.ToString();
+
+            // slanje SignalR signala da je napisana nova poruka
+            var context = GlobalHost.ConnectionManager.GetHubContext<TrenchrHub>();
+            context.Clients.All.newMessage(poruka.Text, poruka.UserID, posiljalacIme, poruka.ConversationID);
+
             return Created("lokacija", "radi");
         }
     }

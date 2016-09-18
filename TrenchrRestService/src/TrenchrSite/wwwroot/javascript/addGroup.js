@@ -2,7 +2,28 @@
 /**
  * Created by milica on 8/15/2016.
  */
+//pravljenje konekcije na server
+var connection = $.hubConnection('http://localhost:12345/signalr', { useDefaultPath: false });
+HubProxy = connection.createHubProxy('trenchrhub');
 
+//signali koje klijent prima
+HubProxy.on('newMessage', function (tekst, posiljalac_id, posiljalacIme, id_konv) {
+    //if (posiljalac_id != id_korisnika) {
+        document.getElementById("posiljalacPoruke").innerHTML = "<span style='color: teal;'>Posiljalac: </span>" + posiljalacIme;
+        document.getElementById("tekstPoruke").innerHTML = "<span style='color: teal;'>Poruka: </span>" + tekst;
+        id_konverzacije = id_konv;
+        document.getElementById("notifikacija").style = "visibility: visible;";
+    //}
+});
+
+//konektovanje na server
+connection.start({ jsonp: true })
+    .done(function () { console.log("SignalR connected"); })
+    .fail(function () { console.log("SignalR connection failed"); });
+
+function procitajPoruku() {
+    window.location = '/inbox.html';
+}
 
 function MaterialSelect(element) {
     'use strict';
@@ -242,7 +263,4 @@ function unesi_predmet() {
         }
     });
 
-
 }
-
-

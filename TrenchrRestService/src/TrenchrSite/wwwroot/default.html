@@ -16,9 +16,9 @@
     <link rel="stylesheet" href="material-gray-orange.css">
     <link rel="stylesheet" href="styles.css">
 
-    <script src = "javascript/jquery-2.1.1.js"></script>
-    <script src = "javascript/jquery.signalR-2.2.1.js"></script>
-    <script src = "http://localhost:12345/signalr/hubs"></script>
+    <script src="javascript/jquery-2.1.1.js"></script>
+    <script src="javascript/jquery.signalR-2.2.1.js"></script>
+    <script src="http://localhost:12345/signalr/hubs"></script>
 
     <script src = "javascript/material.js"></script>
     <script src = "javascript/default.js"></script>
@@ -34,8 +34,6 @@
             z-index: 900;
         }
     </style>
-
-    <!--<script src="https://code.jquery.com/jquery-1.10.2.js"></script>-->
 </head>
 
 <body>
@@ -69,7 +67,6 @@
             </div>
         </header>
 
-
     <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
         <header class="demo-drawer-header">
                 <span>  <img src="images/default.png" class="demo-avatar">
@@ -89,7 +86,6 @@
     </div>
     
     <main class="default mdl-layout__content">
-        <button style="width:150px" onclick="test()">TEST</button>
         <div class="mdl-grid">
             <div class="mdl-cell mdl-cell--1-col"></div>
             <div class="mdl-cell mdl-cell--6-col srednji_div" id="postoviGrupe"></div>
@@ -99,15 +95,21 @@
             </div>
         </div> <!--grid-->
 
+        <!-- Notifikacioni prozor -->
+        <div class="mdl-grid" id="notifikacioniProzor">
+            <div class="mdl-cell mdl-cell--8-col"></div>
+            <div class="mdl-cell mdl-cell--2-col" id="notifikacija">
+                <span id="notifikacijaHeader"> NOVA PORUKA </span> <br />
+                <span id="posiljalacPoruke"> test </span> <br />
+                <span id="tekstPoruke"> test </span> <br />
+                <button id="procitajPoruku" onclick="procitajPoruku()"> Procitaj </button>
+            </div>
+            <div class="mdl-cell mdl-cell--2-col"></div>
+        </div>
     </main>
 
     <div class="mdl-layout__obfuscator"></div>
 </div>
-
-
-
-
-    
 
 </body>
 

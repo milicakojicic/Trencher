@@ -16,8 +16,11 @@
     <link rel="stylesheet" href="material-gray-orange.css">
     <link rel="stylesheet" href="styles.css">
 
-    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src = "javascript/material.js"></script>
+    <script src="javascript/jquery-2.1.1.js"></script>
+    <script src="javascript/jquery.signalR-2.2.1.js"></script>
+    <script src="http://localhost:12345/signalr/hubs"></script>
+
+    <script src="javascript/material.js"></script>
     <script src="javascript/inbox.js"></script>
 
     <link href="select2.min.css" rel="stylesheet" />
@@ -39,8 +42,6 @@
 <body>
 
 <div class="demo-blog mdl-layout mdl-js-layout has-drawer is-upgraded mdl-layout--fixed-header">
-
-
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
             mdl-layout--fixed-header">
         <header class="mdl-layout__header">
@@ -50,7 +51,6 @@
                 </span>
 
                 <span class="trenchr" id="ime_grupe">Sanduče</span>
-
                 <div class="mdl-layout-spacer"></div>
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
                   mdl-textfield--floating-label mdl-textfield--align-right ikonica_header">
@@ -69,7 +69,6 @@
         </header>
 
         <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
-
             <header class="demo-drawer-header">
                 <span>  <img src="images/default.png" class="demo-avatar">
                     Ljubica Peleksic
@@ -88,7 +87,6 @@
         </div>
 
         <main class="default mdl-layout__content">
-
             <div class="mdl-grid">
                 <div class="mdl-cell mdl-cell--2-col"></div>
                 <div class="mdl-cell mdl-cell--8-col" id="primalac">
@@ -102,28 +100,12 @@
                 <div class="mdl-cell mdl-cell--2-col"></div>
                 <div class="mdl-cell mdl-cell--8-col">
                     <div class="messages" id="poruke">
-                        <div class="mdl-grid divZaPoruku">
-                            <div class="mdl-cell mdl-cell--6-col">
-                            </div>
-                            <div class="mdl-cell mdl-cell--6-col">
-                                <div class="pojedinacnaPorukaDiv ">
-                                    <span class="pojedinacnaPorukaMoja">Ljubica je luda vise od ovog inboxa bla bla blaaa poludecu Milice sta je ovo aman</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mdl-grid">
-                            <div class="mdl-cell mdl-cell--6-col">
-                                <div class="pojedinacnaPorukaDiv ">
-                                    <span class="pojedinacnaPorukaTudja">Ovo je poruka bla bla blaaaaaaaaaaaaaa</span>
-                                </div>
-                            </div>
-                            <div class="mdl-cell mdl-cell--6-col">
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="mdl-cell mdl-cell--2-col"></div>
             </div> <!--grid-->
+
+            <button style="width: 100px" onclick="posaljiPoruku()"> TEST </button>
 
             <!-- Forma za pisanje pojdinacne poruke -->
             <div class="mdl-grid">
@@ -132,17 +114,29 @@
                     <div class="message">
                         <form>
                             <div class="mdl-textfield mdl-js-textfield" id="porukaDiv">
-                                <textarea class="mdl-textfield__input center" type="text" rows= "3" id="poruka" ></textarea>
+                                <textarea class="mdl-textfield__input center" type="text" rows="3" id="poruka" ></textarea>
                                 <label class="mdl-textfield__label" for="poruka">Napisi poruku...</label>
                             </div>
                             <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent postButton"
-                                   id="posaljiPoruku" type="button" value="Pošalji" onclick="posalji()" disabled>
+                                   id="posaljiPoruku" type="button" value="Pošalji" onclick="posaljiPoruku()" disabled>
                             </input>
                         </form>
                     </div>
                 </div>
                 <div class="mdl-cell mdl-cell--2-col"></div>
             </div> <!--grid-->
+
+            <!-- Notifikacioni prozor -->
+            <div class="mdl-grid" id="notifikacioniProzor">
+                <div class="mdl-cell mdl-cell--8-col"></div>
+                <div class="mdl-cell mdl-cell--2-col" id="notifikacija">
+                    <span id="notifikacijaHeader"> NOVA PORUKA </span> <br />
+                    <span id="posiljalacPoruke"> test </span> <br />
+                    <span id="tekstPoruke"> test </span> <br />
+                    <button id="procitajPoruku" onclick="procitajPoruku()"> Procitaj </button> 
+                </div>
+                <div class="mdl-cell mdl-cell--2-col"></div>
+            </div>
         </main>
 
         <div class="mdl-layout__obfuscator"></div>

@@ -11,15 +11,17 @@ namespace TrenchrRestService.Models
         public long ID { get; set; }
         public long UserID { get; set; }
         public string Text { get; set; }
-        public DateTime Time { get; set; }
+        public string Time { get; set; }
         public long ConversationID { get; set; }
+
+        public Message() { }
 
         public Message(IRecord record)
         {
             ID = (long)record["id"];
             UserID = (long)record["user_id"];
-            Text = (string)record["tekst"];
-            Time = (DateTime)record["vreme"];
+            Text = record["tekst"].ToString();
+            Time = record["vreme"].ToString();
             ConversationID = (long)record["conversation_id"];
         }
 
@@ -28,9 +30,9 @@ namespace TrenchrRestService.Models
             var stmnt = "MATCH (konverzacija), (autor) " +
                         $"WHERE id(konverzacija) = {ConversationID} AND id(autor) = {UserID} " +
                         " WITH konverzacija, autor " +
-                        "CREATE (autor)-[:u_konverzaciji]->(konverzacija)-[:sadrzi_poruku]->(p:poruka { " +
+                        "CREATE (konverzacija)-[:sadrzi_poruku]->(p:poruka { " +
                         $" tekst: '{Text}', " +
-                        $" vreme : {Time}, " +
+                        $" vreme : '{Time}', " +
                         $" poslao : {UserID} " +
                         "}) RETURN id(p) as id";
 
