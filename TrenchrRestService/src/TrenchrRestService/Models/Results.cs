@@ -17,7 +17,7 @@ namespace TrenchrRestService.Models
         {
             Path = (string)record["putanja"];
             ID = (long)record["id"];
-            KursID = (long)record["kurs_id"];
+            CourseID = (long)record["kurs_id"];
             Type = (string)record["tip"];
             Text = (string)record["tekst"];
             Important = (string)record["indikator"];

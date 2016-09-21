@@ -13,7 +13,7 @@ namespace TrenchrRestService.Models
         public string University { get; set; }
         public string City { get; set; }
 
-        public Faculty(){}
+        public Faculty() { }
 
         public Faculty(IRecord record)
         {

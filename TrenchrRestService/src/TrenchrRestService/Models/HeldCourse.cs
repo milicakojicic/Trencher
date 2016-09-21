@@ -15,10 +15,9 @@ namespace TrenchrRestService.Models
         public string Level { get; set; }
         public string Year { get; set; }
        
-        //treba nam za unos, da znamo sa kojim kursom je povezana grupa
+        // treba nam za unos, da znamo sa kojim kursom je povezana grupa
         public long CourseID { get; set; }
         
-
         public HeldCourse() { }
 
         public HeldCourse(IRecord record)
@@ -29,9 +28,7 @@ namespace TrenchrRestService.Models
             Type = (string)record["tip"];
             Level = (string)record["nivo"];
             Year = (string)record["godina"];
-
         }
-
 
         public long SacuvajKurs()
         {
@@ -46,7 +43,6 @@ namespace TrenchrRestService.Models
                         $" godina: '{Year}' " +
                         "}) RETURN id(o) as id";
 
-        
             var result = Neo4jClient.Execute(stmnt);
             return (long)result.FirstOrDefault()["id"];
         }

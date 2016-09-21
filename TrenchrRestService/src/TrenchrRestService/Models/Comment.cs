@@ -15,7 +15,7 @@ namespace TrenchrRestService.Models
         // post na koji se odnosi
         public long ParentID { get; set; }
 
-        //dodatna polja, student koji je okacio komentar + njegova slika 
+        // dodatna polja, student koji je okacio komentar + njegova slika 
         public long UserID { get; set; }
         public string PicturePath{ get; set; }
         public string AuthorInfo { get; set; }

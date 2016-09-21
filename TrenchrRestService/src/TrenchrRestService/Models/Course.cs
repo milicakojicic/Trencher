@@ -12,10 +12,10 @@ namespace TrenchrRestService.Models
         public string Name { get; set; }
         public long Espb { get; set; }
         public string Description { get; set; }
-        //treba nam smer i fakultet kom predmet pripada
+
+        // treba nam smer i fakultet kom predmet pripada
         public string Module { get; set; }
         public string Faculty { get; set; }
-
 
         public Course() { }
 
@@ -27,7 +27,6 @@ namespace TrenchrRestService.Models
             Description = (string)record["opis"];
             Module  = (string)record["smer"];
             Faculty = (string)record["fakultet"];
-
         }
     }
 }

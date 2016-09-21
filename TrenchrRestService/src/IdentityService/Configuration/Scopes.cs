@@ -1,5 +1,5 @@
+using IdentityServer4.Models;
 using System.Collections.Generic;
-using IdentityServer3.Core.Models;
 
 namespace IdentityService.Configuration
 {

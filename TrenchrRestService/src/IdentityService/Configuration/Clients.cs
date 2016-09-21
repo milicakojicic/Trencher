@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using IdentityServer3.Core.Models;
+﻿using IdentityServer4.Models;
+using System.Collections.Generic;
 
 namespace IdentityService.Configuration
 {
@@ -19,7 +19,7 @@ namespace IdentityService.Configuration
                     },
 
                     // server to server communication
-                    Flow = Flows.ClientCredentials,
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
 
                     // only allowed to access api1
                     AllowedScopes = new List<string>
@@ -33,7 +33,7 @@ namespace IdentityService.Configuration
                     Enabled = true,
                     ClientName = "JS Client",
                     ClientId = "js",
-                    Flow = Flows.Implicit,
+                    AllowedGrantTypes = GrantTypes.Implicit,
 
                     RedirectUris = new List<string>
                     {

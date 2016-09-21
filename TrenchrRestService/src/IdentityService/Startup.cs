@@ -7,10 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using IdentityServer3.Core.Configuration;
 using System.Security.Cryptography.X509Certificates;
-using Owin;
-using IdentityService.Configuration;
+
 
 namespace IdentityService
 {
@@ -35,12 +33,20 @@ namespace IdentityService
         public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services, IHostingEnvironment env)
         {
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
-            services.AddDataProtection();
+
+            var certFile = env.ContentRootPath + "\\idsrv3test.pfx";
+
+
+
             services.AddMvc();
+            
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,27 +71,27 @@ namespace IdentityService
 
             app.UseStaticFiles();
 
-            var certFile = env.ContentRootPath + "\\idsrv3test.pfx";
+            
 
-            var idsrvOptions = new IdentityServerOptions
-            {
-                Factory = new IdentityServerServiceFactory()
-                                .UseInMemoryUsers(Users.Get())
-                                .UseInMemoryClients(Clients.Get())
-                                .UseInMemoryScopes(Scopes.Get()),
+            //var idsrvOptions = new IdentityServerOptions
+            //{
+            //    Factory = new IdentityServerServiceFactory()
+            //                    .UseInMemoryUsers(Users.Get())
+            //                    .UseInMemoryClients(Clients.Get())
+            //                    .UseInMemoryScopes(Scopes.Get()),
 
-                SigningCertificate = new X509Certificate2(certFile, "idsrv3test"),
-                RequireSsl = true,
-                LoggingOptions = new LoggingOptions
-                {
-                    EnableHttpLogging = true,
-                    EnableKatanaLogging = true,
-                    EnableWebApiDiagnostics = true,
-                    WebApiDiagnosticsIsVerbose = true
-                }
-            };
+            //    SigningCertificate = new X509Certificate2(certFile, "idsrv3test"),
+            //    RequireSsl = true,
+            //    LoggingOptions = new LoggingOptions
+            //    {
+            //        EnableHttpLogging = true,
+            //        EnableKatanaLogging = true,
+            //        EnableWebApiDiagnostics = true,
+            //        WebApiDiagnosticsIsVerbose = true
+            //    }
+            //};
 
-            app.UseIdentityServer(idsrvOptions);
+            //app.UseIdentityServer(idsrvOptions);
 
             app.UseMvc();
         }

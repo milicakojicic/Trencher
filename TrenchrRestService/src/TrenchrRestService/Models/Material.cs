@@ -16,7 +16,7 @@ namespace TrenchrRestService.Models
         {
             Path = (string)record["putanja"];
             ID = (long)record["id"];
-            KursID = (long)record["kurs_id"];
+            CourseID = (long)record["kurs_id"];
             Type = (string)record["tip"];
             Text = (string)record["tekst"];
             Important = (string)record["indikator"];
@@ -29,7 +29,7 @@ namespace TrenchrRestService.Models
         public long SacuvajMaterijale()
         {
             var stmnt = "MATCH (ok:odrzan_kurs), (autor) " +
-                        $"WHERE id(ok) = {KursID} AND id(autor) = {UserId} " +
+                        $"WHERE id(ok) = {CourseID} AND id(autor) = {UserId} " +
                         " WITH ok,autor " +
                         "CREATE (ok)-[:ima_post]->(o:materijali{" +
                         $" tekst : '{Text}', " +

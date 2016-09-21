@@ -9,6 +9,5 @@ namespace TrenchrRestService.Hubs
 {
     [HubName("trenchrhub")]
     public class TrenchrHub : Hub
-    {
-    }
+    { }
 }

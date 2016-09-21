@@ -10,10 +10,10 @@ namespace TrenchrRestService.Models
     {
 
         public long ID { get; set; }
-        public long ParentId { get; set; }
+        public long VoteID { get; set; }
         public string Text { get; set; }
         //inicijalizovace se na 0 i svaki put ce da se uvecava 
-        public long BrojGlasova { get; set; }
+        public long VotesCount { get; set; }
 
         public VoteOption()
         {
@@ -23,9 +23,9 @@ namespace TrenchrRestService.Models
         public VoteOption(IRecord record)
         {
             ID = (long)record["id"];
-            ParentId = (long)record["roditelj_id"];
+            VoteID = (long)record["roditelj_id"];
             Text = (string)record["text"];
-            BrojGlasova = (long)record["broj_glasova"];
+            VotesCount = (long)record["broj_glasova"];
         }
 
         //vezi je za odredjeno glasanje, i inicijalno je broj glasova 0
@@ -34,7 +34,7 @@ namespace TrenchrRestService.Models
         public long SacuvajOpcijuGlasanja()
         {
             var stmnt = "MATCH (g:glasanje)" +
-                      $"WHERE id(g) = {ParentId}" +
+                      $"WHERE id(g) = {VoteID}" +
                        " WITH g " +
                        "CREATE (o:opcija{" +
                        $" tekst : '{Text}', " +
