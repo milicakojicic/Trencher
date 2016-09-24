@@ -69,7 +69,7 @@
 
     <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
         <header class="demo-drawer-header">
-                <span>  <img src="images/default.png" class="demo-avatar">
+                <span><img src="images/default.png" class="demo-avatar">
                     Ljubica Peleksic
                 </span>
                 <span id="mail">
@@ -90,8 +90,8 @@
             <div class="mdl-cell mdl-cell--1-col"></div>
             <div class="mdl-cell mdl-cell--6-col srednji_div" id="postoviGrupe"></div>
 
-            <div class="mdl-cell mdl-cell--4-col" style="background-color: whitesmoke; " id="mojeGrupe">
-                <h4 class="naslov_grupe"> Moje grupe </h4>
+            <div class="mdl-cell mdl-cell--4-col" id="mojeGrupe">
+                <h4 class="naslov_grupe" id="naslovGrupe"> Moje grupe </h4>
             </div>
         </div> <!--grid-->
 
@@ -99,10 +99,10 @@
         <div class="mdl-grid" id="notifikacioniProzor">
             <div class="mdl-cell mdl-cell--8-col"></div>
             <div class="mdl-cell mdl-cell--2-col" id="notifikacija">
-                <span id="notifikacijaHeader"> NOVA PORUKA </span> <br />
-                <span id="posiljalacPoruke"> test </span> <br />
-                <span id="tekstPoruke"> test </span> <br />
-                <button id="procitajPoruku" onclick="procitajPoruku()"> Procitaj </button>
+                <span id="notifikacijaHeader"> test </span> <br />
+                <span id="notifikacijaPosiljalac"> test </span> <br />
+                <span id="notifikacijaTekst"> test </span> <br />
+                <button id="procitaj" onclick="procitaj()"> Procitaj </button>
             </div>
             <div class="mdl-cell mdl-cell--2-col"></div>
         </div>

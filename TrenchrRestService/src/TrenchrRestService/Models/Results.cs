@@ -30,7 +30,7 @@ namespace TrenchrRestService.Models
         public long SacuvajRezultate()
         {
             var stmnt = "MATCH (ok:odrzan_kurs), (autor) " +
-                        $"WHERE id(ok) = {KursID} AND id(autor) = {UserId} " +
+                        $"WHERE id(ok) = {CourseID} AND id(autor) = {UserId} " +
                         " WITH ok,autor " +
                         "CREATE (ok)-[:ima_post]->(o:rezultati{" +
                         $" tekst : '{Text}', " +

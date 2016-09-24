@@ -65,12 +65,21 @@ namespace TrenchrRestService.Controllers
         [HttpPost]
         public IActionResult NovoObavestenje([FromBody] JObject jsonBody)
         {
-            // slanje SignalR signala da je napisan novi post
-            var context = GlobalHost.ConnectionManager.GetHubContext<TrenchrHub>();
-            context.Clients.All.newPost("Novo obavestenje");
-
             var obavestenje = JsonConvert.DeserializeObject<NotificationPost>(jsonBody.ToString(), new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Ignore });
             obavestenje.SaveToDBNotification();
+
+            // user_id => username
+            var stmnt = $"match (s:student) where id(s)=" + jsonBody["UserId"] + " return s.name;";
+            var resultUser = Neo4jClient.Execute(stmnt);
+            string username = null;
+
+            foreach (var o in resultUser)
+                username = o.Values.ElementAt(0).Value.ToString();
+
+            // slanje SignalR signala da je napisan novi post
+            var context = GlobalHost.ConnectionManager.GetHubContext<TrenchrHub>();
+            context.Clients.All.newPost("obavestenje", jsonBody["Text"], jsonBody["CourseID"], jsonBody["UserId"], username);
+
             return Created("lokacija", "radi");
         }
 
@@ -78,12 +87,21 @@ namespace TrenchrRestService.Controllers
         [HttpPost]
         public IActionResult NoviMaterijali([FromBody] JObject jsonBody)
         {
-            // slanje SignalR signala da je napisan novi post
-            var context = GlobalHost.ConnectionManager.GetHubContext<TrenchrHub>();
-            context.Clients.All.newPost("Nov materijal");
-
             var materijali = JsonConvert.DeserializeObject<Material>(jsonBody.ToString(), new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Ignore });
             materijali.SacuvajMaterijale();
+
+            // user_id => username
+            var stmnt = $"match (s:student) where id(s)=" + jsonBody["UserId"] + " return s.name;";
+            var resultUser = Neo4jClient.Execute(stmnt);
+            string username = null;
+
+            foreach (var o in resultUser)
+                username = o.Values.ElementAt(0).Value.ToString();
+
+            // slanje SignalR signala da je napisan novi post
+            var context = GlobalHost.ConnectionManager.GetHubContext<TrenchrHub>();
+            context.Clients.All.newPost("materijal", jsonBody["Text"], jsonBody["CourseID"], jsonBody["UserId"], username);
+
             return Created("lokacija", "radi");
         }
 
@@ -91,12 +109,22 @@ namespace TrenchrRestService.Controllers
         [HttpPost]
         public IActionResult NoviRezultati([FromBody] JObject jsonBody)
         {
-            // slanje SignalR signala da je napisan novi post
-            var context = GlobalHost.ConnectionManager.GetHubContext<TrenchrHub>();
-            context.Clients.All.newPost("Novi rezultati");
-
             var rezultati = JsonConvert.DeserializeObject<Results>(jsonBody.ToString(), new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Ignore });
             rezultati.SacuvajRezultate();
+
+            // user_id => username
+            var stmnt = $"match (s:student) where id(s)=" + jsonBody["UserId"] + " return s.name;";
+            var resultUser = Neo4jClient.Execute(stmnt);
+            string username = null;
+
+            foreach (var o in resultUser)
+                username = o.Values.ElementAt(0).Value.ToString();
+
+            // slanje SignalR signala da je napisan novi post
+            var context = GlobalHost.ConnectionManager.GetHubContext<TrenchrHub>();
+
+            context.Clients.All.newPost("rezultati", jsonBody["Text"], jsonBody["CourseID"], jsonBody["UserId"], username);
+
             return Created("lokacija", "radi");
         }
 
@@ -105,13 +133,22 @@ namespace TrenchrRestService.Controllers
         [HttpPost]
         public IActionResult NovoGlasanje([FromBody] JObject jsonBody)
         {
-            // slanje SignalR signala da je napisan novi post
-            var context = GlobalHost.ConnectionManager.GetHubContext<TrenchrHub>();
-            context.Clients.All.newPost("Novo glasanje");
-
             var glasanje = JsonConvert.DeserializeObject<Vote>(jsonBody.ToString(), new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Ignore });
             var id = glasanje.SacuvajGlasanje();
             string jsonString = JsonConvert.SerializeObject(id);
+
+            // user_id => username
+            var stmnt = $"match (s:student) where id(s)=" + jsonBody["UserId"] + " return s.name;";
+            var resultUser = Neo4jClient.Execute(stmnt);
+            string username = null;
+
+            foreach (var o in resultUser)
+                username = o.Values.ElementAt(0).Value.ToString();
+
+            // slanje SignalR signala da je napisan novi post
+            var context = GlobalHost.ConnectionManager.GetHubContext<TrenchrHub>();
+            context.Clients.All.newPost("glasanje", jsonBody["Text"], jsonBody["CourseID"], jsonBody["UserId"], username);
+
             return Created("lokacija", jsonString);
         }
 
@@ -234,7 +271,7 @@ namespace TrenchrRestService.Controllers
 
             for (i = 0; i < courses.ToArray().Length; i++) {
                 for (j = 0; j < posts.ToArray().Length; j++) {
-                    if (courses[i].ID == posts[j].KursID)
+                    if (courses[i].ID == posts[j].CourseID)
                         finalPosts.Add(posts[j]);
                 }
             }
@@ -255,7 +292,6 @@ namespace TrenchrRestService.Controllers
             return Ok(JsonConvert.SerializeObject(opcije, Formatting.Indented));
         }
 
-
         //jedna odredjena opcija jednog odredjenog posta
         [Route("postovi/{id1}/opcije/{id2}")]
         [HttpGet]
@@ -269,19 +305,13 @@ namespace TrenchrRestService.Controllers
             return Ok(JsonConvert.SerializeObject(opcije, Formatting.Indented));
         }
 
-
         [Route("opcije/{id}")]
         [HttpPut]
         public IActionResult updateOption([FromBody] JObject jsonBody, long id)
         {
-          
             string stmnt = $"MATCH (u) WHERE id(u) = {id} SET u.brGlasova = u.brGlasova + 1";
             Neo4jClient.Execute(stmnt);
             return Ok();
         }
-
-
     }
 }
-
-

@@ -68,7 +68,7 @@ namespace TrenchrRestService.Controllers
                         $"WHERE id(ok) = {id_grupe} and id(s) = {id_korisnika} WITH ok,s CREATE (s)-[:pohadja]->(ok) " ;
 
             var result = Neo4jClient.Execute(stmnt); 
-                    return Created("lokacija", "radi");
+            return Created("lokacija", "radi");
         }
 
         [Route("kursevi/novi_kurs")]

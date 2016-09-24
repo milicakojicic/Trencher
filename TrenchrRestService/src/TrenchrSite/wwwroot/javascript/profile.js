@@ -1,9 +1,14 @@
-
 //id studenta koji treba da se prikaze
-var id = 1248 ;
+var id = 600;
+var id_konverzacije = 0;
+var id_grupe = 0;
+var notifikacija = false;
 
-function procitajPoruku() {
-    window.location = '/inbox.html';
+function procitaj() {
+    if (notifikacija == true)
+        window.location = '/inbox.html?konv=' + id_konverzacije;
+    else
+        window.location = '/group.html?grp=' + id_grupe;
 }
 
 $(document).ready(function(){
@@ -14,12 +19,25 @@ $(document).ready(function(){
 
     //signali koje klijent prima
     HubProxy.on('newMessage', function (tekst, posiljalac_id, posiljalacIme, id_konv) {
-        if (posiljalac_id != id_korisnika) {
-            document.getElementById("posiljalacPoruke").innerHTML = "<span style='color: teal;'>Posiljalac: </span>" + posiljalacIme;
-            document.getElementById("tekstPoruke").innerHTML = "<span style='color: teal;'>Poruka: </span>" + tekst;
+        //if (posiljalac_id != id_korisnika) {
+            document.getElementById("notifikacijaHeader").innerHTML = "NOVA PORUKA";
+            document.getElementById("notifikacijaPosiljalac").innerHTML = "<span style='color: teal;'>Posiljalac: </span>" + posiljalacIme;
+            document.getElementById("notifikacijaTekst").innerHTML = "<span style='color: teal;'>Poruka: </span>" + tekst;
             id_konverzacije = id_konv;
             document.getElementById("notifikacija").style = "visibility: visible;";
-        }
+            notifikacija = true;
+        //}
+    });
+
+    HubProxy.on('newPost', function (tipPosta, tekst, id_kursa, posiljalac_id, posiljalacIme) {
+        //if (posiljalac_id != id_korisnika) {
+            document.getElementById("notifikacijaHeader").innerHTML = tipPosta.toUpperCase();
+            document.getElementById("notifikacijaPosiljalac").innerHTML = "<span style='color: teal;'>Posiljalac: </span>" + posiljalacIme;
+            document.getElementById("notifikacijaTekst").innerHTML = "<span style='color: teal;'>Poruka: </span>" + tekst;
+            id_grupe = id_kursa;
+            document.getElementById("notifikacija").style = "visibility: visible;";
+            notifikacija = false;
+        //}
     });
 
     //konektovanje na server
@@ -146,10 +164,7 @@ $(document).ready(function(){
             document.getElementById("university").value = student.University;
 
         });
-
-
     });
-
 });
 
 function izmeniProfil() {
@@ -166,9 +181,5 @@ function izmeniProfil() {
     document.getElementById("edit").style.display="none";
     document.getElementById("save").style.display="inline";
     document.getElementById("reset").style.display="inline";
-
     document.getElementById("name").focus();
-
 }
-
-

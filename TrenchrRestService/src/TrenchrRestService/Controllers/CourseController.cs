@@ -11,13 +11,12 @@ namespace TrenchrRestService.Controllers
 {
     public class CourseController : ApiController
     {
-
         //svi kursevi
         [Route("kursevi_neodrzani")]
         [HttpGet]
         public IActionResult VratiSveKurseve()
         {
-            var stmnt = "match(f: fakultet) -[:ima_smer]->(s:smer)-[:sadrzi_kurs]->(k: kurs) return f.name as fakultet, s.name as smer, k.name as name, id(k) as id, k.espb as espb, k.opis as opis";
+            var stmnt = "match(f: fakultet)-[:ima_smer]->(s:smer)-[:sadrzi_kurs]->(k: kurs) return f.name as fakultet, s.name as smer, k.name as name, id(k) as id, k.espb as espb, k.opis as opis";
             var resultCourses = Neo4jClient.Execute(stmnt);
             var courses = new List<Course>();
             foreach (var o in resultCourses)

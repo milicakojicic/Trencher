@@ -9,14 +9,19 @@ var mat = 0;
 var opcije_za_glasanje = [];
 
 //testirati na predmetu Automatsko rezonovanje
-var id_grupe = 1242;
-var id_korisnika = 1251;
+var id_grupe = 592;
+var id_korisnika = 600;
+var id_konverzacije = 0;
+var notifikacija = false;
 
-function procitajPoruku() {
-    window.location = '/inbox.html';
+function procitaj() {
+    if (notifikacija == true)
+        window.location = '/inbox.html?konv=' + id_konverzacije;
+    else
+        window.location = '/group.html?grp=' + id_grupe;
 }
 
-$( document ).ready(function() {
+$(document).ready(function () {
 
     //pravljenje konekcije na server
     var connection = $.hubConnection('http://localhost:12345/signalr', { useDefaultPath: false });
@@ -25,10 +30,23 @@ $( document ).ready(function() {
     //signali koje klijent prima
     HubProxy.on('newMessage', function (tekst, posiljalac_id, posiljalacIme, id_konv) {
         //if (posiljalac_id != id_korisnika) {
-            document.getElementById("posiljalacPoruke").innerHTML = "<span style='color: teal;'>Posiljalac: </span>" + posiljalacIme;
-            document.getElementById("tekstPoruke").innerHTML = "<span style='color: teal;'>Poruka: </span>" + tekst;
+            document.getElementById("notifikacijaHeader").innerHTML = "NOVA PORUKA";
+            document.getElementById("notifikacijaPosiljalac").innerHTML = "<span style='color: teal;'>Posiljalac: </span>" + posiljalacIme;
+            document.getElementById("notifikacijaTekst").innerHTML = "<span style='color: teal;'>Poruka: </span>" + tekst;
             id_konverzacije = id_konv;
             document.getElementById("notifikacija").style = "visibility: visible;";
+            notifikacija = true;
+        //}
+    });
+
+    HubProxy.on('newPost', function (tipPosta, tekst, id_kursa, posiljalac_id, posiljalacIme) {
+        //if (posiljalac_id != id_korisnika) {
+        document.getElementById("notifikacijaHeader").innerHTML = tipPosta.toUpperCase();
+        document.getElementById("notifikacijaPosiljalac").innerHTML = "<span style='color: teal;'>Posiljalac: </span>" + posiljalacIme;
+        document.getElementById("notifikacijaTekst").innerHTML = "<span style='color: teal;'>Poruka: </span>" + tekst;
+        id_grupe = id_kursa;
+        document.getElementById("notifikacija").style = "visibility: visible;";
+        notifikacija = false;
         //}
     });
 
@@ -37,49 +55,44 @@ $( document ).ready(function() {
         .done(function () { console.log("SignalR connected"); })
         .fail(function () { console.log("SignalR connection failed"); });
 
-    $('#groupPost').bind('input propertychange', function() {
+    $('#groupPost').bind('input propertychange', function () {
 
         document.getElementById("publish").disabled = true;
         document.getElementById("publish").style.opacity = 0.5;
         document.getElementById("groupPost").placeholder = " ";
 
-        if(this.value.length){
+        if (this.value.length) {
             document.getElementById("publish").disabled = false;
             document.getElementById("publish").style.opacity = 1;
 
         }
     });
 
-
-
-});
-
-
     var parametar = getQueryParams(document.location.search);
     var idGrupe = parametar.id;
 
     //ajax poziv za info o predmetu
-    $.get("http://localhost:12345/kursevi/" + id_grupe, function(data) {
+    $.get("http://localhost:12345/kursevi/" + id_grupe, function (data) {
 
         var kurs = JSON.parse(data);
         console.log(kurs);
 
-        document.getElementById("ime_grupe").innerText += kurs.Name + " "+ kurs.Year;
+        document.getElementById("ime_grupe").innerText += kurs.Name + " " + kurs.Year;
 
     });
 
     //svi kursevi studenta kojima on pripada, da bi se prikazao u search-u
     $.ajax({
-        url:'http://localhost:12345/studenti/' + id_korisnika + '/kursevi',
-        type:'GET',
+        url: 'http://localhost:12345/studenti/' + id_korisnika + '/kursevi',
+        type: 'GET',
         dataType: 'json',
-        success: function( json ) {
-            $.each(json, function(i, value) {
+        success: function (json) {
+            $.each(json, function (i, value) {
                 $('#grupe').append($('<option>').attr('value', value.Name + " " + value.Year));
             });
         }
     });
-
+});
 
     //OBJAVA POST-a
     $('#publish').click(function() {
@@ -108,7 +121,7 @@ $( document ).ready(function() {
                 'async': false,
                 'url': 'http://localhost:12345/postovi/materijali',
                 'data': JSON.stringify({
-                    "KursID": id_grupe,
+                    "CourseID": id_grupe,
                     "Type": tip, //imam
                     "Text": text,
                     "Important": ind, //imam
@@ -128,7 +141,7 @@ $( document ).ready(function() {
                 'async': false,
                 'url': 'http://localhost:12345/postovi/rezultati',
                 'data': JSON.stringify({
-                    "KursID": id_grupe,
+                    "CourseID": id_grupe,
                     "Type": tip, //imam
                     "Text": text,
                     "Important": ind, //imam
@@ -162,7 +175,7 @@ $( document ).ready(function() {
                     'async': false,
                     'url': 'http://localhost:12345/postovi/glasanje',
                     'data': JSON.stringify({
-                        "KursID": id_grupe,
+                        "CourseID": id_grupe,
                         "Type": tip, //imam
                         "Text": text,
                         "Important": ind, //imam
@@ -198,7 +211,7 @@ $( document ).ready(function() {
                 'async': false,
                 'url': 'http://localhost:12345/postovi/obavestenja',
                 'data': JSON.stringify({
-                    "KursID": id_grupe,
+                    "CourseID": id_grupe,
                     "Type": tip, //imam
                     "Text": text,
                     "Important": ind, //imam
@@ -359,18 +372,13 @@ $.ajax({
                                     }
                             }
                         });
-
                     }
 
                     document.getElementById("komentari_" + res[1]).focus();
                     document.getElementById("kom_" + res[1]).value = "";
                     document.getElementById("kom_" + res[1]).setAttribute("placeholder", "Napisite komentar");
-
-
                 }
             });
-
-
 
             $.ajax({
                 url:'http://localhost:12345/postovi/' + id_posta + '/komentari',
@@ -471,9 +479,6 @@ $.ajax({
     }
 
 });
-
-
-
 
 //uzimanje argumenata iz url-a
 function getQueryParams(qs) {
@@ -614,8 +619,6 @@ function poslednjaOpcija() {
     }
 
 }
-
-
 
 function povecajBrojGlasova(id) {
 

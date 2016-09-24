@@ -1,18 +1,34 @@
-
 /**
  * Created by milica on 8/15/2016.
  */
 //pravljenje konekcije na server
+var id_konverzacije = 0;
+var id_grupe = 0;
+var notifikacija = false;
+
 var connection = $.hubConnection('http://localhost:12345/signalr', { useDefaultPath: false });
 HubProxy = connection.createHubProxy('trenchrhub');
 
 //signali koje klijent prima
 HubProxy.on('newMessage', function (tekst, posiljalac_id, posiljalacIme, id_konv) {
     //if (posiljalac_id != id_korisnika) {
-        document.getElementById("posiljalacPoruke").innerHTML = "<span style='color: teal;'>Posiljalac: </span>" + posiljalacIme;
-        document.getElementById("tekstPoruke").innerHTML = "<span style='color: teal;'>Poruka: </span>" + tekst;
+        document.getElementById("notifikacijaHeader").innerHTML = "NOVA PORUKA";
+        document.getElementById("notifikacijaPosiljalac").innerHTML = "<span style='color: teal;'>Posiljalac: </span>" + posiljalacIme;
+        document.getElementById("notifikacijaTekst").innerHTML = "<span style='color: teal;'>Poruka: </span>" + tekst;
         id_konverzacije = id_konv;
         document.getElementById("notifikacija").style = "visibility: visible;";
+        notifikacija = true;
+    //}
+});
+
+HubProxy.on('newPost', function (tipPosta, tekst, id_kursa, posiljalac_id, posiljalacIme) {
+    //if (posiljalac_id != id_korisnika) {
+    document.getElementById("notifikacijaHeader").innerHTML = tipPosta.toUpperCase();
+    document.getElementById("notifikacijaPosiljalac").innerHTML = "<span style='color: teal;'>Posiljalac: </span>" + posiljalacIme;
+    document.getElementById("notifikacijaTekst").innerHTML = "<span style='color: teal;'>Poruka: </span>" + tekst;
+    id_grupe = id_kursa;
+    document.getElementById("notifikacija").style = "visibility: visible;";
+    notifikacija = false;
     //}
 });
 
@@ -21,8 +37,11 @@ connection.start({ jsonp: true })
     .done(function () { console.log("SignalR connected"); })
     .fail(function () { console.log("SignalR connection failed"); });
 
-function procitajPoruku() {
-    window.location = '/inbox.html';
+function procitaj() {
+    if (notifikacija == true)
+        window.location = '/inbox.html?konv=' + id_konverzacije;
+    else
+        window.location = '/group.html?grp=' + id_grupe;
 }
 
 function MaterialSelect(element) {
