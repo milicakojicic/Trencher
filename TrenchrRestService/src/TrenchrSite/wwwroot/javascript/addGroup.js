@@ -37,6 +37,24 @@ connection.start({ jsonp: true })
     .done(function () { console.log("SignalR connected"); })
     .fail(function () { console.log("SignalR connection failed"); });
 
+//GET za informacije o korisniku
+$.get("http://localhost:12345/studenti/" + id, function (data) {
+    var student = JSON.parse(data);
+
+    var headerSlika = document.getElementById("korisnik");
+
+    //dodavanje slike studenta
+    if (student.PicturePath == "")
+        headerSlika.innerHTML += '<img src="images/default.png" class="demo-avatar">';
+    else
+        headerSlika.innerHTML += '<img src="' + student.PicturePath + '"  class="demo-avatar">';
+
+    var spanUser = document.getElementById("korisnik");
+    spanUser.innerHTML += student.Name + " " + student.Surname;
+    var spanMail = document.getElementById("mail");
+    spanMail.innerText += student.Email;
+});
+
 function procitaj() {
     if (notifikacija == true)
         window.location = '/inbox.html?konv=' + id_konverzacije;
@@ -218,7 +236,6 @@ $.ajax({
 });
 
 
-
 function unesi_predmet() {
 
     arr = [];
@@ -245,7 +262,6 @@ function unesi_predmet() {
         }
 
     }
-
 
     console.log(document.getElementById("naziv_predmeta").value);
     console.log(document.getElementById("nivo").value);
@@ -281,5 +297,4 @@ function unesi_predmet() {
             window.alert("Uspesan unos kursa");
         }
     });
-
 }

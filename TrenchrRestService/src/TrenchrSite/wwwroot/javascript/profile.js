@@ -1,5 +1,5 @@
 //id studenta koji treba da se prikaze
-var id = 600;
+var id_korisnika = 600;
 var id_konverzacije = 0;
 var id_grupe = 0;
 var notifikacija = false;
@@ -45,20 +45,45 @@ $(document).ready(function(){
         .done(function () { console.log("SignalR connected"); })
         .fail(function () { console.log("SignalR connection failed"); });
 
-    //svi kursevi studenta kojima on pripada, da bi se prikaza
+    //svi kursevi studenta kojima on pripada, da bi se prikazao search
     $.ajax({
-        url:'http://localhost:12345/studenti/' + id + '/kursevi',
+        url: 'http://localhost:12345/studenti/' + id_korisnika + '/kursevi',
         type:'GET',
         dataType: 'json',
         success: function( json ) {
             $.each(json, function(i, value) {
-                $('#grupe').append($('<option>').attr('value', value.Name + " " + value.Year));
+                $('#grupe').append($('<option>').attr('value', value.Name + " " + value.Year).attr('id', value.ID));
             });
+
+            var pretraga_grupa = document.getElementById('fixed-header-drawer-exp');
+            var trazi_grupe = document.getElementById('grupe');
+            var attr;
+
+            pretraga_grupa.addEventListener("keyup", function (event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+
+                    if (pretraga_grupa.value.length != 0) {
+
+                        for (var i = 0; i < trazi_grupe.options.length; i++) {
+                            attr = trazi_grupe.options[i];
+
+                            if (attr.value == pretraga_grupa.value)
+                                id_grupe = attr.id;
+
+                            console.log(id_grupe);
+                        }
+
+                        pretraga_grupa.value = '';
+                        notifikacija = false;
+                        procitaj();
+                    }
+                }
+            }, false);
         }
     });
 
-    $.get("http://localhost:12345/studenti/" + id, function(data){
-
+    $.get("http://localhost:12345/studenti/" + id_korisnika, function (data) {
         var student = JSON.parse(data);
         var div = document.getElementById("divProfil");
         var divPic = document.getElementById("profile");
@@ -66,22 +91,15 @@ $(document).ready(function(){
         var headerSlika = document.getElementById("korisnik");
 
         //dodavanje slike studenta
-        if(student.PicturePath == ""){
-            headerSlika.innerHTML += '<img src="images/default.png" class="demo-avatar">'
-        }
-        else {
+        if(student.PicturePath == "")
+            headerSlika.innerHTML += '<img src="images/default.png" class="demo-avatar">';
+        else 
             headerSlika.innerHTML += '<img src="'+ student.PicturePath +'"  class="demo-avatar">';
-        }
-
 
         var spanUser = document.getElementById("korisnik");
         spanUser.innerHTML += student.Name + " " + student.Surname;
-
-
         var spanMail = document.getElementById("mail");
         spanMail.innerText += student.Email;
-
-
 
         div.innerHTML +=    '<label class="profileLabel">Ime '+
                                 '<input class="mdl-textfield__input" id="name" type="text" value="' + student.Name + '" disabled autofocus '+
@@ -109,46 +127,58 @@ $(document).ready(function(){
                             '<input class="mdl-textfield__input" id="year" type="text" value="'+ student.Year+'" disabled> '+
                             '</label> ';
 
-        if(student.PicturePath == ""){
-            divPic.innerHTML += '<img src="images/default.png" class="profilePicture">'
-        }
-        else {
-            //PROVERITI DA LI JE DOBRO
-            divPic.innerHTML += '<img src="'+ student.PicturePath +'" class="profilePicture">'
-        }
-
-
+        if (student.PicturePath == "")
+            divPic.innerHTML += '<img src="images/default.png" class="profilePicture">';
+        else
+            divPic.innerHTML += '<img src="' + student.PicturePath + '" class="profilePicture">';
     });
 
-    //NAPISATI PUT POZIV ZA UNOS KORISNIKA U BAZU
     $('#save').click(function() {
         var name = document.getElementById("name").value;
+        document.getElementById("name").disabled = true;
+        document.getElementById("name").style = "color: darkgray;";
         var surname = document.getElementById("surname").value;
+        document.getElementById("surname").disabled = true;
+        document.getElementById("surname").style = "color: darkgray;";
         var index = document.getElementById("index").value;
+        document.getElementById("index").disabled = true;
+        document.getElementById("index").style = "color: darkgray;";
         var email = document.getElementById("email").value;
+        document.getElementById("email").disabled = true;
+        document.getElementById("email").style = "color: darkgray;";
         var faculty = document.getElementById("faculty").value;
+        document.getElementById("faculty").disabled = true;
+        document.getElementById("faculty").style = "color: darkgray;";
         var university = document.getElementById("university").value;
+        document.getElementById("university").disabled = true;
+        document.getElementById("university").style = "color: darkgray;";
         var course = document.getElementById("course").value;
+        document.getElementById("course").disabled = true;
+        document.getElementById("course").style = "color: darkgray;";
         var year = parseInt(document.getElementById("year").value);
+        document.getElementById("year").disabled = true;
+        document.getElementById("year").style = "color: darkgray;";
 
         $.ajax({
-            type: 'put',
-            url: 'http://localhost:12345/korisnici/' + id,
+            type: 'PUT',
+            url: 'http://localhost:12345/korisnici/' + id_korisnika,
             data: JSON.stringify( {
                 "ime" : name,
                 "prezime" : surname,
                 "generacija" : year,
                 "indeks" : index,
-                "email" : email
+                "email": email
             }),
             contentType: "application/json; charset=utf-8"
         });
 
+        document.getElementById("edit").style.display = "inline";
+        document.getElementById("save").style.display = "none";
+        document.getElementById("reset").style.display = "none";
     });
 
     $('#reset').click(function() {
-
-        $.get("http://localhost:12345/studenti/" + id, function(data){
+        $.get("http://localhost:12345/studenti/" + id_korisnika, function (data) {
 
             var student = JSON.parse(data);
             var div = document.getElementById("divProfil");
@@ -162,21 +192,27 @@ $(document).ready(function(){
             document.getElementById("course").value = student.Module;
             document.getElementById("year").value = student.Year;
             document.getElementById("university").value = student.University;
-
         });
     });
 });
 
 function izmeniProfil() {
-
     document.getElementById("name").disabled = false;
+    document.getElementById("name").style = "color: black;";
     document.getElementById("surname").disabled = false;
+    document.getElementById("surname").style = "color: black;";
     document.getElementById("index").disabled = false;
+    document.getElementById("index").style = "color: black;";
     document.getElementById("email").disabled = false;
+    document.getElementById("email").style = "color: black;";
     document.getElementById("faculty").disabled = false;
+    document.getElementById("faculty").style = "color: black;";
     document.getElementById("university").disabled = false;
+    document.getElementById("university").style = "color: black;";
     document.getElementById("course").disabled = false;
+    document.getElementById("course").style = "color: black;";
     document.getElementById("year").disabled = false;
+    document.getElementById("year").style = "color: black;";
 
     document.getElementById("edit").style.display="none";
     document.getElementById("save").style.display="inline";

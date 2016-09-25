@@ -1,10 +1,20 @@
 var focus = 0,
     blur = 0;
-var id_konverzacije = 628, id_korisnika = 600;
+var id_konverzacije, id_korisnika = 600;
 var id_grupe = 0;
 var notifikacija = false;
 
 var HubProxy;
+
+function getParameterByName(name) {
+    url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
 
 function posaljiPoruku() {
     //cuvanje nove poruke u bazi
@@ -68,6 +78,7 @@ function procitaj() {
 
 $(document).ready(function() {
 
+    id_konverzacije = getParameterByName('konv');
     osveziPoruke();
 
     //pravljenje konekcije na server
@@ -102,6 +113,25 @@ $(document).ready(function() {
         .done(function () { console.log("SignalR connected"); })
         .fail(function () { console.log("SignalR connection failed"); });
 
+    //GET za informacije o korisniku
+    $.get("http://localhost:12345/studenti/" + id_korisnika, function (data) {
+        var student = JSON.parse(data);
+
+        var headerSlika = document.getElementById("korisnik");
+
+        //dodavanje slike studenta
+        if (student.PicturePath == "")
+            headerSlika.innerHTML = '<img src="images/default.png" class="demo-avatar">';
+        else
+            headerSlika.innerHTML = '<img src="' + student.PicturePath + '"  class="demo-avatar">';
+
+        var spanUser = document.getElementById("korisnik");
+        spanUser.innerHTML += student.Name + " " + student.Surname;
+        var spanMail = document.getElementById("mail");
+        spanMail.innerHTML = "";
+        spanMail.innerText += student.Email;
+    });
+
     //kada se krene pisati poruka omogucava se pritisak dugmeta dok postoji text u textarea
     $('#poruka').bind('input propertychange', function () {
 
@@ -122,8 +152,34 @@ $(document).ready(function() {
         dataType: 'json',
         success: function (json) {
             $.each(json, function (i, value) {
-                $('#trazi_grupe').append($('<option>').attr('value', value.Name + " " + value.Year));
+                $('#trazi_grupe').append($('<option>').attr('value', value.Name + " " + value.Year).attr('id', value.ID));
             });
+
+            var pretraga_grupa = document.getElementById('fixed-header-drawer-exp');
+            var trazi_grupe = document.getElementById('trazi_grupe');
+            var attr;
+
+            pretraga_grupa.addEventListener("keyup", function (event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+
+                    if (pretraga_grupa.value.length != 0) {
+
+                        for (var i = 0; i < trazi_grupe.options.length; i++) {
+                            attr = trazi_grupe.options[i];
+
+                            if (attr.value == pretraga_grupa.value)
+                                id_grupe = attr.id;
+
+                            console.log(id_grupe);
+                        }
+
+                        pretraga_grupa.value = '';
+                        notifikacija = false;
+                        procitaj();
+                    }
+                }
+            }, false);
         }
     });
 
@@ -142,7 +198,8 @@ $(document).ready(function() {
 
                 var a = {};
                 a.id = osobe[i].ID;
-                a.text = [osobe[i].Name + " " + osobe[i].Surname, osobe[i].PicturePath];
+                //a.text = [osobe[i].Name + " " + osobe[i].Surname, osobe[i].PicturePath];
+                a.text = [osobe[i].Name + " " + osobe[i].Surname];
 
                 studenti.push(a);
             }
@@ -163,13 +220,13 @@ $(document).ready(function() {
 
         $(".js-example-data-array").select2({
 
-            templateResult: function(data){
+            templateResult: function (data) {
 
                 var str = data.text;
                 var res = str.split(",");
 
-                return $('<span>').html(data).append('<img src="'+ res[1]+ '"  style="height:20px; width: 20px; margin-right: 20px;">').append(res[0]);
-            }       ,     // Specify format function for selected item
+                return $('<span>').html(data).append('<img src="' + res[1] + '"  style="height:20px; width: 20px; margin-right: 20px;">').append(res[0]);
+            }, // Format funkcija za izabrani item
             escapeMarkup: function(m) {
                 return m;
             }

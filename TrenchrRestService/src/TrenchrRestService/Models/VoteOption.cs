@@ -15,10 +15,7 @@ namespace TrenchrRestService.Models
         //inicijalizovace se na 0 i svaki put ce da se uvecava 
         public long VotesCount { get; set; }
 
-        public VoteOption()
-        {
-
-        }
+        public VoteOption() { }
 
         public VoteOption(IRecord record)
         {
@@ -34,15 +31,14 @@ namespace TrenchrRestService.Models
         public long SacuvajOpcijuGlasanja()
         {
             var stmnt = "MATCH (g:glasanje)" +
-                      $"WHERE id(g) = {VoteID}" +
-                       " WITH g " +
-                       "CREATE (o:opcija{" +
+                       $"WHERE id(g) = {VoteID}" +
+                        " WITH g " +
+                        "CREATE (o:opcija{" +
                        $" tekst : '{Text}', " +
                        $" brGlasova : {0} " +
                         "})-[:u_glasanju]->(g) RETURN id(o) as id";
             var result = Neo4jClient.Execute(stmnt);
             return (long)result.FirstOrDefault()["id"];
-
         }
     }
 }

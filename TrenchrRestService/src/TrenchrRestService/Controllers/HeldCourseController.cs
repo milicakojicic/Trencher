@@ -56,7 +56,7 @@ namespace TrenchrRestService.Controllers
         }
 
         // prijavljivanje studenta na kurs
-        [Route("kursevi/prijavljivanje")]
+        [Route("kursevi/prijava")]
         [HttpPost]
         public IActionResult PrijaviStudentaNaKurs([FromBody] JObject jsonBody)
         {
@@ -68,6 +68,22 @@ namespace TrenchrRestService.Controllers
                         $"WHERE id(ok) = {id_grupe} and id(s) = {id_korisnika} WITH ok,s CREATE (s)-[:pohadja]->(ok) " ;
 
             var result = Neo4jClient.Execute(stmnt); 
+            return Created("lokacija", "radi");
+        }
+
+        // prijavljivanje studenta na kurs
+        [Route("kursevi/odjava")]
+        [HttpPost]
+        public IActionResult OdjaviStudentaSaKursa([FromBody] JObject jsonBody)
+        {
+            dynamic par = jsonBody;
+            long id_korisnika = par.ID_korisnika;
+            long id_grupe = par.ID_grupe;
+
+            var stmnt = "match (ok:odrzan_kurs), (s:student) " +
+                       $"WHERE id(ok) = {id_grupe} and id(s) = {id_korisnika} WITH ok,s match (s)-[r:pohadja]->(ok) delete r;";
+
+            var result = Neo4jClient.Execute(stmnt);
             return Created("lokacija", "radi");
         }
 

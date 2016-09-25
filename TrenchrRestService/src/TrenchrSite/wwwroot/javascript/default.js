@@ -4,11 +4,6 @@ var id_konverzacije = 0;
 var id_grupe = 0;
 var notifikacija = false;
 
-function pogledajGrupu(idGrupe) {
-    url = "group.html";
-    window.location.href = url + "?id=" + idGrupe;
-}
-
 function procitaj() {
     if (notifikacija == true)
         window.location = '/inbox.html?konv=' + id_konverzacije;
@@ -25,12 +20,12 @@ $(document).ready(function() {
     //signali koje klijent prima
     HubProxy.on('newMessage', function (tekst, posiljalac_id, posiljalacIme, id_konv) {
         //if (posiljalac_id != id_korisnika) {
-            document.getElementById("notifikacijaHeader").innerHTML = "NOVA PORUKA";
-            document.getElementById("notifikacijaPosiljalac").innerHTML = "<span style='color: teal;'>Posiljalac: </span>" + posiljalacIme;
-            document.getElementById("notifikacijaTekst").innerHTML = "<span style='color: teal;'>Poruka: </span>" + tekst;
-            id_konverzacije = id_konv;
-            document.getElementById("notifikacija").style = "visibility: visible;";
-            notifikacija = true;
+        document.getElementById("notifikacijaHeader").innerHTML = "NOVA PORUKA";
+        document.getElementById("notifikacijaPosiljalac").innerHTML = "<span style='color: teal;'>Posiljalac: </span>" + posiljalacIme;
+        document.getElementById("notifikacijaTekst").innerHTML = "<span style='color: teal;'>Poruka: </span>" + tekst;
+        id_konverzacije = id_konv;
+        document.getElementById("notifikacija").style = "visibility: visible;";
+        notifikacija = true;
         //}
     });
 
@@ -50,16 +45,59 @@ $(document).ready(function() {
         .done(function () { console.log("SignalR connected"); })
         .fail(function () { console.log("SignalR connection failed"); });
 
+    //GET za informacije o korisniku
+    $.get("http://localhost:12345/studenti/" + id_korisnika, function (data) {
+        var student = JSON.parse(data);
+
+        var headerSlika = document.getElementById("korisnik");
+
+        //dodavanje slike studenta
+        if (student.PicturePath == "")
+            headerSlika.innerHTML += '<img src="images/default.png" class="demo-avatar">';
+        else
+            headerSlika.innerHTML += '<img src="' + student.PicturePath + '"  class="demo-avatar">';
+
+        var spanUser = document.getElementById("korisnik");
+        spanUser.innerHTML += student.Name + " " + student.Surname;
+        var spanMail = document.getElementById("mail");
+        spanMail.innerText += student.Email;
+    });
+
     //GET za sve grupe koje korisnik prati
-    //svi kursevi studenta kojima on pripada, da bi se prikazao u search-u
     $.ajax({
         url: 'http://localhost:12345/studenti/' + id_korisnika + '/kursevi',
         type: 'GET',
         dataType: 'json',
         success: function (json) {
             $.each(json, function (i, value) {
-                $('#trazi_grupe').append($('<option>').attr('value', value.Name + " " + value.Year));
+                $('#trazi_grupe').append($('<option>').attr('value', value.Name + " " + value.Year).attr('id', value.ID));
             });
+
+            var pretraga_grupa = document.getElementById('fixed-header-drawer-exp');
+            var trazi_grupe = document.getElementById('trazi_grupe');
+            var attr;
+
+            pretraga_grupa.addEventListener("keyup", function (event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+
+                    if (pretraga_grupa.value.length != 0) {
+
+                        for (var i = 0; i < trazi_grupe.options.length; i++) {
+                            attr = trazi_grupe.options[i];
+
+                            if (attr.value == pretraga_grupa.value)
+                                id_grupe = attr.id;
+
+                            console.log(id_grupe);
+                        }
+
+                        pretraga_grupa.value = '';
+                        notifikacija = false;
+                        procitaj();
+                    }
+                }
+            }, false);
 
             //div gde se prikazuju grupe
             var div = document.getElementById("mojeGrupe");
@@ -69,11 +107,12 @@ $(document).ready(function() {
 
                 var name = json[i].Name;
                 var year = json[i].Year;
+                var url = "group.html?grp=" + json[i].ID;
 
                 div.innerHTML += '<div class="mdl-list__item grupe" id="grupa">' +
                                     '<span class="mdl-list__item-primary-content"> ' +
                                     '<i class="material-icons mdl-list__item-avatar">school</i> ' +
-                                    '<a href="group.html" id="grupa">' + name + '  ' + year + '</a> ' +
+                                    '<a href=\'' + url + '\' id="grupa">' + name + '  ' + year + '</a> ' +
                                     '</span> ' +
                                  '</div>';
             }
@@ -113,7 +152,7 @@ $(document).ready(function() {
                     '</div>' +
                     '</div>' +
                     '<div class="objava" id=' + id_posta + '>' +
-                    postovi[i].Text + id_posta +
+                    postovi[i].Text +
                     '</div>' +
                     '<div id = ' + komentar + '>' +
                         //ovde idu svi redom komentari
@@ -123,7 +162,6 @@ $(document).ready(function() {
                     '' +
                     '</div>';
 
-
                 $("#" + komentar).css({"background-color": "whitesmoke"});
                 $(".komentarDiv").css({"background-color": "whitesmoke", "margin-bottom": "20px", "width": "100%"});
                 $("#" + komentar_tekst).css({
@@ -132,19 +170,16 @@ $(document).ready(function() {
                     "width": "100%"
                 });
 
-
                 $('body').on('input onpropertychange', '#' + komentar_tekst, function () {
                     console.log("mic");
                     //document.getElementById(komentar_tekst).setAttribute("placeholder", "");
                 });
-
 
                 $('body').on('keydown', '#' + komentar_tekst, function (e) {
                     if (e.keyCode === 13 && !e.shiftKey) {
                         if (!e.shiftKey) {
 
                             var id = e.target.id;
-                            console.log("Ovo je id textarea na koju sam kliknula: " + id);
                             var res = id.split("_");
 
                             var vrednost = $(this).val();
@@ -174,7 +209,6 @@ $(document).ready(function() {
                             console.log("Uneo sam post:" + id_unetog_komentara);
 
                             //ajax poziv za bas taj komentar koji je unet
-
                             $.ajax({
                                 url: 'http://localhost:12345/postovi/' + res[1] + '/komentari/' + id_unetog_komentara,
                                 type: 'GET',
@@ -274,13 +308,13 @@ $(document).ready(function() {
                                 document.getElementById(id_posta).innerHTML += '' +
                                     '<div class="mdl-grid glas_ceo">' +
                                     '<div class="mdl-cell mdl-cell--10-col opcija">' +
-                                    glasanje[l].Text +
+                                        glasanje[l].Text +
                                     '</div>' +
-                                    '<div class="mdl-cell mdl-cell--1-col">' + id_checkbox +
+                                    '<div class="mdl-cell mdl-cell--1-col">' +
                                     '<input type="checkbox" id=' + id_checkbox + ' class="mdl-checkbox__input " onclick="povecajBrojGlasova(this.id)"> ' +
                                     '</div>' +
                                     '<div class="mdl-cell mdl-cell--1-col glas" id=' + brGlasova + '>' +
-                                    glasanje[l].BrojGlasova +
+                                        glasanje[l].VotesCount +
                                     '</div>' +
                                     '</div>';
                             }
@@ -290,14 +324,15 @@ $(document).ready(function() {
 
                 //profil slika za autora posta
                 if (postovi[i].PicturePath == "") {
+                    document.getElementById(autor).innerHTML += "<span style='font-size: 30px;'>" + postovi[i].Caption + "</span> <br /> <br />"
                     document.getElementById(autor).innerHTML += '<img src="images/default.png" class="demo-avatar" style="margin-right: 10px;">';
                     document.getElementById(autor).innerHTML += postovi[i].AuthorInfo;
                 }
                 else {
+                    document.getElementById(autor).innerHTML += "<span style='font-size: 30px;'>" + postovi[i].Caption + "</span> <br /> <br />"
                     document.getElementById(autor).innerHTML += '<img src="' + postovi[i].PicturePath + '"  class="demo-avatar" style="margin-right: 10px;">';
                     document.getElementById(autor).innerHTML += postovi[i].AuthorInfo;
                 }
-
             }
         }
     });
@@ -314,14 +349,24 @@ function povecajBrojGlasova(id) {
     console.log("Id opcije:" + res[0]);
     console.log("Id posta: " + res[1]);
 
-    //ajax za update
-    $.ajax({
-        type: 'put',
-        async: false,
-        url: 'http://localhost:12345/opcije/' + res[0],
-        contentType: "application/json; charset=utf-8"
-    });
-
+    if (document.getElementById(id).checked == true) {
+        //ajax za update
+        $.ajax({
+            type: 'PUT',
+            async: false,
+            url: 'http://localhost:12345/opcije/' + res[0] + '/*',
+            contentType: "application/json; charset=utf-8"
+        });
+    }
+    else {
+        //ajax za update
+        $.ajax({
+            type: 'PUT',
+            async: false,
+            url: 'http://localhost:12345/opcije/' + res[0] + '/-',
+            contentType: "application/json; charset=utf-8"
+        });
+    }
 
     $.ajax({
         url:'http://localhost:12345/postovi/' + res[1] + '/opcije/' + res[0],
@@ -330,7 +375,7 @@ function povecajBrojGlasova(id) {
         dataType: 'json',
         success: function( data ) {
             console.log(data);
-            document.getElementById("brGlasova" + res[0]).innerHTML = data[0].BrojGlasova;
+            document.getElementById("brGlasova" + res[0]).innerHTML = data[0].VotesCount;
         }
     });
 }

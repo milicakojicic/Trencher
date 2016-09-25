@@ -15,7 +15,6 @@ namespace TrenchrRestService.Controllers
 {
     public class PostController : ApiController
     {
-        //TODO promeni rutu
         //postovi koji pripadaju nekom predmetu
         [Route("postovi/{id}")]
         [HttpGet]
@@ -212,7 +211,7 @@ namespace TrenchrRestService.Controllers
                         "post.putanja as putanja, post.tekst as tekst," +
                         "post.ind as indikator, post.vreme as vreme," +
                         "id(neko) as korisnik_id, neko.ime as ime_korisnika, neko.putanja as putanja_korisnika " +
-                        "order by vreme desc limit 20";
+                        "order by vreme desc";
 
             var resultPosts = Neo4jClient.Execute(stmnt);
 
@@ -252,12 +251,10 @@ namespace TrenchrRestService.Controllers
                     notifications.Add(new NotificationPost(o));
                     posts.Add(new NotificationPost(o));
                 }
-
             }
 
             //sad nam treba da su ti postovi bas u grupama koje korisnik prati
             //trebaju nam sve grupe korisnika 
-
             var stmnt1 = $"MATCH (s:student)-[:pohadja]-(o:odrzan_kurs) where id(s) = {id} return id(o) as id, o.name as name, o.espb as espb, o.tip as tip, o.nivo as nivo, o.godina as godina";
             var resultCourses = Neo4jClient.Execute(stmnt1);
             var courses = new List<HeldCourse>();
@@ -266,13 +263,14 @@ namespace TrenchrRestService.Controllers
 
             /* da li se id grupe tog korisnika nalazi u listi postova koji su vraceni (post u sebi ima polje kursa kome pripada),
             ako da  - onda ih ispisujemo */
-
             int i, j;
 
             for (i = 0; i < courses.ToArray().Length; i++) {
                 for (j = 0; j < posts.ToArray().Length; j++) {
-                    if (courses[i].ID == posts[j].CourseID)
+                    if (courses[i].ID == posts[j].CourseID) {
+                        posts[j].Caption = courses[i].Name;
                         finalPosts.Add(posts[j]);
+                    }
                 }
             }
 
@@ -305,11 +303,13 @@ namespace TrenchrRestService.Controllers
             return Ok(JsonConvert.SerializeObject(opcije, Formatting.Indented));
         }
 
-        [Route("opcije/{id}")]
+        [Route("opcije/{id}/{operacija}")]
         [HttpPut]
-        public IActionResult updateOption([FromBody] JObject jsonBody, long id)
+        public IActionResult updateOption([FromBody] JObject jsonBody, long id, char operacija)
         {
-            string stmnt = $"MATCH (u) WHERE id(u) = {id} SET u.brGlasova = u.brGlasova + 1";
+            if (operacija == '*')
+                operacija = '+';
+            string stmnt = $"MATCH (u) WHERE id(u) = {id} SET u.brGlasova = u.brGlasova" + operacija + "1";
             Neo4jClient.Execute(stmnt);
             return Ok();
         }

@@ -50,6 +50,26 @@ $(document).ready(function(){
         .done(function () { console.log("SignalR connected"); })
         .fail(function () { console.log("SignalR connection failed"); });
 
+    //GET za informacije o korisniku
+    $.get("http://localhost:12345/studenti/" + id_korisnika, function (data) {
+        var student = JSON.parse(data);
+        var div = document.getElementById("divProfil");
+        var divPic = document.getElementById("profile");
+
+        var headerSlika = document.getElementById("korisnik");
+
+        //dodavanje slike studenta
+        if (student.PicturePath == "")
+            headerSlika.innerHTML += '<img src="images/default.png" class="demo-avatar">';
+        else
+            headerSlika.innerHTML += '<img src="' + student.PicturePath + '"  class="demo-avatar">';
+
+        var spanUser = document.getElementById("korisnik");
+        spanUser.innerHTML += student.Name + " " + student.Surname;
+        var spanMail = document.getElementById("mail");
+        spanMail.innerText += student.Email;
+    });
+
     //uzimanje podataka o svim kursevima
     kurseviSvi = $.parseJSON(
         $.ajax({
@@ -72,11 +92,37 @@ $(document).ready(function(){
             'type': "GET",
             'dataType': 'json',
             'global': false,
-            'url': "http://localhost:12345/studenti/"+id_korisnika+"/kursevi",
+            'url': "http://localhost:12345/studenti/" + id_korisnika + "/kursevi",
             success: function( json ) {
                 $.each(json, function(i, value) {
-                    $('#trazi_grupe').append($('<option>').attr('value', value.Name + " " + value.Year));
+                    $('#trazi_grupe').append($('<option>').attr('value', value.Name + " " + value.Year).attr('id', value.ID));
                 });
+
+                var pretraga_grupa = document.getElementById('fixed-header-drawer-exp');
+                var trazi_grupe = document.getElementById('trazi_grupe');
+                var attr;
+
+                pretraga_grupa.addEventListener("keyup", function (event) {
+                    if (event.keyCode == 13) {
+                        event.preventDefault();
+
+                        if (pretraga_grupa.value.length != 0) {
+
+                            for (var i = 0; i < trazi_grupe.options.length; i++) {
+                                attr = trazi_grupe.options[i];
+
+                                if (attr.value == pretraga_grupa.value)
+                                    id_grupe = attr.id;
+
+                                console.log(id_grupe);
+                            }
+
+                            pretraga_grupa.value = '';
+                            notifikacija = false;
+                            procitaj();
+                        }
+                    }
+                }, false);
             }
         }).responseText);
 
@@ -94,7 +140,7 @@ $(document).ready(function(){
             '<span>' + kurseviOsobe[i].Name + '  ' + kurseviOsobe[i].Year + '</span> '+
             '</span> '+
             '<input type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect '+
-            'mdl-button--accent join" value="Pridružen" id="' + kurseviOsobe[i].ID + '" disabled> '+
+            'mdl-button--accent join pridruzi" value="Pridružen" id="' + kurseviOsobe[i].ID + '"> '+
             '</div> ';
 
     }
@@ -104,9 +150,8 @@ $(document).ready(function(){
         var ind = 0;
 
         for(var j=0; j < id_grupa.length; j ++){
-            if(kurseviSvi[i].ID == id_grupa[j]){
+            if (kurseviSvi[i].ID == id_grupa[j])
                 ind = 1;
-            }
         }
 
         if(ind == 0){
@@ -116,7 +161,7 @@ $(document).ready(function(){
                 '<span>' + kurseviSvi[i].Name + '  ' + kurseviSvi[i].Year + '</span> '+
                 '</span> '+
                 '<input type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect '+
-                'mdl-button--accent join pridruzi" value="Pridruzi se" id="' + kurseviSvi[i].ID + '"> '+
+                'mdl-button--accent join pridruzi" value="Pridruži se" id="' + kurseviSvi[i].ID + '"> '+
                 '</div> ';
         }
     }
@@ -124,28 +169,34 @@ $(document).ready(function(){
     $('.pridruzi').click(function() {
 
         idGrupe = this.id;
-
         console.log(idGrupe + " " + id_korisnika);
 
-        //ako je korisnik vec trazio da se pridruzi grupi, zahtev se ne salje
-        if(!document.getElementById(idGrupe).value == "Pridruzi se"){
-            console.log(document.getElementById(idGrupe).value);
-        }
         //ako korisnik nije trazio da se pridruzi grupi, zahtev se salje
-        else {
-            //ajax poziv za pridruzivanje korisnika grupi
+        if(document.getElementById(idGrupe).value == "Pridruzi se"){
+            $.ajax({
+                type: 'post',
+                url: 'http://localhost:12345/kursevi/prijava',
+                data: JSON.stringify({
+                    "ID_korisnika": id_korisnika,
+                    "ID_grupe": idGrupe
+                }),
+                contentType: "application/json; charset=utf-8"
+            });
             document.getElementById(idGrupe).value = "Pridružen";
         }
-
-        $.ajax({
-            type: 'post',
-            url: 'http://localhost:12345/kursevi/prijavljivanje',
-            data: JSON.stringify( {
-                "ID_korisnika" : id_korisnika,
-                "ID_grupe" : idGrupe
-            }),
-            contentType: "application/json; charset=utf-8"
-        });
+        //ako korisnik zeli da se odjavi iz grupe
+        else {
+            $.ajax({
+                type: 'post',
+                url: 'http://localhost:12345/kursevi/odjava',
+                data: JSON.stringify({
+                    "ID_korisnika": id_korisnika,
+                    "ID_grupe": idGrupe
+                }),
+                contentType: "application/json; charset=utf-8"
+            });
+            document.getElementById(idGrupe).value = "Pridruži se";
+        }
     });
 });
 
