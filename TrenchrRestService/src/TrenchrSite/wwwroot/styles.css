@@ -1060,7 +1060,7 @@ footer {
     overflow-x: hidden;
 }
 
-.message {
+#message {
     height: 140px;
     background-color: whitesmoke;
     padding-left: 20px;

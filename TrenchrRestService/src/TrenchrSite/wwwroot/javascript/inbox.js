@@ -16,25 +16,6 @@ function getParameterByName(name) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-function posaljiPoruku() {
-    //cuvanje nove poruke u bazi
-    $.ajax({
-        'type': 'post',
-        'async': false,
-        'url': 'http://localhost:12345/konverzacije/' + id_konverzacije + '/poruke',
-        'data': JSON.stringify({
-            "UserID": id_korisnika,
-            "Text": document.getElementById("poruka").value,
-            "Time": new Date().toLocaleString(),
-            "ConversationID": id_konverzacije
-        }),
-        'contentType': "application/json; charset=utf-8",
-        success: function () {
-            osveziPoruke();
-        }
-    });
-}
-
 function osveziPoruke() {
     $.get("http://localhost:12345/konverzacije/" + id_konverzacije, function (data) {
 
@@ -78,8 +59,43 @@ function procitaj() {
 
 $(document).ready(function() {
 
-    id_konverzacije = getParameterByName('konv');
-    osveziPoruke();
+    $('#posaljiPoruku').click(function () {
+        //cuvanje nove poruke u bazi
+        $.ajax({
+            'type': 'post',
+            'async': false,
+            'url': 'http://localhost:12345/konverzacije/' + id_konverzacije + '/poruke',
+            'data': JSON.stringify({
+                "UserID": id_korisnika,
+                "Text": document.getElementById("poruka").value,
+                "Time": new Date().toLocaleString(),
+                "ConversationID": id_konverzacije
+            }),
+            'contentType': "application/json; charset=utf-8",
+            success: function () {
+                osveziPoruke();
+            }
+        });
+    });
+
+    if (getParameterByName('konv') == null)
+    {
+        document.getElementById('poruke').hidden = true;
+        document.getElementById('porukaDiv').hidden = true;
+        document.getElementById('posaljiPoruku').hidden = true;
+        document.getElementById('poruka').hidden = true;
+        document.getElementById('message').hidden = true;
+    }
+    else
+    {
+        document.getElementById('poruke').hidden = false;
+        document.getElementById('porukaDiv').hidden = false;
+        document.getElementById('posaljiPoruku').hidden = false;
+        document.getElementById('poruka').hidden = false;
+        document.getElementById('message').hidden = false;
+        id_konverzacije = getParameterByName('konv');
+        osveziPoruke();
+    }
 
     //pravljenje konekcije na server
     var connection = $.hubConnection('http://localhost:12345/signalr', { useDefaultPath: false });
@@ -134,7 +150,6 @@ $(document).ready(function() {
 
     //kada se krene pisati poruka omogucava se pritisak dugmeta dok postoji text u textarea
     $('#poruka').bind('input propertychange', function () {
-
         document.getElementById("posaljiPoruku").disabled = true;
         document.getElementById("posaljiPoruku").style.opacity = 0.5;
         document.getElementById("poruka").placeholder = " ";
@@ -151,12 +166,14 @@ $(document).ready(function() {
         type: 'GET',
         dataType: 'json',
         success: function (json) {
+            var trazi_grupe = document.getElementById('trazi_grupe');
+            trazi_grupe.innerHTML = "";
+
             $.each(json, function (i, value) {
                 $('#trazi_grupe').append($('<option>').attr('value', value.Name + " " + value.Year).attr('id', value.ID));
             });
 
             var pretraga_grupa = document.getElementById('fixed-header-drawer-exp');
-            var trazi_grupe = document.getElementById('trazi_grupe');
             var attr;
 
             pretraga_grupa.addEventListener("keyup", function (event) {
@@ -188,7 +205,7 @@ $(document).ready(function() {
 
     $.ajax({
         url: "http://localhost:12345/studenti",
-        type: "get",
+        type: "GET",
         async: false,
         success: function (data) {
 
@@ -198,18 +215,15 @@ $(document).ready(function() {
 
                 var a = {};
                 a.id = osobe[i].ID;
-                //a.text = [osobe[i].Name + " " + osobe[i].Surname, osobe[i].PicturePath];
-                a.text = [osobe[i].Name + " " + osobe[i].Surname];
+                a.text = [osobe[i].Name + " " + osobe[i].Surname, osobe[i].PicturePath];
 
                 studenti.push(a);
             }
         }
     });
 
-    console.log(studenti);
-
      $(".js-example-data-array").select2({
-        data: studenti,
+         data: studenti,
          minimumResultsForSearch: -1,
          placeholder: function(){
              $(this).data('placeholder');
@@ -217,11 +231,9 @@ $(document).ready(function() {
      });
 
     $(function(){
-
         $(".js-example-data-array").select2({
 
             templateResult: function (data) {
-
                 var str = data.text;
                 var res = str.split(",");
 
@@ -233,8 +245,24 @@ $(document).ready(function() {
         });
     });
 
-    $("#pretraziOsobe")
+    //fja koja se pokrece kada je izabrana osoba
+    $('.js-example-data-array').on("select2:selecting", function (e) {
+        var test = '';
+        id_korisnika_2 = e.params.args.data.id;
+        $.ajax({
+            url: 'http://localhost:12345/korisnici/' + id_korisnika + '/konverzacije/' + id_korisnika_2,
+            type: 'GET',
+            dataType: 'json',
+            success: function (result) {
+                id_konverzacije = result;
+                notifikacija = true;
+                procitaj(); 
+            }
+        });
+    });
+
     //fja u kojoj treba za izabranu osobu prikazati dosadasnji chat sa njom
+    $("#pretraziOsobe")
         .focusout(function () {
             console.log("Ljubica");
         });
@@ -248,50 +276,4 @@ $(document).ready(function() {
             }
         }
     });
-
-    //dodati zahtev za upisivanje nove poruke u bazu
-    function posalji(e) {
-        var div = document.getElementById("poruke");
-
-        //div.innerHTML += '<div class="mdl-grid divZaPoruku"> ' +
-        //    '<div class="mdl-cell mdl-cell--6-col"> ' +
-        //    '</div> ' +
-        //    '<div class="mdl-cell mdl-cell--6-col"> ' +
-        //    '<div class="pojedinacnaPorukaDiv "> ' +
-        //    '<span class="pojedinacnaPorukaMoja">' + poruka.value + '</span> ' +
-        //    '</div> ' +
-        //    '</div> ' +
-        //    '</div> ';
-
-        //cuvanje poruke u bazi
-        $.ajax({
-            'type': 'get',
-            'url': 'http://localhost:12345/postovi/' + id_posta + '/opcije',
-            'async': false,
-            'success': function (data) {
-                var glasanje = JSON.parse(data);
-
-                for (var l = 0; l < glasanje.length; l++) {
-                    document.getElementById(id_posta).innerHTML += '' +
-                        '<div class="mdl-grid glas_ceo">' +
-                        '<div class="mdl-cell mdl-cell--10-col opcija">' +
-                        glasanje[l].Text +
-                        '</div>' +
-                        '<div class="mdl-cell mdl-cell--1-col">' +
-                        '<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox2"> ' +
-                        '<input type="checkbox" id="checkbox2" class="mdl-checkbox__input"> ' +
-                        '</label>' +
-                        '</div>' +
-                        '<div class="mdl-cell mdl-cell--1-col glas">' +
-                        glasanje[l].BrojGlasova +
-                        '</div>' +
-                        '</div>';
-                }
-            }
-        });
-
-        div.scrollTop = div.scrollHeight;
-        poruka.value = "";
-        poruka.placeholder = "Napisi poruku...";
-    }
 });

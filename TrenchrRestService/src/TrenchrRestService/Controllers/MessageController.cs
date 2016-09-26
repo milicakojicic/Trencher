@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.SignalR;
 using Microsoft.AspNetCore.Mvc;
+using Neo4j.Driver.V1;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -15,40 +16,33 @@ namespace TrenchrRestService.Controllers
     public class MessageController : ApiController
     {
         //vracanje konverzacija korisnika
-        [Route("korisnici/{id}/konverzacije")]
+        [Route("korisnici/{id1}/konverzacije/{id2}")]
         [HttpGet]
-        public IActionResult VratiKonverzacijeKorisnika(long id)
+        public IActionResult VratiKonverzaciju(long id1, long id2)
         {
-            var stmnt1 = $"match (s:student)-[:u_konverzaciji]->(k:konverzacija) where id(s) = {id} return id(k) as id, k.ime as name";
-            var rezKonverzacije = Neo4jClient.Execute(stmnt1);
-            var konverzacije = new List<Conversation>();
-            foreach (Conversation o1 in rezKonverzacije)
+            var stmnt1 = $"match (s1:student)-[:u_konverzaciji]->(k:konverzacija)<-[:u_konverzaciji]-(s2:student) where id(s1) = {id1} and id(s2) = {id2} return id(k) as id, k.ime as name";
+            var rezKonverzacije1 = Neo4jClient.Execute(stmnt1);
+            IRecord[] konverzacija1 = rezKonverzacije1.ToArray();
+            string id_konverzacije = "";
+
+            if (konverzacija1.Count() == 0)
             {
-                Conversation o = new Conversation();
+                var stmnt2 = $"match (s1:student), (s2:student) where id(s1) = {id1} and id(s2) = {id2} " + 
+                              "with s1, s2 " + 
+                              "create (k:konverzacija) " +
+                              "create (s1)-[:u_konverzaciji]->(k) " +
+                              "create (s2)-[:u_konverzaciji]->(k);";
+                var rezKonverzacije2 = Neo4jClient.Execute(stmnt2);
 
-                o.ID = o1.ID;
-                o.Name = o1.Name;
-
-                var stmnt2 = $"match (s:student)-[:u_konverzaciji]->(k:konverzacija) where id(k) = {o.ID} return id(s) as id, s.ime as name, s.prezime as surname, s.email as email, s.putanja as picture_path";
-                var rezKorisnici = Neo4jClient.Execute(stmnt2);
-                var korisnici = new HashSet<User>();
-                foreach (var o2 in rezKorisnici)
-                    korisnici.Add(new User(o2));
-
-                o.Users = korisnici;
-
-                var stmnt3 = $"match (k:konverzacija)-[:sadrzi_poruku]->(p:poruka) where id(k) = {id} return id(p) as id, p.poslao as user_id, p.vreme as vreme, p.tekst as tekst, id(k) as conversation_id";
-                var rezPoruke = Neo4jClient.Execute(stmnt3);
-                var poruke = new List<Message>();
-                foreach (var o3 in rezPoruke)
-                    poruke.Add(new Message(o3));
-
-                o.Messages = poruke;
-
-                konverzacije.Add(o);
+                var stmnt3 = $"match (s1:student)-[:u_konverzaciji]->(k:konverzacija)<-[:u_konverzaciji]-(s2:student) where id(s1) = {id1} and id(s2) = {id2} return id(k) as id, k.ime as name";
+                var rezKonverzacije3 = Neo4jClient.Execute(stmnt3);
+                IRecord[] konverzacija3 = rezKonverzacije3.ToArray();
+                id_konverzacije = konverzacija3[0]["id"].ToString();
             }
+            else
+                id_konverzacije = konverzacija1[0]["id"].ToString();
 
-            return Ok(JsonConvert.SerializeObject(konverzacije, Formatting.Indented));
+            return Ok(JsonConvert.SerializeObject(id_konverzacije, Formatting.Indented));
         }
 
         //vracanje poruka neke konverzacije

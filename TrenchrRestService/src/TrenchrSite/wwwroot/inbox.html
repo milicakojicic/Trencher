@@ -49,7 +49,6 @@
                 <span>
                     <img src="images/logoT.JPG" style="width: 25px; height: 25px;"/>
                 </span>
-
                 <span class="trenchr" id="ime_grupe">Sanduče</span>
                 <div class="mdl-layout-spacer"></div>
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
@@ -103,21 +102,18 @@
                 <div class="mdl-cell mdl-cell--2-col"></div>
             </div> <!--grid-->
 
-            <button style="width: 100px" onclick="posaljiPoruku()"> TEST </button>
-
             <!-- Forma za pisanje pojdinacne poruke -->
             <div class="mdl-grid">
                 <div class="mdl-cell mdl-cell--2-col"></div>
                 <div class="mdl-cell mdl-cell--8-col">
-                    <div class="message">
+                    <div id="message">
                         <form>
                             <div class="mdl-textfield mdl-js-textfield" id="porukaDiv">
-                                <textarea class="mdl-textfield__input center" type="text" rows="3" id="poruka" ></textarea>
+                                <textarea class="mdl-textfield__input center" type="text" rows="3" id="poruka"></textarea>
                                 <label class="mdl-textfield__label" for="poruka">Napisi poruku...</label>
                             </div>
-                            <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent postButton"
-                                   id="posaljiPoruku" type="button" value="Pošalji" onclick="posaljiPoruku()" disabled>
-                            </input>
+                            <button style="width: 100px" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent 
+                                    postButton" id="posaljiPoruku" onclick="posaljiPoruku()"> Pošalji </button>
                         </form>
                     </div>
                 </div>
