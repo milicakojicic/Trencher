@@ -62,10 +62,10 @@ create (rs2)-[:odrzan]->(rs2_16)
 // UBACI SLIKE
 // Studenti
 create (LjubicaPeleksic:student {name: "Ljubica Peleksic", ime:"Ljubica", prezime: "Peleksic",generacija: 2012, indeks: "1070/2015", email: "bla1@gmail.com", putanja:"images/ljubica.jpg", _password:"ljubica", _claimRoles:"[Student]"})
-create (MilicaKojicic:student {name: "Milica Kojicic", ime:"Milica", prezime: "Kojicic", generacija: 2012, indeks: "1066/2015", email: "bla@gmail.com", putanja:"images/milica.jpg", _password:"", _claimRoles:"[Student]"})
-create (NemanjaSubotic:student {name: "Nemanja Subotic", ime:"Nemanja", prezime: "Subotic", generacija: 2012 , indeks: "1071/2015", email: "bla2@gmail.com", putanja:"", _password:"", _claimRoles:"[Student]"})
-create (PetarVukmirovic:student {name: "Petar Vukmirovic", ime:"Petar", prezime: "Vukmirovic", generacija: 2012, indeks: "1076/2015", email: "bla3@gmail.com", putanja:"", _password:"", _claimRoles:"[Student]"})
-create (IgorRodic:student {name: "Igor Rodic", ime:"Igor", prezime: "Rodic", generacija: 2012, indeks: "1075/2015", email: "bla5@gmail.com", putanja:"", _password:"", _claimRoles:"[Student]"})
+create (MilicaKojicic:student {name: "Milica Kojicic", ime:"Milica", prezime: "Kojicic", generacija: 2012, indeks: "1066/2015", email: "bla@gmail.com", putanja:"images/milica.jpg", _password:"milica", _claimRoles:"[Student]"})
+create (NemanjaSubotic:student {name: "Nemanja Subotic", ime:"Nemanja", prezime: "Subotic", generacija: 2012 , indeks: "1071/2015", email: "bla2@gmail.com", putanja:"", _password:"nemanja", _claimRoles:"[Student]"})
+create (PetarVukmirovic:student {name: "Petar Vukmirovic", ime:"Petar", prezime: "Vukmirovic", generacija: 2012, indeks: "1076/2015", email: "bla3@gmail.com", putanja:"", _password:"petar", _claimRoles:"[Student]"})
+create (IgorRodic:student {name: "Igor Rodic", ime:"Igor", prezime: "Rodic", generacija: 2012, indeks: "1075/2015", email: "bla5@gmail.com", putanja:"", _password:"igor", _claimRoles:"[Student]"})
 
 // Studenti->Fakultet
 create (MilicaKojicic)-[:na_fakultetu]->(matf)
@@ -73,7 +73,6 @@ create (LjubicaPeleksic)-[:na_fakultetu]->(matf)
 create (NemanjaSubotic)-[:na_fakultetu]->(matf)
 create (PetarVukmirovic)-[:na_fakultetu]->(matf)
 create (IgorRodic)-[:na_fakultetu]->(matf)
-
 
 // Student -> Smer
 create (MilicaKojicic)-[:na_smeru]->(matfI)
