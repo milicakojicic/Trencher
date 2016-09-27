@@ -34,6 +34,9 @@ namespace TrenchrRestService.Controllers
         [HttpGet]
         public IActionResult VratiGrupeStudenta(long id)
         {
+            if (!AuthorizationValidator.isAuthorized(Context, id))
+                return new UnauthorizedResult();
+
             var stmnt = $"MATCH (s:student)-[:pohadja]-(o:odrzan_kurs) where id(s) = {id} return id(o) as id, o.name as name, o.espb as espb, o.tip as tip, o.nivo as nivo, o.godina as godina";
             var resultCourses = Neo4jClient.Execute(stmnt);
             var courses = new List<HeldCourse>();
