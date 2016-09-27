@@ -42,6 +42,14 @@ namespace TrenchrRestService
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
+
+            services.AddAuthorization(options =>
+            {
+                
+                options.AddPolicy("AdminPolicy", policy =>
+                                     policy.RequireClaim("role", "Admin"));
+            });
+
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",
@@ -66,9 +74,9 @@ namespace TrenchrRestService
 
             app.UseJwtBearerAuthentication(new JwtBearerOptions()
             {
-                Authority = "https://localhost:44300",
+                Authority = "http://localhost:9300",
                 RequireHttpsMetadata = false,
-                Audience = "http://localhost:44300/resources",
+                Audience = "http://localhost:9300/resources",
                 AutomaticAuthenticate = true
             });
 

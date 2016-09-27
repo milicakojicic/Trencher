@@ -17,10 +17,11 @@
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0",
-    "IdentityServer4": "1.0.0-rc1-update2"
-    //"IdentityServer3": "2.5.0",
-    //"IdentityServer3.Integration.AspNetCore": "1.0.0",
-    //"AspNet.Hosting.Katana.Extensions": "1.0.0-alpha3-final" 
+ //   "IdentityServer4": "1.0.0-rc1-update2"
+    "IdentityServer3": "2.5.0",
+    "IdentityServer3.Integration.AspNetCore": "1.0.0",
+    "AspNet.Hosting.Katana.Extensions": "1.0.0-alpha3-final",
+    "Neo4j.Driver": "1.0.2" 
   },
 
   "tools": {

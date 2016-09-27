@@ -13,7 +13,7 @@ using TrenchrRestService.Models;
 
 namespace TrenchrRestService.Controllers
 {
-    //[Authorize]
+    [Authorize(Roles = "Admin")]
     public class UserController : ApiController
     {
         //uzimanje podataka o svim studenata

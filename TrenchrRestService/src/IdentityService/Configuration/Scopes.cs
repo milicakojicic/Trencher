@@ -1,4 +1,4 @@
-using IdentityServer4.Models;
+using IdentityServer3.Core.Models;
 using System.Collections.Generic;
 
 namespace IdentityService.Configuration
@@ -12,6 +12,7 @@ namespace IdentityService.Configuration
                 // standard OpenID Connect scopes
                 StandardScopes.OpenId,
                 StandardScopes.ProfileAlwaysInclude,
+                StandardScopes.OfflineAccess,
                 StandardScopes.EmailAlwaysInclude,
 
                 // API - access token will 

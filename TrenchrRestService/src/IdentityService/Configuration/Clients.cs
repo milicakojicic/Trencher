@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Models;
+﻿
+using IdentityServer3.Core.Models;
 using System.Collections.Generic;
 
 namespace IdentityService.Configuration
@@ -19,7 +20,7 @@ namespace IdentityService.Configuration
                     },
 
                     // server to server communication
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    Flow = Flows.ClientCredentials,
 
                     // only allowed to access api1
                     AllowedScopes = new List<string>
@@ -30,32 +31,29 @@ namespace IdentityService.Configuration
 
                 new Client
                 {
-                    Enabled = true,
-                    ClientName = "JS Client",
                     ClientId = "js",
-                    AllowedGrantTypes = GrantTypes.Implicit,
+                    ClientName = "JavaScript Client",
+                    Flow = Flows.Implicit,
+                    AllowAccessTokensViaBrowser = true,
 
                     RedirectUris = new List<string>
                     {
-                        "http://localhost:56668/popup.html",
-                        "http://localhost:56668/silent-renew.html"
+                        "http://localhost:5003/callback.html"
                     },
-
                     PostLogoutRedirectUris = new List<string>
                     {
-                        "http://localhost:56668/index.html"
+                        "http://localhost:5003/index.html"
                     },
-
                     AllowedCorsOrigins = new List<string>
                     {
-                        "http://localhost:56668"
+                        "http://localhost:5003"
                     },
 
-                    //AllowAccessToAllScopes = true,
-                    AccessTokenLifetime = 60,
                     AllowedScopes = new List<string>
                     {
-                        "openid", "profile", "email", "api1"
+                        StandardScopes.OpenId.Name,
+                        StandardScopes.Profile.Name,
+                        "api1"
                     }
                 }
             };

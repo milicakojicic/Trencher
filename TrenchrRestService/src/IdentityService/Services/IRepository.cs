@@ -10,7 +10,6 @@ namespace IdentityService.Services
     {
         Neo4jDbUser GetUserByUsername(string username);
         Neo4jDbUser GetUserById(long id);
-        bool ValidatePassword(string username, string plainTextPassword);
-        Neo4jDbClient GetClient(string clientId);
+        //bool ValidatePassword(string username, string plainTextPassword);
     }
 }
