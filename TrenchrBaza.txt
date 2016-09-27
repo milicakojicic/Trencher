@@ -22,7 +22,7 @@ create (msnr:kurs {name:"Metodologija strucnog i naucnog rada", espb: 4, opis: "
 create (kiaa2:kurs {name:"Konstrukcija i analiza algoritama 2", espb: 8, opis: "Opis kursa"})
 create (niz:kurs {name:"Naucno izracunavanje", espb: 8, opis: "Opis kursa"})
 create (bioinf:kurs {name:"Bioinformatika", espb: 8, opis: "Opis kursa"})
-
+create (rs2:kurs {name:"Razvoj softvera 2", espb: 8, opis: "Opis kursa"})
 
 // Smer -> Kurs
 create (matfI)-[:sadrzi_kurs]->(mr)
@@ -34,7 +34,7 @@ create (matfI)-[:sadrzi_kurs]->(msnr)
 create (matfI)-[:sadrzi_kurs]->(kiaa2)
 create (matfI)-[:sadrzi_kurs]->(niz)
 create (matfI)-[:sadrzi_kurs]->(bioinf)
-
+create (matfI)-[:sadrzi_kurs]->(rs2)
 
 // Odrzani kursevi
 create (mr16:odrzan_kurs {name:"Mrezno racunarstvo", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
@@ -45,7 +45,7 @@ create (ip16:odrzan_kurs {name:"Istrazivanje podataka", espb: 8, tip: "obavezni"
 create (msnr16:odrzan_kurs {name:"Metodologija strucnog i naucnog rada", espb: 4, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
 create (kiaa2_16:odrzan_kurs {name:"Konstrukcija i analiza algoritama 2", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
 create (bioinf_16:odrzan_kurs {name:"Bioinformatika", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
-
+create (rs2_16:odrzan_kurs {name:"Razvoj softvera 2", espb: 8, tip: "obavezni", nivo: "master studije", godina: "2015/2016"})
 
 // Kursevi -> Odrzani kursevi
 create (mr)-[:odrzan]->(mr16)
@@ -57,16 +57,17 @@ create (msnr)-[:odrzan]->(msnr16)
 create (kiaa2)-[:odrzan]->(kiaa2_16)
 create (niz)-[:odrzan]->(niz16)
 create (bioinf)-[:odrzan]->(bioinf_16)
+create (rs2)-[:odrzan]->(rs2_16)
 
+// UBACI SLIKE
 // Studenti
-create (MilicaKojicic:student {name: "Milica Kojicic", ime:"Milica", prezime: "Kojicic", generacija: 2012, indeks: "1066/2015", email: "bla@gmail.com",putanja:"images/milica.jpg"})
-create (LjubicaPeleksic:student {name: "Ljubica Peleksic", ime:"Ljubica", prezime: "Peleksic",generacija: 2012, indeks: "1070/2015", email: "bla1@gmail.com",putanja:"images/ljubica.jpg"})
-create (NemanjaSubotic:student {name: "Nemanja Subotic", ime:"Nemanja", prezime: "Subotic", generacija: 2012 , indeks: "1071/2015", email: "bla2@gmail.com",putanja:""})
-create (PetarVukmirovic:student {name: "Petar Vukmirovic", ime:"Petar", prezime: "Vukmirovic", generacija: 2012, indeks: "1076/2015", email: "bla3@gmail.com",putanja:""})
-create (IgorRodic:student {name: "Igor Rodic", ime:"Igor", prezime: "Rodic", generacija: 2012, indeks: "1075/2015", email: "bla5@gmail.com",putanja:""})
+create (LjubicaPeleksic:student {name: "Ljubica Peleksic", ime:"Ljubica", prezime: "Peleksic",generacija: 2012, indeks: "1070/2015", email: "bla1@gmail.com", putanja:"images/ljubica.jpg", _password:"ljubica", _claimRoles:"[Student]"})
+create (MilicaKojicic:student {name: "Milica Kojicic", ime:"Milica", prezime: "Kojicic", generacija: 2012, indeks: "1066/2015", email: "bla@gmail.com", putanja:"images/milica.jpg", _password:"", _claimRoles:"[Student]"})
+create (NemanjaSubotic:student {name: "Nemanja Subotic", ime:"Nemanja", prezime: "Subotic", generacija: 2012 , indeks: "1071/2015", email: "bla2@gmail.com", putanja:"", _password:"", _claimRoles:"[Student]"})
+create (PetarVukmirovic:student {name: "Petar Vukmirovic", ime:"Petar", prezime: "Vukmirovic", generacija: 2012, indeks: "1076/2015", email: "bla3@gmail.com", putanja:"", _password:"", _claimRoles:"[Student]"})
+create (IgorRodic:student {name: "Igor Rodic", ime:"Igor", prezime: "Rodic", generacija: 2012, indeks: "1075/2015", email: "bla5@gmail.com", putanja:"", _password:"", _claimRoles:"[Student]"})
 
 // Studenti->Fakultet
-
 create (MilicaKojicic)-[:na_fakultetu]->(matf)
 create (LjubicaPeleksic)-[:na_fakultetu]->(matf)
 create (NemanjaSubotic)-[:na_fakultetu]->(matf)
@@ -133,6 +134,7 @@ create (NenadMitic:profesor {name: "Nenad Mitic", ime:"Nenad", prezime: "Mitic",
 create (MilenaVujosevicJanicic:profesor {name: "Milena Vujosevic Janicic", ime:"Milena", prezime: "Vujosevic Janicic",putanja:"", email: "bla@gmail.com"})
 create (MiodragZivkovic:profesor {name: "Miodrag Zivkovic", ime:"Miodrag", prezime: "Zivkovic",putanja:"", email: "bla@gmail.com"})
 create (MladenNikolic:profesor {name: "Mladen Nikolic", ime:"Mladen", prezime: "Nikolic",putanja:"", email: "bla@gmail.com"})
+create (VladimirFilipovic:profesor {name: "Vladimir Filipovic", ime:"Vladimir", prezime: "Filipovic", putanja:"", email: "vladof@gmail.com"})
 
 // Profesor -> Predmet
 create (SasaMalkov)-[:drzi]->(is16)
@@ -143,6 +145,7 @@ create (NenadMitic)-[:drzi]->(ip16)
 create (MilenaVujosevicJanicic)-[:drzi]->(msnr16)
 create (MiodragZivkovic)-[:drzi]->(kiaa2_16)
 create (MladenNikolic)-[:drzi]->(niz16)
+create (VladimirFilipovic)-[:drzi]->(rs2_16)
 
 //Profesor -> Fakultet
 create (SasaMalkov)-[:na_fakultetu]->(matf)
@@ -152,6 +155,7 @@ create (NenadMitic)-[:na_fakultetu]->(matf)
 create (MilenaVujosevicJanicic)-[:na_fakultetu]->(matf)
 create (MiodragZivkovic)-[:na_fakultetu]->(matf)
 create (MladenNikolic)-[:na_fakultetu]->(matf)
+create (VladimirFilipovic)-[:na_fakultetu]->(matf)
 
 // Asistenti
 create (StasaVujicicStankovic:asistent {name: "Stasa Vujicic Stankovic", ime:"Stasa", prezime: "Vujicic Stankovic ", putanja:"", email: "bla@gmail.com"})
@@ -160,7 +164,7 @@ create (StefanMiskovic:asistent {name: "Stefan Miskovic", ime:"Stefan", prezime:
 create (MirjanaMaljkovic:asistent {name: "Mirjana Maljkovic", ime:"Mirjana", prezime: "Maljkovic", putanja:"", email: "bla@gmail.com"})
 create (DanijelaPetrovic:asistent {name: "Danijela Petrovic", ime:"Danijela", prezime: "Petrovic", putanja:"", email: "bla@gmail.com"})
 
-// Profesor -> Predmet
+// Asistent -> Predmet
 create (StasaVujicicStankovic)-[:drzi_vezbe]->(is16)
 create (MirjanaMaljkovic)-[:drzi_vezbe]->(pbp16)
 create (MilanBankovic)-[:drzi_vezbe]->(ar16)
@@ -169,7 +173,7 @@ create (MirjanaMaljkovic)-[:drzi_vezbe]->(ip16)
 create (DanijelaPetrovic)-[:drzi_vezbe]->(kiaa2_16)
 create (StefanMiskovic)-[:drzi_vezbe]->(niz16)
 
-//Profesor -> Fakultet
+// Profesor -> Fakultet
 create (StasaVujicicStankovic)-[:na_fakultetu]->(matf)
 create (MirjanaMaljkovic)-[:na_fakultetu]->(matf)
 create (StefanMiskovic)-[:na_fakultetu]->(matf)
