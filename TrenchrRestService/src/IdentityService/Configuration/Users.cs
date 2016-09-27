@@ -20,7 +20,7 @@ namespace IdentityService.Configuration
             {
                 var user = new InMemoryUser
                 {
-                    Subject = (string)row["subject"],
+                    Subject = ((long)row["subject"]).ToString(),
                     Username = (string)row["email"],
                     Password = (string)row["password"]
                 };
@@ -34,14 +34,16 @@ namespace IdentityService.Configuration
                 };
 
 
-                var roles = (string[])row["roles"];
-                foreach (string role in roles)
+                string temp = row["roles"].ToString();
+                string[] roles = temp.Substring(1, temp.Length-2).Split(',');
+                foreach (var role in roles)
                     claims.Add(new Claim(Constants.ClaimTypes.Role, role));
 
                 user.Claims = claims;
                 users.Add(user);
 
             }
+
             return users;
         }
     }
