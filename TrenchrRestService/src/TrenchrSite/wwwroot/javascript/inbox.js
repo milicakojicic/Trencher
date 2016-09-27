@@ -1,8 +1,9 @@
 var focus = 0,
     blur = 0;
-var id_konverzacije, id_korisnika = 600;
+var id_konverzacije
+var id_korisnika = 600;
 var id_grupe = 0;
-var notifikacija = false;
+var notifikacija = null;
 
 var HubProxy;
 
@@ -53,7 +54,7 @@ function osveziPoruke() {
 function procitaj() {
     if (notifikacija == true)
         window.location = '/inbox.html?konv=' + id_konverzacije;
-    else
+    else if (notifikacija == false)
         window.location = '/group.html?grp=' + id_grupe;
 }
 
@@ -63,15 +64,14 @@ $(document).ready(function() {
         //cuvanje nove poruke u bazi
         $.ajax({
             'type': 'post',
-            'async': false,
             'url': 'http://localhost:12345/konverzacije/' + id_konverzacije + '/poruke',
+            'contentType': 'application/json; charset=utf-8',
             'data': JSON.stringify({
                 "UserID": id_korisnika,
                 "Text": document.getElementById("poruka").value,
                 "Time": new Date().toLocaleString(),
                 "ConversationID": id_konverzacije
             }),
-            'contentType': "application/json; charset=utf-8",
             success: function () {
                 osveziPoruke();
             }
@@ -103,25 +103,25 @@ $(document).ready(function() {
 
     //signali koje klijent prima
     HubProxy.on('newMessage', function (tekst, posiljalac_id, posiljalacIme, id_konv) {
-        //if (posiljalac_id != id_korisnika) {
+        if (posiljalac_id != id_korisnika) {
             document.getElementById("notifikacijaHeader").innerHTML = "NOVA PORUKA";
             document.getElementById("notifikacijaPosiljalac").innerHTML = "<span style='color: teal;'>Posiljalac: </span>" + posiljalacIme;
             document.getElementById("notifikacijaTekst").innerHTML = "<span style='color: teal;'>Poruka: </span>" + tekst;
             id_konverzacije = id_konv;
             document.getElementById("notifikacija").style = "visibility: visible;";
             notifikacija = true;
-        //}
+        }
     });
 
     HubProxy.on('newPost', function (tipPosta, tekst, id_kursa, posiljalac_id, posiljalacIme) {
-        //if (posiljalac_id != id_korisnika) {
-        document.getElementById("notifikacijaHeader").innerHTML = tipPosta.toUpperCase();
-        document.getElementById("notifikacijaPosiljalac").innerHTML = "<span style='color: teal;'>Posiljalac: </span>" + posiljalacIme;
-        document.getElementById("notifikacijaTekst").innerHTML = "<span style='color: teal;'>Poruka: </span>" + tekst;
-        id_grupe = id_kursa;
-        document.getElementById("notifikacija").style = "visibility: visible;";
-        notifikacija = false;
-        //}
+        if (posiljalac_id != id_korisnika) {
+            document.getElementById("notifikacijaHeader").innerHTML = tipPosta.toUpperCase();
+            document.getElementById("notifikacijaPosiljalac").innerHTML = "<span style='color: teal;'>Posiljalac: </span>" + posiljalacIme;
+            document.getElementById("notifikacijaTekst").innerHTML = "<span style='color: teal;'>Poruka: </span>" + tekst;
+            id_grupe = id_kursa;
+            document.getElementById("notifikacija").style = "visibility: visible;";
+            notifikacija = false;
+        }
     });
 
     //konektovanje na server
@@ -272,7 +272,7 @@ $(document).ready(function() {
     poruka.addEventListener("keydown", function (e) {
         if (e.keyCode === 13 && !e.shiftKey) {
             if (!e.shiftKey) {
-                posalji(e);
+                posalji();
             }
         }
     });

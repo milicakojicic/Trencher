@@ -19,25 +19,25 @@ $(document).ready(function() {
 
     //signali koje klijent prima
     HubProxy.on('newMessage', function (tekst, posiljalac_id, posiljalacIme, id_konv) {
-        //if (posiljalac_id != id_korisnika) {
-        document.getElementById("notifikacijaHeader").innerHTML = "NOVA PORUKA";
-        document.getElementById("notifikacijaPosiljalac").innerHTML = "<span style='color: teal;'>Posiljalac: </span>" + posiljalacIme;
-        document.getElementById("notifikacijaTekst").innerHTML = "<span style='color: teal;'>Poruka: </span>" + tekst;
-        id_konverzacije = id_konv;
-        document.getElementById("notifikacija").style = "visibility: visible;";
-        notifikacija = true;
-        //}
+        if (posiljalac_id != id_korisnika) {
+            document.getElementById("notifikacijaHeader").innerHTML = "NOVA PORUKA";
+            document.getElementById("notifikacijaPosiljalac").innerHTML = "<span style='color: teal;'>Posiljalac: </span>" + posiljalacIme;
+            document.getElementById("notifikacijaTekst").innerHTML = "<span style='color: teal;'>Poruka: </span>" + tekst;
+            id_konverzacije = id_konv;
+            document.getElementById("notifikacija").style = "visibility: visible;";
+            notifikacija = true;
+        }
     });
 
     HubProxy.on('newPost', function (tipPosta, tekst, id_kursa, posiljalac_id, posiljalacIme) {
-        //if (posiljalac_id != id_korisnika) {
-        document.getElementById("notifikacijaHeader").innerHTML = tipPosta.toUpperCase();
-        document.getElementById("notifikacijaPosiljalac").innerHTML = "<span style='color: teal;'>Posiljalac: </span>" + posiljalacIme;
-        document.getElementById("notifikacijaTekst").innerHTML = "<span style='color: teal;'>Poruka: </span>" + tekst;
-        id_grupe = id_kursa;
-        document.getElementById("notifikacija").style = "visibility: visible;";
-        notifikacija = false;
-        //}
+        if (posiljalac_id != id_korisnika) {
+            document.getElementById("notifikacijaHeader").innerHTML = tipPosta.toUpperCase();
+            document.getElementById("notifikacijaPosiljalac").innerHTML = "<span style='color: teal;'>Posiljalac: </span>" + posiljalacIme;
+            document.getElementById("notifikacijaTekst").innerHTML = "<span style='color: teal;'>Poruka: </span>" + tekst;
+            id_grupe = id_kursa;
+            document.getElementById("notifikacija").style = "visibility: visible;";
+            notifikacija = false;
+        }
     });
 
     //konektovanje na server
@@ -251,7 +251,6 @@ $(document).ready(function() {
                     success: function (komentarVrednost) {
 
                         for (var i = 0; i < komentarVrednost.length; i++) {
-                            console.log(komentarVrednost[i].Text);
 
                             var koment = i;
 
@@ -300,8 +299,6 @@ $(document).ready(function() {
                             for (var l = 0; l < glasanje.length; l++) {
 
                                 var id_checkbox = glasanje[l].ID + "_" + id_posta;
-                                console.log("Id opcije:" + id_checkbox);
-                                console.log(id_posta);
 
                                 var brGlasova = "brGlasova" + glasanje[l].ID;
 

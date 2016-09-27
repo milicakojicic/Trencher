@@ -20,8 +20,8 @@
     <script src="javascript/jquery.signalR-2.2.1.js"></script>
     <script src="http://localhost:12345/signalr/hubs"></script>
 
-    <script src="javascript/material.js"></script>
     <script src="javascript/inbox.js"></script>
+    <script src="javascript/material.js"></script>
 
     <link href="select2.min.css" rel="stylesheet" />
     <script src="javascript/select2.min.js"></script>
@@ -112,8 +112,8 @@
                                 <textarea class="mdl-textfield__input center" type="text" rows="3" id="poruka"></textarea>
                                 <label class="mdl-textfield__label" for="poruka">Napisi poruku...</label>
                             </div>
-                            <button style="width: 100px" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent 
-                                    postButton" id="posaljiPoruku" onclick="posaljiPoruku()"> Pošalji </button>
+                            <input type="button" style="width: 100px" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent 
+                                    postButton" id="posaljiPoruku" onclick="posaljiPoruku" value="Pošalji" />
                         </form>
                     </div>
                 </div>
@@ -127,7 +127,7 @@
                     <span id="notifikacijaHeader"> test </span> <br />
                     <span id="notifikacijaPosiljalac"> test </span> <br />
                     <span id="notifikacijaTekst"> test </span> <br />
-                    <button id="procitaj" onclick="procitaj()"> Procitaj </button>
+                    <button onclick="procitaj()"> Procitaj </button>
                 </div>
                 <div class="mdl-cell mdl-cell--2-col"></div>
             </div>
@@ -135,7 +135,7 @@
 
         <div class="mdl-layout__obfuscator"></div>
     </div>
-    <script src="javascript/inbox.js"></script>
+</div>
 </body>
 
 <script>

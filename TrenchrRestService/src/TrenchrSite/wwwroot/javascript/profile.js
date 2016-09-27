@@ -19,25 +19,25 @@ $(document).ready(function(){
 
     //signali koje klijent prima
     HubProxy.on('newMessage', function (tekst, posiljalac_id, posiljalacIme, id_konv) {
-        //if (posiljalac_id != id_korisnika) {
+        if (posiljalac_id != id_korisnika) {
             document.getElementById("notifikacijaHeader").innerHTML = "NOVA PORUKA";
             document.getElementById("notifikacijaPosiljalac").innerHTML = "<span style='color: teal;'>Posiljalac: </span>" + posiljalacIme;
             document.getElementById("notifikacijaTekst").innerHTML = "<span style='color: teal;'>Poruka: </span>" + tekst;
             id_konverzacije = id_konv;
             document.getElementById("notifikacija").style = "visibility: visible;";
             notifikacija = true;
-        //}
+        }
     });
 
     HubProxy.on('newPost', function (tipPosta, tekst, id_kursa, posiljalac_id, posiljalacIme) {
-        //if (posiljalac_id != id_korisnika) {
+        if (posiljalac_id != id_korisnika) {
             document.getElementById("notifikacijaHeader").innerHTML = tipPosta.toUpperCase();
             document.getElementById("notifikacijaPosiljalac").innerHTML = "<span style='color: teal;'>Posiljalac: </span>" + posiljalacIme;
             document.getElementById("notifikacijaTekst").innerHTML = "<span style='color: teal;'>Poruka: </span>" + tekst;
             id_grupe = id_kursa;
             document.getElementById("notifikacija").style = "visibility: visible;";
             notifikacija = false;
-        //}
+        }
     });
 
     //konektovanje na server

@@ -24,25 +24,25 @@ $(document).ready(function(){
 
     //signali koje klijent prima
     HubProxy.on('newMessage', function (tekst, posiljalac_id, posiljalacIme, id_konv) {
-        //if (posiljalac_id != id_korisnika) {
+        if (posiljalac_id != id_korisnika) {
             document.getElementById("notifikacijaHeader").innerHTML = "NOVA PORUKA";
             document.getElementById("notifikacijaPosiljalac").innerHTML = "<span style='color: teal;'>Posiljalac: </span>" + posiljalacIme;
             document.getElementById("notifikacijaTekst").innerHTML = "<span style='color: teal;'>Poruka: </span>" + tekst;
             id_konverzacije = id_konv;
             document.getElementById("notifikacija").style = "visibility: visible;";
             notifikacija = true;
-        //}
+        }
     });
 
     HubProxy.on('newPost', function (tipPosta, tekst, id_kursa, posiljalac_id, posiljalacIme) {
-        //if (posiljalac_id != id_korisnika) {
+        if (posiljalac_id != id_korisnika) {
         document.getElementById("notifikacijaHeader").innerHTML = tipPosta.toUpperCase();
         document.getElementById("notifikacijaPosiljalac").innerHTML = "<span style='color: teal;'>Posiljalac: </span>" + posiljalacIme;
         document.getElementById("notifikacijaTekst").innerHTML = "<span style='color: teal;'>Poruka: </span>" + tekst;
         id_grupe = id_kursa;
         document.getElementById("notifikacija").style = "visibility: visible;";
         notifikacija = false;
-        //}
+        }
     });
 
     //konektovanje na server
@@ -140,7 +140,7 @@ $(document).ready(function(){
             '<span>' + kurseviOsobe[i].Name + '  ' + kurseviOsobe[i].Year + '</span> '+
             '</span> '+
             '<input type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect '+
-            'mdl-button--accent join pridruzi" value="Pridružen" id="' + kurseviOsobe[i].ID + '"> '+
+            'mdl-button--accent join pridruzi" value="Pridružen" id="' + kurseviOsobe[i].ID + 'g"> ' +
             '</div> ';
 
     }
@@ -161,7 +161,7 @@ $(document).ready(function(){
                 '<span>' + kurseviSvi[i].Name + '  ' + kurseviSvi[i].Year + '</span> '+
                 '</span> '+
                 '<input type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect '+
-                'mdl-button--accent join pridruzi" value="Pridruži se" id="' + kurseviSvi[i].ID + '"> '+
+                'mdl-button--accent join pridruzi" value="Pridruži se" id="' + kurseviSvi[i].ID + 'g"> ' +
                 '</div> ';
         }
     }
@@ -169,10 +169,11 @@ $(document).ready(function(){
     $('.pridruzi').click(function() {
 
         idGrupe = this.id;
-        console.log(idGrupe + " " + id_korisnika);
+        idGrupe = idGrupe.substring(0, idGrupe.length-1)
+        console.log(idGrupe + " " + document.getElementById(idGrupe + 'g').value);
 
         //ako korisnik nije trazio da se pridruzi grupi, zahtev se salje
-        if(document.getElementById(idGrupe).value == "Pridruzi se"){
+        if (document.getElementById(idGrupe + 'g').value == "Pridruži se") {
             $.ajax({
                 type: 'post',
                 url: 'http://localhost:12345/kursevi/prijava',
@@ -182,7 +183,7 @@ $(document).ready(function(){
                 }),
                 contentType: "application/json; charset=utf-8"
             });
-            document.getElementById(idGrupe).value = "Pridružen";
+            document.getElementById(idGrupe + 'g').value = "Pridružen";
         }
         //ako korisnik zeli da se odjavi iz grupe
         else {
@@ -195,7 +196,7 @@ $(document).ready(function(){
                 }),
                 contentType: "application/json; charset=utf-8"
             });
-            document.getElementById(idGrupe).value = "Pridruži se";
+            document.getElementById(idGrupe + 'g').value = "Pridruži se";
         }
     });
 });
