@@ -1,8 +1,11 @@
 //id studenta koji treba da se prikaze
-var id_korisnika = 600;
+var id_korisnika = logedInUserID;
 var id_konverzacije = 0;
 var id_grupe = 0;
 var notifikacija = false;
+
+//header za autorizaciju
+var headers = {};
 
 function procitaj() {
     if (notifikacija == true)
@@ -12,6 +15,10 @@ function procitaj() {
 }
 
 $(document).ready(function(){
+
+    if (user && user.access_token) {
+        headers['Authorization'] = 'Bearer ' + user.access_token;
+    }
 
     //pravljenje konekcije na server
     var connection = $.hubConnection('http://localhost:12345/signalr', { useDefaultPath: false });
@@ -48,7 +55,8 @@ $(document).ready(function(){
     //svi kursevi studenta kojima on pripada, da bi se prikazao search
     $.ajax({
         url: 'http://localhost:12345/studenti/' + id_korisnika + '/kursevi',
-        type:'GET',
+        type: 'GET',
+        headers: headers,
         dataType: 'json',
         success: function( json ) {
             $.each(json, function(i, value) {
@@ -70,8 +78,6 @@ $(document).ready(function(){
 
                             if (attr.value == pretraga_grupa.value)
                                 id_grupe = attr.id;
-
-                            console.log(id_grupe);
                         }
 
                         pretraga_grupa.value = '';
@@ -162,6 +168,7 @@ $(document).ready(function(){
         $.ajax({
             type: 'PUT',
             url: 'http://localhost:12345/korisnici/' + id_korisnika,
+            headers: headers,
             data: JSON.stringify( {
                 "ime" : name,
                 "prezime" : surname,

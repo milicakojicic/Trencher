@@ -4,6 +4,9 @@ var id_konverzacije = 0;
 var id_grupe = 0;
 var notifikacija = false;
 
+//header za autorizaciju
+var headers = {};
+
 function procitaj() {
     if (notifikacija == true)
         window.location = '/inbox.html?konv=' + id_konverzacije;
@@ -13,7 +16,6 @@ function procitaj() {
 
 $(document).ready(function() {
 
-    var headers = {};
     if (user && user.access_token) {
         headers['Authorization'] = 'Bearer ' + user.access_token;
     }
@@ -49,7 +51,6 @@ $(document).ready(function() {
     connection.start({ jsonp: true })
         .done(function () { console.log("SignalR connected"); })
         .fail(function () { console.log("SignalR connection failed"); });
-
 
     //GET za informacije o korisniku
     $.get("http://localhost:12345/studenti/" + id_korisnika, function (data) {
@@ -96,8 +97,6 @@ $(document).ready(function() {
 
                             if (attr.value == pretraga_grupa.value)
                                 id_grupe = attr.id;
-
-                            console.log(id_grupe);
                         }
 
                         pretraga_grupa.value = '';
@@ -179,7 +178,6 @@ $(document).ready(function() {
                 });
 
                 $('body').on('input onpropertychange', '#' + komentar_tekst, function () {
-                    console.log("mic");
                     //document.getElementById(komentar_tekst).setAttribute("placeholder", "");
                 });
 
@@ -193,8 +191,6 @@ $(document).ready(function() {
                             var vrednost = $(this).val();
 
                             var promenljiva_za_objavu_komentara = "komentari_" + res[1];
-                            console.log(promenljiva_za_objavu_komentara);
-                            console.log(vrednost);
                             var seconds = new Date().getTime() / 1000;
 
                             var id_unetog_komentara = $.parseJSON(
@@ -213,9 +209,6 @@ $(document).ready(function() {
                                     }
                                 }).responseText);
 
-                            //id unetog komentara
-                            console.log("Uneo sam post:" + id_unetog_komentara);
-
                             //ajax poziv za bas taj komentar koji je unet
                             $.ajax({
                                 url: 'http://localhost:12345/postovi/' + res[1] + '/komentari/' + id_unetog_komentara,
@@ -223,9 +216,6 @@ $(document).ready(function() {
                                 dataType: 'json',
                                 async: false,
                                 success: function (komentarVrednost) {
-
-                                    console.log("U ajaxu bre");
-                                    console.log(komentarVrednost);
 
                                     if (komentarVrednost[0].PicturePath == "") {
                                         document.getElementById(promenljiva_za_objavu_komentara).innerHTML += '<div><span>' +
@@ -255,6 +245,7 @@ $(document).ready(function() {
                     url: 'http://localhost:12345/postovi/' + id_posta + '/komentari',
                     type: 'GET',
                     dataType: 'json',
+                    headers: headers,
                     async: false,
                     success: function (komentarVrednost) {
 
@@ -300,6 +291,7 @@ $(document).ready(function() {
                     $.ajax({
                         'type': 'get',
                         'url': 'http://localhost:12345/postovi/' + id_posta + '/opcije',
+                        'headers': headers,
                         'async': false,
                         'success': function (data) {
                             var glasanje = JSON.parse(data);
@@ -345,20 +337,15 @@ $(document).ready(function() {
 
 function povecajBrojGlasova(id) {
 
-    //vraca bas taj id opcije
-    console.log("U fji: " + id);
-
     //id_opcije razmak id_posta
     var res = id.split("_");
-
-    console.log("Id opcije:" + res[0]);
-    console.log("Id posta: " + res[1]);
 
     if (document.getElementById(id).checked == true) {
         //ajax za update
         $.ajax({
             type: 'PUT',
             async: false,
+            headers: headers,
             url: 'http://localhost:12345/opcije/' + res[0] + '/*',
             contentType: "application/json; charset=utf-8"
         });
@@ -368,6 +355,7 @@ function povecajBrojGlasova(id) {
         $.ajax({
             type: 'PUT',
             async: false,
+            headers: headers,
             url: 'http://localhost:12345/opcije/' + res[0] + '/-',
             contentType: "application/json; charset=utf-8"
         });
@@ -375,11 +363,11 @@ function povecajBrojGlasova(id) {
 
     $.ajax({
         url:'http://localhost:12345/postovi/' + res[1] + '/opcije/' + res[0],
-        type:'GET',
+        type: 'GET',
+        headers: headers,
         async: false,
         dataType: 'json',
         success: function( data ) {
-            console.log(data);
             document.getElementById("brGlasova" + res[0]).innerHTML = data[0].VotesCount;
         }
     });

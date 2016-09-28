@@ -35,6 +35,9 @@ namespace TrenchrRestService.Controllers
         [HttpGet]
         public IActionResult GetStudent(long id)
         {
+            if (!AuthorizationValidator.isAuthorized(Context, id))
+                return new UnauthorizedResult();
+
             var stmnt = $"MATCH (s:student)-[:na_fakultetu]-(fakultet),(s:student)-[:na_smeru]-(smer) where id(s) = {id} return id(s) as id, s.ime as ime, s.prezime as prezime, s.generacija as generacija, s.email as email, s.indeks as indeks, s.putanja as slika, fakultet.name as fakultet, fakultet.university as univerzitet, smer.name as smer";
             var resultStudents = Neo4jClient.Execute(stmnt);
             var student = new Student(resultStudents.FirstOrDefault());
@@ -47,6 +50,9 @@ namespace TrenchrRestService.Controllers
         [HttpGet]
         public IActionResult vratiKorisnika(long id)
         {
+            if (!AuthorizationValidator.isAuthorized(Context, id))
+                return new UnauthorizedResult();
+
             var stmnt = $"MATCH (a) where id(a) = {id} return id(a) as id, a.email as email, a.ime as ime, a.prezime as prezime, a.putanja as slika, labels(a) as oznaka";
             var resultUser = Neo4jClient.Execute(stmnt);
             var user = resultUser.FirstOrDefault();
@@ -76,6 +82,9 @@ namespace TrenchrRestService.Controllers
         [HttpPut]
         public IActionResult updatePicture([FromBody] JObject jsonBody, long id)
         {
+            if (!AuthorizationValidator.isAuthorized(Context, id))
+                return new UnauthorizedResult();
+
             dynamic param = jsonBody;
             string putanja = param.picture_path;
             string stmnt = $"MATCH (u) SET u.putanja = {putanja} WHERE id(u) = {id}";
@@ -87,6 +96,9 @@ namespace TrenchrRestService.Controllers
         [HttpPut]
         public IActionResult updateUser([FromBody] JObject jsonBody, long id)
         {
+            if (!AuthorizationValidator.isAuthorized(Context, id))
+                return new UnauthorizedResult();
+
             var stmnt = new StringBuilder($"MATCH (u) WHERE id(u) = {id} SET ");
             var updatedProperties = jsonBody.Properties();
             var property = updatedProperties.First();

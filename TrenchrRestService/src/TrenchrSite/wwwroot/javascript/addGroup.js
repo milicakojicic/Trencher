@@ -260,20 +260,12 @@ function unesi_predmet() {
             document.getElementById("forma").reset();
             return;
         }
-
     }
-
-    console.log(document.getElementById("naziv_predmeta").value);
-    console.log(document.getElementById("nivo").value);
-    console.log(document.getElementById("tip").value);
-    console.log(document.getElementById("skolska_godina").value);
 
     //ajax poziv za unos nove grupe
     //da bismo dobili naziv nove grupe
 
     var res = naziv.split(",");
-    console.log(res[0]);
-    console.log(res[1]);
 
     var id_kursa = res[0];
     var espb = res[1];

@@ -20,6 +20,9 @@ namespace TrenchrRestService.Controllers
         [HttpGet]
         public IActionResult VratiKonverzaciju(long id1, long id2)
         {
+            if (!AuthorizationValidator.isAuthorized(Context, id1))
+                return new UnauthorizedResult();
+
             var stmnt1 = $"match (s1:student)-[:u_konverzaciji]->(k:konverzacija)<-[:u_konverzaciji]-(s2:student) where id(s1) = {id1} and id(s2) = {id2} return id(k) as id, k.ime as name";
             var rezKonverzacije1 = Neo4jClient.Execute(stmnt1);
             IRecord[] konverzacija1 = rezKonverzacije1.ToArray();

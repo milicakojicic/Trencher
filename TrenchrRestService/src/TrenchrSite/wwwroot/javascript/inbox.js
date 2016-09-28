@@ -1,11 +1,14 @@
 var focus = 0,
     blur = 0;
 var id_konverzacije
-var id_korisnika = 600;
+var id_korisnika = logedInUserID;
 var id_grupe = 0;
 var notifikacija = null;
 
 var HubProxy;
+
+//header za autorizaciju
+var headers = {};
 
 function getParameterByName(name) {
     url = window.location.href;
@@ -60,12 +63,17 @@ function procitaj() {
 
 $(document).ready(function() {
 
+    if (user && user.access_token) {
+        headers['Authorization'] = 'Bearer ' + user.access_token;
+    }
+
     $('#posaljiPoruku').click(function () {
         //cuvanje nove poruke u bazi
         $.ajax({
             'type': 'post',
             'url': 'http://localhost:12345/konverzacije/' + id_konverzacije + '/poruke',
             'contentType': 'application/json; charset=utf-8',
+            'headers': headers,
             'data': JSON.stringify({
                 "UserID": id_korisnika,
                 "Text": document.getElementById("poruka").value,
@@ -164,6 +172,7 @@ $(document).ready(function() {
     $.ajax({
         url: 'http://localhost:12345/studenti/' + id_korisnika + '/kursevi',
         type: 'GET',
+        headers: headers,
         dataType: 'json',
         success: function (json) {
             var trazi_grupe = document.getElementById('trazi_grupe');
@@ -187,8 +196,6 @@ $(document).ready(function() {
 
                             if (attr.value == pretraga_grupa.value)
                                 id_grupe = attr.id;
-
-                            console.log(id_grupe);
                         }
 
                         pretraga_grupa.value = '';
@@ -206,6 +213,7 @@ $(document).ready(function() {
     $.ajax({
         url: "http://localhost:12345/studenti",
         type: "GET",
+        headers: headers,
         async: false,
         success: function (data) {
 
@@ -252,6 +260,7 @@ $(document).ready(function() {
         $.ajax({
             url: 'http://localhost:12345/korisnici/' + id_korisnika + '/konverzacije/' + id_korisnika_2,
             type: 'GET',
+            headers: headers,
             dataType: 'json',
             success: function (result) {
                 id_konverzacije = result;

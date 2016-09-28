@@ -19,20 +19,19 @@
       <script src="javascript/oidc-client.js"></script>
       <script src="javascript/appAuth.js"></script>
 
-
       <script src = "javascript/jquery.js"></script>
       <script src = "javascript/material.js"></script>
 
       <style>
-    #view-source {
-      position: fixed;
-      display: block;
-      right: 0;
-      bottom: 0;
-      margin-right: 40px;
-      margin-bottom: 40px;
-      z-index: 900;
-    }
+        #view-source {
+          position: fixed;
+          display: block;
+          right: 0;
+          bottom: 0;
+          margin-right: 40px;
+          margin-bottom: 40px;
+          z-index: 900;
+        }
     </style>
   </head>
 
@@ -73,21 +72,19 @@
               </div>
             </div>
 
-            <>
             <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
 
                   <div>
                     <div  class="content-grid mdl-grid" style="margin-left:125px;">
-                      <div class="mdl-cell mdl-cell--6-col">
+                      <!--<div class="mdl-cell mdl-cell--6-col">
                         <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white show-modal-reg" id="registrovanje">Registrujte se</button>
-                      </div>
+                      </div>-->
+                        <div class="mdl-cell mdl-cell--6-col">
+                        </div>
                       <div class="mdl-cell mdl-cell--6-col">
-                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white close show-modal-log" id="logovanje">Ulogujte se</button>
+                        <button type="button" onclick="login()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white close show-modal-log" id="logovanje">Ulogujte se</button>
                       </div>
                     </div>
-
-
-                      <button onclick="login()">LOGIN</button>
 
                   <dialog class="mdl-dialog">
                    <div class="mdl-dialog__content">

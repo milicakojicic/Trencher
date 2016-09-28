@@ -255,6 +255,9 @@ namespace TrenchrRestService.Controllers
 
             //sad nam treba da su ti postovi bas u grupama koje korisnik prati
             //trebaju nam sve grupe korisnika 
+            if (!AuthorizationValidator.isAuthorized(Context, id))
+                return new UnauthorizedResult();
+
             var stmnt1 = $"MATCH (s:student)-[:pohadja]-(o:odrzan_kurs) where id(s) = {id} return id(o) as id, o.name as name, o.espb as espb, o.tip as tip, o.nivo as nivo, o.godina as godina";
             var resultCourses = Neo4jClient.Execute(stmnt1);
             var courses = new List<HeldCourse>();

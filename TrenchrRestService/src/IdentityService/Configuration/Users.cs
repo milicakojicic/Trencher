@@ -33,7 +33,6 @@ namespace IdentityService.Configuration
                     new Claim(Constants.ClaimTypes.Email, (string)row["email"])
                 };
 
-
                 string temp = row["roles"].ToString();
                 string[] roles = temp.Substring(1, temp.Length-2).Split(',');
                 foreach (var role in roles)
@@ -41,7 +40,6 @@ namespace IdentityService.Configuration
 
                 user.Claims = claims;
                 users.Add(user);
-
             }
 
             return users;

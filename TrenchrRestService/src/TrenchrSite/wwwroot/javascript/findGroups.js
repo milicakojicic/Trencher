@@ -1,5 +1,5 @@
 //testirati na predmetu Automatsko rezonovanje
-var id_korisnika = 600;
+var id_korisnika = logedInUserID;
 
 var kurseviOsobe = "";
 var kurseviSvi = "";
@@ -9,6 +9,9 @@ var id_konverzacije = 0;
 var id_grupe = 0;
 var notifikacija = false;
 
+//header za autorizaciju
+var headers = {};
+
 function procitaj() {
     if (notifikacija == true)
         window.location = '/inbox.html?konv=' + id_konverzacije;
@@ -17,6 +20,10 @@ function procitaj() {
 }
 
 $(document).ready(function(){
+
+    if (user && user.access_token) {
+        headers['Authorization'] = 'Bearer ' + user.access_token;
+    }
 
     //pravljenje konekcije na server
     var connection = $.hubConnection('http://localhost:12345/signalr', { useDefaultPath: false });
@@ -75,6 +82,7 @@ $(document).ready(function(){
         $.ajax({
             'async': false,
             'type': "GET",
+            'headers': headers,
             'dataType': 'json',
             'global': false,
             'url': "http://localhost:12345/kursevi",
@@ -90,6 +98,7 @@ $(document).ready(function(){
         $.ajax({
             'async': false,
             'type': "GET",
+            'headers': headers,
             'dataType': 'json',
             'global': false,
             'url': "http://localhost:12345/studenti/" + id_korisnika + "/kursevi",
@@ -113,8 +122,6 @@ $(document).ready(function(){
 
                                 if (attr.value == pretraga_grupa.value)
                                     id_grupe = attr.id;
-
-                                console.log(id_grupe);
                             }
 
                             pretraga_grupa.value = '';
@@ -170,13 +177,13 @@ $(document).ready(function(){
 
         idGrupe = this.id;
         idGrupe = idGrupe.substring(0, idGrupe.length-1)
-        console.log(idGrupe + " " + document.getElementById(idGrupe + 'g').value);
 
         //ako korisnik nije trazio da se pridruzi grupi, zahtev se salje
         if (document.getElementById(idGrupe + 'g').value == "Pridruži se") {
             $.ajax({
                 type: 'post',
                 url: 'http://localhost:12345/kursevi/prijava',
+                headers: headers,
                 data: JSON.stringify({
                     "ID_korisnika": id_korisnika,
                     "ID_grupe": idGrupe
@@ -190,6 +197,7 @@ $(document).ready(function(){
             $.ajax({
                 type: 'post',
                 url: 'http://localhost:12345/kursevi/odjava',
+                headers: headers,
                 data: JSON.stringify({
                     "ID_korisnika": id_korisnika,
                     "ID_grupe": idGrupe

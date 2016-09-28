@@ -10,9 +10,12 @@ var opcije_za_glasanje = [];
 
 //testirati na predmetu Automatsko rezonovanje
 var id_grupe = 0;
-var id_korisnika = 600;
+var id_korisnika = logedInUserID;
 var id_konverzacije = 0;
 var notifikacija = false;
+
+//header za autorizaciju
+var headers = {};
 
 function procitaj() {
     if (notifikacija == true)
@@ -32,6 +35,10 @@ function getParameterByName(name) {
 }
 
 $(document).ready(function () {
+
+    if (user && user.access_token) {
+        headers['Authorization'] = 'Bearer ' + user.access_token;
+    }
 
     id_grupe = getParameterByName('grp');
 
@@ -106,7 +113,6 @@ $(document).ready(function () {
     $.get("http://localhost:12345/kursevi/" + id_grupe, function (data) {
 
         var kurs = JSON.parse(data);
-        console.log(kurs);
 
         document.getElementById("ime_grupe").innerText += kurs.Name + " " + kurs.Year;
     });
@@ -115,6 +121,7 @@ $(document).ready(function () {
     $.ajax({
         url: 'http://localhost:12345/studenti/' + id_korisnika + '/kursevi',
         type: 'GET',
+        headers: headers,
         dataType: 'json',
         success: function (json) {
             $.each(json, function (i, value) {
@@ -136,8 +143,6 @@ $(document).ready(function () {
 
                             if (attr.value == pretraga_grupa.value)
                                 id_grupe = attr.id;
-
-                            console.log(id_grupe);
                         }
 
                         pretraga_grupa.value = '';
@@ -174,6 +179,7 @@ $(document).ready(function () {
             $.ajax({
                 'type': 'post',
                 'async': false,
+                'headers': headers,
                 'url': 'http://localhost:12345/postovi/materijali',
                 'data': JSON.stringify({
                     "CourseID": id_grupe,
@@ -194,6 +200,7 @@ $(document).ready(function () {
             $.ajax({
                 'type': 'post',
                 'async': false,
+                'headers': headers,
                 'url': 'http://localhost:12345/postovi/rezultati',
                 'data': JSON.stringify({
                     "CourseID": id_grupe,
@@ -228,6 +235,7 @@ $(document).ready(function () {
                 $.ajax({
                     'type': 'post',
                     'async': false,
+                    'headers': headers,
                     'url': 'http://localhost:12345/postovi/glasanje',
                     'data': JSON.stringify({
                         "CourseID": id_grupe,
@@ -244,7 +252,8 @@ $(document).ready(function () {
                 //pridruzivanje opcije postu
                 $.ajax({
                     'type': 'post',
-                    'async' : false,
+                    'async': false,
+                    'headers': headers,
                     'url': 'http://localhost:12345/postovi/glasanje/opcija',
                     'data': JSON.stringify({
                         "ParentID": odgovor,
@@ -264,6 +273,7 @@ $(document).ready(function () {
             $.ajax({
                 'type': 'post',
                 'async': false,
+                'headers': headers,
                 'url': 'http://localhost:12345/postovi/obavestenja',
                 'data': JSON.stringify({
                     "CourseID": id_grupe,
@@ -312,6 +322,7 @@ $(document).ready(function () {
         url: 'http://localhost:12345/postovi/' + id_grupe,
         type:'GET',
         dataType: 'json',
+        headers: headers,
         async: false,
         success: function(postovi) {
 
@@ -354,7 +365,6 @@ $(document).ready(function () {
 
 
                 $('body').on('input onpropertychange', '#' + komentar_tekst, function() {
-                    console.log("mic");
                     //document.getElementById(komentar_tekst).setAttribute("placeholder", "");
                 });
 
@@ -363,20 +373,18 @@ $(document).ready(function () {
                         if (!e.shiftKey) {
 
                             var id = e.target.id;
-                            console.log("Ovo je id textarea na koju sam kliknula: " + id);
                             var res = id.split("_");
 
                             var vrednost = $(this).val();
 
                             var promenljiva_za_objavu_komentara = "komentari_" + res[1];
-                            console.log(promenljiva_za_objavu_komentara);
-                            console.log(vrednost);
                             var seconds = new Date().getTime() / 1000;
 
                             var id_unetog_komentara = $.parseJSON(
                                 $.ajax({
                                     'type': 'post',
                                     'async': false,
+                                    'headers': headers,
                                     'url': 'http://localhost:12345/postovi/komentari',
                                     'data': JSON.stringify({
                                         "ParentID": res[1], //id_post-a
@@ -389,20 +397,15 @@ $(document).ready(function () {
                                     }
                                 }).responseText);
 
-                            //id unetog komentara
-                            console.log("Uneo sam post:" + id_unetog_komentara);
-
                             //ajax poziv za bas taj komentar koji je unet
 
                             $.ajax({
                                 url:'http://localhost:12345/postovi/' + res[1] + '/komentari/' + id_unetog_komentara,
                                 type:'GET',
                                 dataType: 'json',
+                                headers: headers,
                                 async: false,
                                 success: function(komentarVrednost) {
-
-                                    console.log("U ajaxu bre");
-                                    console.log(komentarVrednost);
 
                                     if(komentarVrednost[0].PicturePath == ""){
                                             document.getElementById(promenljiva_za_objavu_komentara).innerHTML += '<div><span>' +
@@ -433,10 +436,10 @@ $(document).ready(function () {
                     type:'GET',
                     dataType: 'json',
                     async: false,
+                    headers: headers,
                     success: function(komentarVrednost) {
 
                         for(var i = 0; i < komentarVrednost.length; i++) {
-                            console.log(komentarVrednost[i].Text);
 
                             var koment= i;
 
@@ -482,14 +485,13 @@ $(document).ready(function () {
                         'type': 'get',
                         'url': 'http://localhost:12345/postovi/' + id_posta + '/opcije',
                         'async': false,
+                        'headers': headers,
                         'success' : function(data) {
                             var glasanje = JSON.parse(data);
 
                             for(var l = 0; l < glasanje.length; l++){
 
                                 var id_checkbox = glasanje[l].ID + "_" + id_posta;
-                                console.log("Id opcije:" +id_checkbox);
-                                console.log(id_posta);
 
                                 var brGlasova = "brGlasova" + glasanje[l].ID;
 
@@ -645,20 +647,15 @@ function poslednjaOpcija() {
 
 function povecajBrojGlasova(id) {
 
-    //vraca bas taj id opcije
-    console.log("U fji: " + id);
-
     //id_opcije razmak id_posta
     var res = id.split("_");
-
-    console.log("Id opcije:" + res[0]);
-    console.log("Id posta: " + res[1]);
 
     if (document.getElementById(id).checked == true)
     {
         //ajax za update
         $.ajax({
             type: 'PUT',
+            headers: headers,
             async: false,
             url: 'http://localhost:12345/opcije/' + res[0] + '/*',
             contentType: "application/json; charset=utf-8"
@@ -669,6 +666,7 @@ function povecajBrojGlasova(id) {
         //ajax za update
         $.ajax({
             type: 'PUT',
+            headers: headers,
             async: false,
             url: 'http://localhost:12345/opcije/' + res[0] + '/-',
             contentType: "application/json; charset=utf-8"
@@ -677,11 +675,11 @@ function povecajBrojGlasova(id) {
         
     $.ajax({
         url:'http://localhost:12345/postovi/' + res[1] + '/opcije/' + res[0],
-        type:'GET',
+        type: 'GET',
+        headers: headers,
         async: false,
         dataType: 'json',
         success: function( data ) {
-            console.log(data);
             document.getElementById("brGlasova" + res[0]).innerHTML = data[0].VotesCount;
         }
     });
