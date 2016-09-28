@@ -10,6 +10,7 @@ using TrenchrRestService.Models;
 
 namespace TrenchrRestService.Controllers
 {
+    [Authorize(Policy = "StudentPolicy")]
     [Route("/")]
     public class DefaultController : ApiController
     {

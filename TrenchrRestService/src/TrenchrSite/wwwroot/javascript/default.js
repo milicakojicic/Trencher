@@ -1,5 +1,5 @@
 //id studenta ciji je profil
-var id_korisnika = 600;
+var id_korisnika = logedInUserID;
 var id_konverzacije = 0;
 var id_grupe = 0;
 var notifikacija = false;
@@ -12,6 +12,11 @@ function procitaj() {
 }
 
 $(document).ready(function() {
+
+    var headers = {};
+    if (user && user.access_token) {
+        headers['Authorization'] = 'Bearer ' + user.access_token;
+    }
 
     //pravljenje konekcije na server
     var connection = $.hubConnection('http://localhost:12345/signalr', { useDefaultPath: false });
@@ -45,6 +50,7 @@ $(document).ready(function() {
         .done(function () { console.log("SignalR connected"); })
         .fail(function () { console.log("SignalR connection failed"); });
 
+
     //GET za informacije o korisniku
     $.get("http://localhost:12345/studenti/" + id_korisnika, function (data) {
         var student = JSON.parse(data);
@@ -63,11 +69,13 @@ $(document).ready(function() {
         spanMail.innerText += student.Email;
     });
 
+
     //GET za sve grupe koje korisnik prati
     $.ajax({
         url: 'http://localhost:12345/studenti/' + id_korisnika + '/kursevi',
         type: 'GET',
         dataType: 'json',
+        headers: headers,
         success: function (json) {
             $.each(json, function (i, value) {
                 $('#trazi_grupe').append($('<option>').attr('value', value.Name + " " + value.Year).attr('id', value.ID));

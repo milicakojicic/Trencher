@@ -24,9 +24,14 @@ var config = {
 };
 var mgr = new Oidc.UserManager(config);
 
-mgr.getUser().then(function (user) {
-    if (user) {
-        log("User logged in", user.profile);
+var user;
+var logedInUserID;
+
+mgr.getUser().then(function (u) {
+    if (u) {
+        log("User logged in", u.profile);
+        user = u;
+        logedInUserID = u.profile.sub;
     }
     else {
         log("User not logged in");
@@ -36,20 +41,6 @@ mgr.getUser().then(function (user) {
 function login() {
     mgr.signinRedirect();
 }
-
-//function api() {
-//    mgr.getUser().then(function (user) {
-//        var url = "http://localhost:12345";
-
-//        var xhr = new XMLHttpRequest();
-//        xhr.open("GET", url);
-//        xhr.onload = function () {
-//            log(xhr.status, JSON.parse(xhr.responseText));
-//        }
-//        xhr.setRequestHeader("Authorization", "Bearer " + user.access_token);
-//        xhr.send();
-//    });
-//}
 
 function logout() {
     mgr.signoutRedirect();

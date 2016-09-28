@@ -1,18 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web.Http;
-using TrenchrRestService;
 using TrenchrRestService.Models;
-using TrenchrRestService.Hubs;
-using Microsoft.AspNet.SignalR;
 
 namespace TrenchrRestService.Controllers
 {
+    [Authorize(Policy = "StudentPolicy")]
     public class HeldCourseController : ApiController
     {
         //svi kursevi
@@ -28,6 +25,7 @@ namespace TrenchrRestService.Controllers
 
             return Ok(JsonConvert.SerializeObject(courses, Formatting.Indented));
         }
+
 
         //kursevi jedne osobe
         [Route("studenti/{id}/kursevi")]

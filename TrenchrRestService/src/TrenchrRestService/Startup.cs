@@ -46,8 +46,8 @@ namespace TrenchrRestService
             services.AddAuthorization(options =>
             {
                 
-                options.AddPolicy("AdminPolicy", policy =>
-                                     policy.RequireClaim("role", "Admin"));
+                options.AddPolicy("StudentPolicy", policy =>
+                                     policy.RequireClaim("role", "Student"));
             });
 
             services.AddCors(options =>
