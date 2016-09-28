@@ -19,6 +19,11 @@
       <script src = "javascript/jquery.js"></script>
       <script src = "javascript/material.js"></script>
 
+
+      <script src="javascript/oidc-client.js"></script>
+      <script src="javascript/app.js"></script>
+
+
       <style>
     #view-source {
       position: fixed;
@@ -69,7 +74,7 @@
               </div>
             </div>
 
-
+            <>
             <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
 
                   <div>
@@ -81,6 +86,9 @@
                         <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white close show-modal-log" id="logovanje">Ulogujte se</button>
                       </div>
                     </div>
+
+
+                      <button onclick="login()">LOGIN</button>
 
                   <dialog class="mdl-dialog">
                    <div class="mdl-dialog__content">
@@ -163,30 +171,30 @@
 
                 <script>
                 //logovanje dijalog
-                 var dialog = document.querySelector('dialog');
-                 var showModalButton = document.querySelector('.show-modal-log');
-                 if (! dialog.showModal) {
-                   dialogPolyfill.registerDialog(dialog);
-                 }
-                 showModalButton.addEventListener('click', function() {
-                   dialog.showModal();
-                 });
-                 dialog.querySelector('.close').addEventListener('click', function() {
-                   dialog.close();
-                 });
+                 //var dialog = document.querySelector('dialog');
+                 //var showModalButton = document.querySelector('.show-modal-log');
+                 //if (! dialog.showModal) {
+                 //  dialogPolyfill.registerDialog(dialog);
+                 //}
+                 //showModalButton.addEventListener('click', function() {
+                 //  dialog.showModal();
+                 //});
+                 //dialog.querySelector('.close').addEventListener('click', function() {
+                 //  dialog.close();
+                 //});
 
                 //registracija dijalog
-                 var dialog1 = document.querySelector('.dialog-reg');
-                 var showModalButton1 = document.querySelector('.show-modal-reg');
-                 if (! dialog1.showModal) {
-                   dialogPolyfill.registerDialog(dialog1);
-                 }
-                 showModalButton1.addEventListener('click', function() {
-                   dialog1.showModal();
-                 });
-                 dialog1.querySelector('.close').addEventListener('click', function() {
-                   dialog1.close();
-                 });
+                 //var dialog1 = document.querySelector('.dialog-reg');
+                 //var showModalButton1 = document.querySelector('.show-modal-reg');
+                 //if (! dialog1.showModal) {
+                 //  dialogPolyfill.registerDialog(dialog1);
+                 //}
+                 //showModalButton1.addEventListener('click', function() {
+                 //  dialog1.showModal();
+                 //});
+                 //dialog1.querySelector('.close').addEventListener('click', function() {
+                 //  dialog1.close();
+                 //});
 
                 </script>
               </div>

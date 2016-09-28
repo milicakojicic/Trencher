@@ -38,15 +38,15 @@ namespace IdentityService.Configuration
 
                     RedirectUris = new List<string>
                     {
-                        "http://localhost:5003/callback.html"
+                        "http://localhost:4033/callback.html"
                     },
                     PostLogoutRedirectUris = new List<string>
                     {
-                        "http://localhost:5003/index.html"
+                        "http://localhost:4033/default.html"
                     },
                     AllowedCorsOrigins = new List<string>
                     {
-                        "http://localhost:5003"
+                        "http://localhost:4033"
                     },
 
                     AllowedScopes = new List<string>
