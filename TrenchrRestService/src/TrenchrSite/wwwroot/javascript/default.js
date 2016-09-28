@@ -18,6 +18,7 @@ $(document).ready(function() {
 
     if (user && user.access_token) {
         headers['Authorization'] = 'Bearer ' + user.access_token;
+        document.cookie = 'Bearer ' + user.access_token;
     }
 
     //pravljenje konekcije na server

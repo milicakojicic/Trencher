@@ -13,7 +13,6 @@ function log() {
     });
 }
 
-
 var config = {
     authority: "http://localhost:9300",
     client_id: "js",

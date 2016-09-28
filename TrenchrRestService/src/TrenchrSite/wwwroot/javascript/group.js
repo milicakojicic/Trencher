@@ -36,9 +36,7 @@ function getParameterByName(name) {
 
 $(document).ready(function () {
 
-    if (user && user.access_token) {
-        headers['Authorization'] = 'Bearer ' + user.access_token;
-    }
+    headers['Authorization'] = document.cookie;
 
     id_grupe = getParameterByName('grp');
 
