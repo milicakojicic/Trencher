@@ -63,7 +63,9 @@ function procitaj() {
 
 $(document).ready(function() {
 
-    headers['Authorization'] = document.cookie;
+    var cookie = document.cookie.split(' ');
+    headers['Authorization'] = 'Bearer ' + cookie[0];
+    logedInUserID = cookie[1];
 
     $('#posaljiPoruku').click(function () {
         //cuvanje nove poruke u bazi

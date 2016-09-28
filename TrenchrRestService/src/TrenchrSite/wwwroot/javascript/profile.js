@@ -16,7 +16,9 @@ function procitaj() {
 
 $(document).ready(function(){
 
-    headers['Authorization'] = document.cookie;
+    var cookie = document.cookie.split(' ');
+    headers['Authorization'] = 'Bearer ' + cookie[0];
+    logedInUserID = cookie[1];
 
     //pravljenje konekcije na server
     var connection = $.hubConnection('http://localhost:12345/signalr', { useDefaultPath: false });

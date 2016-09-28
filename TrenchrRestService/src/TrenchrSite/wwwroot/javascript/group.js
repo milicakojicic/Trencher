@@ -36,7 +36,9 @@ function getParameterByName(name) {
 
 $(document).ready(function () {
 
-    headers['Authorization'] = document.cookie;
+    var cookie = document.cookie.split(' ');
+    headers['Authorization'] = 'Bearer ' + cookie[0];
+    logedInUserID = cookie[1];
 
     id_grupe = getParameterByName('grp');
 
